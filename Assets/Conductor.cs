@@ -173,7 +173,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentH == note.note)
                             {
-                                print(songBeatsPos - hittingNotes[0].beat);
+                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -188,7 +188,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentHM == note.note)
                             {
-                                print(songBeatsPos - hittingNotes[0].beat);
+                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -203,7 +203,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentLM == note.note)
                             {
-                                print(songBeatsPos - hittingNotes[0].beat);
+                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -218,7 +218,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentL == note.note)
                             {
-                                print(songBeatsPos - hittingNotes[0].beat);
+                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -245,18 +245,58 @@ public class Conductor : MonoBehaviour
         }
         else
         {
-            if(Input.GetKeyDown(noteHitting.note))
+            if(noteHitting.lane == 1)
             {
-                if(noteHitting.note == H0 && currentH != H0 || noteHitting.note == HM0 && currentHM != HM0 || noteHitting.note == LM0 && currentLM != LM0 || noteHitting.note == L0 && currentLM != LM0)
+                if(Input.GetKeyDown(H0))
                 {
-                    print("Bad Pluck!");
-                    return;
+                    if(currentH == noteHitting.note)
+                    {
+                        print(songPos - noteHitting.beat * secondsPerBeat);
+                        notes.Remove(noteHitting);
+                        Destroy(noteHitting.gameObject);
+                    }
+                    else print("Wrong Note!");
                 }
-                print(songBeatsPos - noteHitting.beat);
-                notes.Remove(noteHitting);
-                Destroy(noteHitting.gameObject);
             }
-            
+            else if(noteHitting.lane == 2)
+            {
+                if(Input.GetKeyDown(HM0))
+                {
+                    if(currentHM == noteHitting.note)
+                    {
+                        print(songPos - noteHitting.beat * secondsPerBeat);
+                        notes.Remove(noteHitting);
+                        Destroy(noteHitting.gameObject);
+                    }
+                    else print("Wrong Note!");
+                }
+            }
+            else if(noteHitting.lane == 3)
+            {
+                if(Input.GetKeyDown(LM0))
+                {
+                    if(currentLM == noteHitting.note)
+                    {
+                        print(songPos - noteHitting.beat * secondsPerBeat);
+                        notes.Remove(noteHitting);
+                        Destroy(noteHitting.gameObject);
+                    }
+                    else print("Wrong Note!");
+                }
+            }
+            else if(noteHitting.lane == 4)
+            {
+                if(Input.GetKeyDown(L0))
+                {
+                    if(currentL == noteHitting.note)
+                    {
+                        print(songPos - noteHitting.beat * secondsPerBeat);
+                        notes.Remove(noteHitting);
+                        Destroy(noteHitting.gameObject);
+                    }
+                    else print("Wrong Note!");
+                }
+            }
         }
         previousNote = null;
     }
