@@ -17,7 +17,6 @@ public class Conductor : MonoBehaviour
     public float dspSongTime;
     public AudioSource song;
     public float firstBeatOffset;
-    public float silentBeatsBeginning;
 
     [Header("Controls")]
     public KeyCode H0 = KeyCode.Backspace;
@@ -100,8 +99,6 @@ public class Conductor : MonoBehaviour
 
         //Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
-
-        firstBeatOffset -= silentBeatsBeginning/2;
 
         //Start the music
         song.Play();
