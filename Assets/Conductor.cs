@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -13,6 +16,8 @@ public class Conductor : MonoBehaviour
     public float songBeatsPos;
     public float dspSongTime;
     public AudioSource song;
+    public float firstBeatOffset;
+    public float silentBeatsBeginning;
 
     [Header("Controls")]
     public KeyCode H0 = KeyCode.Backspace;
@@ -73,10 +78,16 @@ public class Conductor : MonoBehaviour
 
     public float beatsLateTime = 1.5f;
 
+    public GameObject notesParent;
+
     public KeyCode currentH;
     public KeyCode currentHM;
     public KeyCode currentLM;
     public KeyCode currentL;
+    public int accuracyRoundingDigits = 3;
+    public float missDistance;
+    public int score = 0;
+    bool isStrumming = false;
 
     // Start is called before the first frame update
     void Start()
@@ -90,20 +101,24 @@ public class Conductor : MonoBehaviour
         //Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
 
+        firstBeatOffset -= silentBeatsBeginning/2;
+
         //Start the music
         song.Play();
 
-        foreach(Note note in GameObject.FindObjectsOfType<Note>())
+        foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
         }
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         //determine how many seconds since the song started
-        songPos = (float)(AudioSettings.dspTime - dspSongTime);
+        songPos = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
 
         //determine how many beats since the song started
         songBeatsPos = songPos / secondsPerBeat;
@@ -129,43 +144,55 @@ public class Conductor : MonoBehaviour
         }
         if(readyNotes.Count == 0) return;
         List<Note> hittingNotes = new List<Note>();
-        Note noteHitting = null;
-        bool isStrumming = false;
-        foreach (Note note in readyNotes)
+        isStrumming = false;
+        if(readyNotes[0].strum)
         {
-            if(note.strum)
+            isStrumming = true;
+            foreach(Note note2 in readyNotes)
             {
-                isStrumming = true;
-                foreach(Note note2 in readyNotes)
+                if(previousNote != null)
                 {
-                    if(previousNote != null)
+                    if(note2.beat == previousNote.beat)
                     {
-                        if(note2.beat == previousNote.beat)
-                        {
-                            hittingNotes.Add(note2);
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        hittingNotes.Add(note2);
+                        previousNote = note2;
                     }
-                    else hittingNotes.Add(note2);
+                    else
+                    {
+                        break;
+                    }
                 }
-                // Enforce same strum direction
-                foreach(Note newNote in readyNotes) newNote.downStrum = hittingNotes[0].downStrum;
-                break;
+                else {hittingNotes.Add(note2); previousNote = note2; }
             }
-            else
+            // Enforce same strum direction
+            foreach(Note newNote in hittingNotes) newNote.downStrum = hittingNotes[0].downStrum;
+        }
+        else
+        {
+            isStrumming = false;
+            foreach(Note note2 in readyNotes)
             {
-                isStrumming = false;
-                noteHitting = note;
+                if(previousNote != null)
+                {
+                    if(note2.beat == previousNote.beat)
+                    {
+                        hittingNotes.Add(note2);
+                        previousNote = note2;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else {hittingNotes.Add(note2); previousNote = note2; }
             }
         }
         if(isStrumming)
         {
             if(Input.GetKeyDown(DownStrum) || Input.GetKeyDown(UpStrum))
             {
-                if(hittingNotes[0].downStrum && Input.GetKey(DownStrum) || !hittingNotes[0].downStrum && Input.GetKey(UpStrum))
+                // I have no fucking clue why this works but if I don't reverse down strum to upstrum input it doesn't work
+                if(hittingNotes[0].downStrum && Input.GetKey(UpStrum) || !hittingNotes[0].downStrum && Input.GetKey(DownStrum))
                 {
                     foreach(Note note in hittingNotes)
                     {
@@ -173,7 +200,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentH == note.note)
                             {
-                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
+                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -188,7 +215,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentHM == note.note)
                             {
-                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
+                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -203,7 +230,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentLM == note.note)
                             {
-                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
+                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -218,7 +245,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentL == note.note)
                             {
-                                print(songPos - hittingNotes[0].beat * secondsPerBeat);
+                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -245,60 +272,88 @@ public class Conductor : MonoBehaviour
         }
         else
         {
-            if(noteHitting.lane == 1)
+            foreach(Note note in hittingNotes)
             {
-                if(Input.GetKeyDown(H0))
+                if(note.lane == 1 && Input.GetKeyDown(H0))
                 {
-                    if(currentH == noteHitting.note)
+                    if(currentH == note.note)
                     {
-                        print(songPos - noteHitting.beat * secondsPerBeat);
-                        notes.Remove(noteHitting);
-                        Destroy(noteHitting.gameObject);
+                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
                     }
-                    else print("Wrong Note!");
+                    else
+                    {
+                        print("Wrong Note!");
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
+                    }
                 }
-            }
-            else if(noteHitting.lane == 2)
-            {
-                if(Input.GetKeyDown(HM0))
+                else if(note.lane == 2 && Input.GetKeyDown(HM0))
                 {
-                    if(currentHM == noteHitting.note)
+                    if(currentHM == note.note)
                     {
-                        print(songPos - noteHitting.beat * secondsPerBeat);
-                        notes.Remove(noteHitting);
-                        Destroy(noteHitting.gameObject);
+                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
                     }
-                    else print("Wrong Note!");
+                    else
+                    {
+                        print("Wrong Note!");
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
+                    }
                 }
-            }
-            else if(noteHitting.lane == 3)
-            {
-                if(Input.GetKeyDown(LM0))
+                else if(note.lane == 3 && Input.GetKeyDown(LM0))
                 {
-                    if(currentLM == noteHitting.note)
+                    if(currentLM == note.note)
                     {
-                        print(songPos - noteHitting.beat * secondsPerBeat);
-                        notes.Remove(noteHitting);
-                        Destroy(noteHitting.gameObject);
+                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
                     }
-                    else print("Wrong Note!");
+                    else
+                    {
+                        print("Wrong Note!");
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
+                    }
                 }
-            }
-            else if(noteHitting.lane == 4)
-            {
-                if(Input.GetKeyDown(L0))
+                else if(note.lane == 4 && Input.GetKeyDown(L0))
                 {
-                    if(currentL == noteHitting.note)
+                    if(currentL == note.note)
                     {
-                        print(songPos - noteHitting.beat * secondsPerBeat);
-                        notes.Remove(noteHitting);
-                        Destroy(noteHitting.gameObject);
+                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
                     }
-                    else print("Wrong Note!");
+                    else
+                    {
+                        print("Wrong Note!");
+                        notes.Remove(note);
+                        Destroy(note.gameObject);
+                    }
                 }
+                
             }
         }
         previousNote = null;
+    }
+
+    float GetEndLaneX(Note note)
+    {
+        return GameObject.Find("Lane " + note.lane + " End").gameObject.transform.position.x;
+    }
+
+    int CalculateScore(float distanceFromNote, int lane)
+    {
+        decimal dist = (decimal)distanceFromNote;
+        decimal distRounded = Math.Round(dist, accuracyRoundingDigits);
+        float absDist = Mathf.Abs((float)distRounded);
+        if(absDist > missDistance) {print("Miss"); return 0;}
+        int score = (int)Math.Round((missDistance - absDist)/missDistance * 100);
+        if (score == 0) score += 1;
+        return score;
     }
 
     void DetermineKeyStrokes()
