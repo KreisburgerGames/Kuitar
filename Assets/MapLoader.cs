@@ -43,7 +43,6 @@ public class MapLoader : MonoBehaviour
         GameObject conductorGO = (GameObject)Instantiate(conductorPrefab, SceneManager.GetSceneByName("Game"));
         Conductor conductor = conductorGO.GetComponent<Conductor>();
         conductor.notesParent = GameObject.Find("Notes");
-        conductor.firstBeatOffset = 1 + beatsPerPixel;
         foreach(var note in notes)
         {
             note.conductor = conductor;
@@ -72,7 +71,7 @@ public class MapLoader : MonoBehaviour
 
                 if(a != 0f)
                 {
-                    print(h);
+                    print("hue = " + h);
                     Note note = Instantiate(notePrefab).GetComponent<Note>();
                     note.beat = x * beatsPerPixel;
                     int lane = y + 1;
@@ -86,17 +85,17 @@ public class MapLoader : MonoBehaviour
                     else if(lane == 3) laneStr = "HM";
                     else if(lane == 4) laneStr = "H";
 
-                    if(h == zeroHue) note.noteStr = laneStr + "0";
-                    if(h == oneHue) note.noteStr = laneStr + "1";
-                    if(h == twoHue) note.noteStr = laneStr + "2";
-                    if(h == threeHue) note.noteStr = laneStr + "3";
-                    if(h == fourHue) note.noteStr = laneStr + "4";
-                    if(h == fiveHue) note.noteStr = laneStr + "5";
-                    if(h == sixHue) note.noteStr = laneStr + "6";
-                    if(h == sevenHue) note.noteStr = laneStr + "7";
-                    if(h == eightHue) note.noteStr = laneStr + "8";
-                    if(h == nineHue) note.noteStr = laneStr + "9";
-                    if(h == tenHue) note.noteStr = laneStr + "10";
+                    if(h >= zeroHue && h < oneHue) note.noteStr = laneStr + "0";
+                    else if(h >= oneHue && h < twoHue) note.noteStr = laneStr + "1";
+                    else if (h >= twoHue && h < threeHue) note.noteStr = laneStr + "2";
+                    else if (h >= threeHue && h < fourHue) note.noteStr = laneStr + "3";
+                    else if (h >= fourHue && h < fiveHue) note.noteStr = laneStr + "4";
+                    else if (h >= fiveHue && h < sixHue) note.noteStr = laneStr + "5";
+                    else if (h >= sixHue && h < sevenHue) note.noteStr = laneStr + "6";
+                    else if (h >= sevenHue && h < eightHue) note.noteStr = laneStr + "7";
+                    else if (h >= eightHue && h < nineHue) note.noteStr = laneStr + "8";
+                    else if (h >= nineHue && h < tenHue) note.noteStr = laneStr + "9";
+                    else if (h >= tenHue) note.noteStr = laneStr + "10";
 
                     notes.Add(note);
                     DontDestroyOnLoad(note);

@@ -51,8 +51,7 @@ MonoBehaviour:
   songBeatsPos: 0
   dspSongTime: 0
   song: {fileID: 7231717516183070174}
-  firstBeatOffset: 0
-  silentBeatsBeginning: 0
+  firstBeatOffset: 0.5
   H0: 8
   H1: 49
   H2: 50
@@ -100,7 +99,7 @@ MonoBehaviour:
   DownStrum: 274
   UpStrum: 273
   notes: []
-  beatsUntilReady: 2
+  beatsUntilReady: 3
   beatsLateTime: 1.5
   notesParent: {fileID: 0}
   currentH: 0
