@@ -70,6 +70,7 @@ MonoBehaviour:
   NoteTenIMG: {fileID: 21300000, guid: 9e8e249e525dff74d8f3a12e402d40ae, type: 3}
   DownStrumIMG: {fileID: 21300000, guid: 9e3496fdd71a06d4faa811085587fe66, type: 3}
   UpStrumIMG: {fileID: 21300000, guid: 31fb4942ac7b90e49b89f506c491e21e, type: 3}
+  noteVelCalculationEndDist: 0.25
   lane: 2
 --- !u!212 &7483530134717881084
 SpriteRenderer:

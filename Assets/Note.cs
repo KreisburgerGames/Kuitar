@@ -37,8 +37,7 @@ public class Note : MonoBehaviour
     public Sprite DownStrumIMG;
     public Sprite UpStrumIMG;
 
-
-    private bool calculated = false;
+    public float noteVelCalculationEndDist;
 
     // 1 = High, 4 = Low
     [Range(1, 4)]
@@ -118,12 +117,11 @@ public class Note : MonoBehaviour
     void Update()
     {
         if(!moving) return;
-        if(!calculated)
-        {
-            float secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
-            vel = new Vector2((targetPos.x - transform.position.x) / secondsAvailable, 0);
-            calculated = true;
-        }
+        float distFromTarget = targetPos.x - transform.position.x;
+        print(distFromTarget);
+        if(distFromTarget <= 0 + noteVelCalculationEndDist) return;
+        float secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
+        vel = new Vector2(distFromTarget / secondsAvailable, 0);
         rb.velocity = vel;
     }
 }
