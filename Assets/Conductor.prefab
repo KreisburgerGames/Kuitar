@@ -51,7 +51,7 @@ MonoBehaviour:
   songBeatsPos: 0
   dspSongTime: 0
   song: {fileID: 7231717516183070174}
-  firstBeatOffset: 2.25
+  firstBeatOffset: 2.165
   H0: 8
   H1: 49
   H2: 50
