@@ -118,8 +118,7 @@ public class Note : MonoBehaviour
     {
         if(!moving) return;
         float distFromTarget = targetPos.x - transform.position.x;
-        print(distFromTarget);
-        if(distFromTarget <= 0 + noteVelCalculationEndDist) return;
+        if(distFromTarget <= rb.velocity.x) return;
         float secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
         vel = new Vector2(distFromTarget / secondsAvailable, 0);
         rb.velocity = vel;

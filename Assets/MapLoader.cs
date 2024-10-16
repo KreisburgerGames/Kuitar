@@ -27,8 +27,6 @@ public class MapLoader : MonoBehaviour
     public int nineHue = 270;
     public int tenHue = 300;
 
-    public float firstDsp;
-
     List<Note> notes= new List<Note>();
 
     private IEnumerator LoadLevel(string sceneName)
@@ -54,7 +52,6 @@ public class MapLoader : MonoBehaviour
     void Start ()
     {
         GenerateMap();
-        firstDsp = (float)AudioSettings.dspTime;
     }
 
     void GenerateMap ()

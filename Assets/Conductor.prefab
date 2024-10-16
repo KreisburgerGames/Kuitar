@@ -51,7 +51,7 @@ MonoBehaviour:
   songBeatsPos: 0
   dspSongTime: 0
   song: {fileID: 7231717516183070174}
-  firstBeatOffset: 0.6
+  firstBeatOffset: 2.25
   H0: 8
   H1: 49
   H2: 50
@@ -109,6 +109,7 @@ MonoBehaviour:
   accuracyRoundingDigits: 2
   missDistance: 3
   score: 0
+  startDelay: 0
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0

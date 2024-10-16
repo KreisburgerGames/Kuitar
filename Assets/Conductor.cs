@@ -88,6 +88,8 @@ public class Conductor : MonoBehaviour
     public int score = 0;
     bool isStrumming = false;
 
+    public float startDelay;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,9 +99,6 @@ public class Conductor : MonoBehaviour
         //Calculate the number of seconds in each beat
         secondsPerBeat = 60f / songBPM;
 
-        //Record the time when the music starts
-        dspSongTime = (float)AudioSettings.dspTime;
-
         //Start the music
         song.Play();
 
@@ -107,15 +106,13 @@ public class Conductor : MonoBehaviour
         {
             notes.Add(note);
         }
-
-        
     }
 
     // Update is called once per frame
     void Update()
     {
         //determine how many seconds since the song started
-        songPos = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
+        songPos = song.time - firstBeatOffset;
 
         //determine how many beats since the song started
         songBeatsPos = songPos / secondsPerBeat;
