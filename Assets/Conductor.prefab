@@ -106,7 +106,7 @@ MonoBehaviour:
   currentHM: 0
   currentLM: 0
   currentL: 0
-  accuracyRoundingDigits: 2
+  accuracyRoundingDigits: 1
   missDistance: 3
   score: 0
   startDelay: 0

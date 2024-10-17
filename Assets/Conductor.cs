@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using JetBrains.Annotations;
 using Unity.Mathematics;
@@ -87,6 +88,8 @@ public class Conductor : MonoBehaviour
     public float missDistance;
     public int score = 0;
     bool isStrumming = false;
+
+    public int roundToOneHundredRange = 95;
 
     public float startDelay;
 
@@ -190,11 +193,14 @@ public class Conductor : MonoBehaviour
                 {
                     foreach(Note note in hittingNotes)
                     {
+                        int hitScore;
                         if(note.lane == 1)
                         {
                             if(currentH == note.note)
                             {
-                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                print(hitScore);
+                                if(hitScore == 0) { return; }
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -209,7 +215,9 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentHM == note.note)
                             {
-                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                print(hitScore);
+                                if(hitScore == 0) { return; }
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -224,7 +232,9 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentLM == note.note)
                             {
-                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                print(hitScore);
+                                if(hitScore == 0) { return; }
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -239,7 +249,9 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentL == note.note)
                             {
-                                print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                print(hitScore);
+                                if(hitScore == 0) { return; }
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -268,11 +280,14 @@ public class Conductor : MonoBehaviour
         {
             foreach(Note note in hittingNotes)
             {
+                int hitScore;
                 if(note.lane == 1 && Input.GetKeyDown(H0))
                 {
                     if(currentH == note.note)
                     {
-                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        print(hitScore);
+                        if(hitScore == 0) { return; }
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -287,7 +302,9 @@ public class Conductor : MonoBehaviour
                 {
                     if(currentHM == note.note)
                     {
-                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        print(hitScore);
+                        if(hitScore == 0) { return; }
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -302,7 +319,9 @@ public class Conductor : MonoBehaviour
                 {
                     if(currentLM == note.note)
                     {
-                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        print(hitScore);
+                        if(hitScore == 0) { return; }
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -317,7 +336,9 @@ public class Conductor : MonoBehaviour
                 {
                     if(currentL == note.note)
                     {
-                        print(CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane));
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        print(hitScore);
+                        if(hitScore == 0) { return; }
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -345,9 +366,10 @@ public class Conductor : MonoBehaviour
         decimal distRounded = Math.Round(dist, accuracyRoundingDigits);
         float absDist = Mathf.Abs((float)distRounded);
         if(absDist > missDistance) {print("Miss"); return 0;}
-        int score = (int)Math.Round((missDistance - absDist)/missDistance * 100);
-        if (score == 0) score += 1;
-        return score;
+        int hitScore = (int)Math.Round((missDistance - absDist)/missDistance * 100);
+        if(hitScore > roundToOneHundredRange) hitScore = 100;
+        score += hitScore;
+        return hitScore;
     }
 
     void DetermineKeyStrokes()
