@@ -106,9 +106,10 @@ MonoBehaviour:
   currentHM: 0
   currentLM: 0
   currentL: 0
-  accuracyRoundingDigits: 1
+  accuracyRoundingDigits: 2
   missDistance: 3
   score: 0
+  roundToOneHundredRange: 95
   startDelay: 0
 --- !u!82 &7231717516183070174
 AudioSource:
