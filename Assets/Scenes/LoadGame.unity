@@ -176,11 +176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4930663266464908228, guid: 4a6d67a437bdb8040aa60fefe78e3a3c, type: 3}
       propertyPath: tenHue
-      value: 308
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4930663266464908228, guid: 4a6d67a437bdb8040aa60fefe78e3a3c, type: 3}
       propertyPath: nineHue
-      value: 277
+      value: 270
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
