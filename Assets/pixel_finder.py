@@ -7,3 +7,5 @@ tick = int(input("tick: "))
 
 pixel = ((bar - 1) * (pixels_per_beat * beats_per_bar)) + (beat * pixels_per_beat) + tick - pixels_per_beat - 1
 print(pixel)
+
+input("Press Enter to Exit.")
