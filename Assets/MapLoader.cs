@@ -82,7 +82,7 @@ public class MapLoader : MonoBehaviour
                     else if(lane == 3) laneStr = "HM";
                     else if(lane == 4) laneStr = "H";
 
-                    if(h >= zeroHue && h < oneHue) note.noteStr = laneStr + "0";
+                    if(h >= zeroHue && h < oneHue || h == 360f) note.noteStr = laneStr + "0";
                     else if(h >= oneHue && h < twoHue) note.noteStr = laneStr + "1";
                     else if (h >= twoHue && h < threeHue) note.noteStr = laneStr + "2";
                     else if (h >= threeHue && h < fourHue) note.noteStr = laneStr + "3";
