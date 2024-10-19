@@ -93,6 +93,8 @@ public class Conductor : MonoBehaviour
 
     public float startDelay;
 
+    public GameObject perfectHit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -201,12 +203,14 @@ public class Conductor : MonoBehaviour
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
                                 if(hitScore == 0) { return; }
+                                ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
                             else
                             {
                                 print("Wrong Note!");
+                                WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -218,12 +222,14 @@ public class Conductor : MonoBehaviour
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
                                 if(hitScore == 0) { return; }
+                                ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
                             else
                             {
                                 print("Wrong Note!");
+                                WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -235,12 +241,14 @@ public class Conductor : MonoBehaviour
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
                                 if(hitScore == 0) { return; }
+                                ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
                             else
                             {
                                 print("Wrong Note!");
+                                WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -252,12 +260,14 @@ public class Conductor : MonoBehaviour
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
                                 if(hitScore == 0) { return; }
+                                ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
                             else
                             {
                                 print("Wrong Note!");
+                                WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
                             }
@@ -270,6 +280,7 @@ public class Conductor : MonoBehaviour
                     foreach(Note note in hittingNotes)
                     {
                         print("Wrong Direction!");
+                        WrongDirection();
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -288,12 +299,14 @@ public class Conductor : MonoBehaviour
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
                         if(hitScore == 0) { return; }
+                        ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
                     else
                     {
                         print("Wrong Note!");
+                        WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -305,12 +318,14 @@ public class Conductor : MonoBehaviour
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
                         if(hitScore == 0) { return; }
+                        ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
                     else
                     {
                         print("Wrong Note!");
+                        WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -322,12 +337,14 @@ public class Conductor : MonoBehaviour
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
                         if(hitScore == 0) { return; }
+                        ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
                     else
                     {
                         print("Wrong Note!");
+                        WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -339,12 +356,14 @@ public class Conductor : MonoBehaviour
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
                         if(hitScore == 0) { return; }
+                        ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
                     else
                     {
                         print("Wrong Note!");
+                        WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -370,6 +389,21 @@ public class Conductor : MonoBehaviour
         if(hitScore > roundToOneHundredRange) hitScore = 100;
         score += hitScore;
         return hitScore;
+    }
+
+    void ParticlesAndText(int hitScore, Note note)
+    {
+        Instantiate(perfectHit, note.gameObject.transform.position, Quaternion.identity);
+    }
+
+    void WrongNote(Note note)
+    {
+        // Add feedback here
+    }
+
+    void WrongDirection()
+    {
+        // Add feedback here
     }
 
     void DetermineKeyStrokes()

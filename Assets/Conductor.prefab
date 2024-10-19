@@ -111,6 +111,7 @@ MonoBehaviour:
   score: 0
   roundToOneHundredRange: 95
   startDelay: 0
+  perfectHit: {fileID: 6306884995665241820, guid: b189499493f417e4590c3b8481ebea12, type: 3}
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0
