@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 1575157491484338629}
   - component: {fileID: 3975034284829809069}
   - component: {fileID: -2662806803194526465}
-  m_Layer: 0
+  - component: {fileID: 5311583550097813140}
+  - component: {fileID: 2343104534066774630}
+  m_Layer: 3
   m_Name: PerfectHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1367,8 +1369,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.9103876, b: 0.1641509, a: 1}
-        key1: {r: 0.4433962, g: 0.52541023, b: 1, a: 1}
+        key0: {r: 1, g: 0.94804674, b: 0.51886785, a: 1}
+        key1: {r: 0, g: 0.7764706, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1397,7 +1399,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
-        key0: {r: 0.18785948, g: 0.8113208, b: 0, a: 1}
+        key0: {r: 0.5058824, g: 0.86274517, b: 0.7568628, a: 1}
         key1: {r: 1, g: 0.8794408, b: 0.19433957, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4901,8 +4903,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 0}
+  sharedProfile: {fileID: 11400000, guid: 6ef3e59b918c0234286c7b7a164b01db, type: 2}
   isGlobal: 0
-  blendDistance: 0
+  blendDistance: 10
   weight: 1
   priority: 0
+--- !u!65 &5311583550097813140
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6306884995665241820}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2343104534066774630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6306884995665241820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59aada42c65fc9644bd753da06f5da15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetIntensity: 12
+  fadeInSpeed: 20
+  fadeOutSpeed: 2
+  vol: {fileID: -2662806803194526465}
