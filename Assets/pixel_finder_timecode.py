@@ -7,3 +7,5 @@ time = float(input("time: "))
 beat = time / secondsPerBeat
 
 print(round(beat * pixelsPerBeat))
+
+input("Press Enter to Exit")
