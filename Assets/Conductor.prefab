@@ -100,7 +100,7 @@ MonoBehaviour:
   UpStrum: 273
   notes: []
   beatsUntilReady: 3
-  beatsLateTime: 1.5
+  beatsLateTime: 0.5
   notesParent: {fileID: 0}
   currentH: 0
   currentHM: 0

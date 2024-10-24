@@ -131,6 +131,7 @@ public class Conductor : MonoBehaviour
             if(songBeatsPos > note.beat + beatsLateTime)
             {
                 notes.Remove(note);
+                MissedNote(note);
                 Destroy(note.gameObject);
             }
             if (note.beat <= songBeatsPos + beatsUntilReady)
@@ -280,7 +281,7 @@ public class Conductor : MonoBehaviour
                     foreach(Note note in hittingNotes)
                     {
                         print("Wrong Direction!");
-                        WrongDirection();
+                        WrongDirection(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
                     }
@@ -379,6 +380,11 @@ public class Conductor : MonoBehaviour
         return GameObject.Find("Lane " + note.lane + " End").gameObject.transform.position.x;
     }
 
+    NoteEndColorManager GetColorManager(Note note)
+    {
+        return GameObject.Find("Lane " + note.lane + " End").gameObject.GetComponent<NoteEndColorManager>();
+    }
+
     int CalculateScore(float distanceFromNote, int lane)
     {
         decimal dist = (decimal)distanceFromNote;
@@ -394,16 +400,22 @@ public class Conductor : MonoBehaviour
     void ParticlesAndText(int hitScore, Note note)
     {
         Instantiate(perfectHit, note.gameObject.transform.position, Quaternion.identity);
+        GetColorManager(note).PerfectHit();
     }
 
     void WrongNote(Note note)
     {
-        // Add feedback here
+        GetColorManager(note).Error();
     }
 
-    void WrongDirection()
+    void WrongDirection(Note note)
     {
-        // Add feedback here
+        GetColorManager(note).Error();
+    }
+
+    void MissedNote(Note note)
+    {
+        GetColorManager(note).Error();
     }
 
     void DetermineKeyStrokes()

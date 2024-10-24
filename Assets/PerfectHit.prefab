@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 6597410975874977983}
   - component: {fileID: 1575157491484338629}
   - component: {fileID: 3975034284829809069}
-  - component: {fileID: -2662806803194526465}
   - component: {fileID: 5311583550097813140}
-  - component: {fileID: 2343104534066774630}
   m_Layer: 3
   m_Name: PerfectHit
   m_TagString: Untagged
@@ -4891,23 +4889,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-2662806803194526465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6306884995665241820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 6ef3e59b918c0234286c7b7a164b01db, type: 2}
-  isGlobal: 0
-  blendDistance: 10
-  weight: 1
-  priority: 0
 --- !u!65 &5311583550097813140
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4929,19 +4910,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2343104534066774630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6306884995665241820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59aada42c65fc9644bd753da06f5da15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetIntensity: 12
-  fadeInSpeed: 20
-  fadeOutSpeed: 2
-  vol: {fileID: -2662806803194526465}
