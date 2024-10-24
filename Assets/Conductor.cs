@@ -420,6 +420,7 @@ public class Conductor : MonoBehaviour
 
     void DetermineKeyStrokes()
     {
+        
         if(Input.GetKey(H10)) currentH = H10;
         else if(Input.GetKey(H9)) currentH = H9;
         else if(Input.GetKey(H8)) currentH = H8;
@@ -431,8 +432,9 @@ public class Conductor : MonoBehaviour
         else if(Input.GetKey(H2)) currentH = H2;
         else if(Input.GetKey(H1)) currentH = H1;
         else currentH = H0;
-        
-        if(Input.GetKey(HM10)) currentH = HM10;
+
+
+        if (Input.GetKey(HM10)) currentHM = HM10;
         else if(Input.GetKey(HM9)) currentHM = HM9;
         else if(Input.GetKey(HM8)) currentHM = HM8;
         else if(Input.GetKey(HM7)) currentHM = HM7;
@@ -444,7 +446,7 @@ public class Conductor : MonoBehaviour
         else if(Input.GetKey(HM1)) currentHM = HM1;
         else currentHM = HM0;
 
-        if(Input.GetKey(LM10)) currentH = LM10;
+        if(Input.GetKey(LM10)) currentLM = LM10;
         else if(Input.GetKey(LM9)) currentLM = LM9;
         else if(Input.GetKey(LM8)) currentLM = LM8;
         else if(Input.GetKey(LM7)) currentLM = LM7;

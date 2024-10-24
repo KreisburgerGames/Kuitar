@@ -61,7 +61,7 @@ public class NoteEndColorManager : MonoBehaviour
             BGSprite.color = Color.Lerp(BGSprite.color, BGHitColor, fadeInSpeed * Time.deltaTime);
             float NSCRGB = noteSprite.color.r + noteSprite.color.g + noteSprite.color.b;
             float BGSRGB = BGSprite.color.r + BGSprite.color.g + BGSprite.color.b;
-            if(NSCRGB >= errorMargin(hitColor) && BGSRGB >= errorMargin(BGHitColor)) {print("woo"); fadeIn = false;}
+            if(NSCRGB >= errorMargin(hitColor) && BGSRGB >= errorMargin(BGHitColor)) {fadeIn = false;}
         }
         else
         {
@@ -69,7 +69,7 @@ public class NoteEndColorManager : MonoBehaviour
             BGSprite.color = Color.Lerp(BGSprite.color, originalBGColor, fadeOutSpeed * Time.deltaTime);
             float NSCRGB = noteSprite.color.r + noteSprite.color.g + noteSprite.color.b;
             float BGSRGB = BGSprite.color.r + BGSprite.color.g + BGSprite.color.b;
-            if(NSCRGB >= errorMargin(originalColor) && BGSRGB >= errorMargin(originalBGColor)) {print("done"); active = false;};
+            if(NSCRGB >= errorMargin(originalColor) && BGSRGB >= errorMargin(originalBGColor)) {active = false;};
         }
     }
     
