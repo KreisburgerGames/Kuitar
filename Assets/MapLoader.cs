@@ -63,7 +63,7 @@ public class MapLoader : MonoBehaviour
             {
                 if(file == "cover.png") return;
                 byte[] pngBytes = System.IO.File.ReadAllBytes(file);
-                Texture2D mapToAdd = new Texture2D(1400, 4);
+                Texture2D mapToAdd = new Texture2D(400, 4);
                 mapToAdd.name = "Backseat";
                 mapToAdd.LoadImage(pngBytes);
                 maps.Add(mapToAdd);
