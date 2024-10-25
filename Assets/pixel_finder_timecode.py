@@ -1,11 +1,15 @@
 bpm = 155
-pixelsPerBeat = 4
+pixelsPerBeat = 32
 secondsPerBeat = 60 / bpm
+offset = 0
 
-time = float(input("time: "))
+while True:
+	time = float(input("time: "))
 
-beat = time / secondsPerBeat
+	beat = time / secondsPerBeat
 
-print(round(beat * pixelsPerBeat))
+	print(round(beat * pixelsPerBeat) - offset)
 
-input("Press Enter to Exit")
+	i = input("Press Enter to enter again. Enter Q to quit. ")
+	if (i == "Q" or i == "q"):
+		exit()
