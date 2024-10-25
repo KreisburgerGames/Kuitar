@@ -37,6 +37,46 @@ public class NoteEndColorManager : MonoBehaviour
         active = true;
     }
 
+    public void GoodHit()
+    {
+        noteSprite.color = originalColor;
+        BGSprite.color = originalBGColor;
+        hitColor = BGColorSettings.settings.goodHitColor;
+        BGHitColor = BGColorSettings.settings.goodHitBGColor;
+        fadeIn = true;
+        active = true;
+    }
+
+    public void DecentHit()
+    {
+        noteSprite.color = originalColor;
+        BGSprite.color = originalBGColor;
+        hitColor = BGColorSettings.settings.decentHitColor;
+        BGHitColor = BGColorSettings.settings.decentHitBGColor;
+        fadeIn = true;
+        active = true;
+    }
+
+    public void MehHit()
+    {
+        noteSprite.color = originalColor;
+        BGSprite.color = originalBGColor;
+        hitColor = BGColorSettings.settings.mehHitColor;
+        BGHitColor = BGColorSettings.settings.mehHitBGColor;
+        fadeIn = true;
+        active = true;
+    }
+
+    public void BarelyHit()
+    {
+        noteSprite.color = originalColor;
+        BGSprite.color = originalBGColor;
+        hitColor = BGColorSettings.settings.barelyHitColor;
+        BGHitColor = BGColorSettings.settings.barelyHitBGColor;
+        fadeIn = true;
+        active = true;
+    }
+
     public void Error()
     {
         noteSprite.color = originalColor;

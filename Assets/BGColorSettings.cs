@@ -13,6 +13,22 @@ public class BGColorSettings : MonoBehaviour
     public Color perfectHitColor;
     public Color perfectHitBGColor;
 
+    [Header("Good Hit")]
+    public Color goodHitColor;
+    public Color goodHitBGColor;
+
+    [Header("Decent Hit")]
+    public Color decentHitColor;
+    public Color decentHitBGColor;
+
+    [Header("Meh Hit")]
+    public Color mehHitColor;
+    public Color mehHitBGColor;
+
+    [Header("Barely Hit")]
+    public Color barelyHitColor;
+    public Color barelyHitBGColor;
+
     [Header("Error")]
     public Color errorHitColor;
     public Color errorHitBGColor;

@@ -95,6 +95,11 @@ public class Conductor : MonoBehaviour
 
     public GameObject perfectHit;
 
+    public int perfectHitScore = 100;
+    public int goodHitScore = 75;
+    public int decentHitScore = 50;
+    public int mehHitScore = 30;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -400,7 +405,12 @@ public class Conductor : MonoBehaviour
     void ParticlesAndText(int hitScore, Note note)
     {
         Instantiate(perfectHit, note.gameObject.transform.position, Quaternion.identity);
-        GetColorManager(note).PerfectHit();
+        if(hitScore == 100) GetColorManager(note).PerfectHit();
+        else if (hitScore >= goodHitScore) GetColorManager(note).GoodHit();
+        else if (hitScore >= decentHitScore) GetColorManager(note).DecentHit();
+        else if (hitScore >= mehHitScore) GetColorManager(note).MehHit();
+        else GetColorManager(note).BarelyHit();
+        
     }
 
     void WrongNote(Note note)

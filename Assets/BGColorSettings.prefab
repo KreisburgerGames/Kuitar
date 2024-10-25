@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2455219727246711712}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.8507028, y: 0.44870925, z: -1.8385012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,10 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507de81cb56d2f7478b4fc8cfef973e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perfectHitFadeInSpeed: 5
-  perfectHitFadeOutSpeed: 3
-  perfectHitColor: {r: 0.5950795, g: 1, b: 0.48113197, a: 1}
-  perfectHitBGFadeInSpeed: 5
-  perfectHitBGFadeOutSpeed: 3
-  perfectHitBGColor: {r: 0.20597053, g: 1, b: 0, a: 1}
-  colorRoundingDecimals: 3
+  fadeInSpeed: 30
+  fadeOutSpeed: 1
+  lerpErrorMargin: 0.005
+  perfectHitColor: {r: 0.43137255, g: 0.83137256, b: 1, a: 1}
+  perfectHitBGColor: {r: 0.36862746, g: 0.72156864, b: 1, a: 1}
+  goodHitColor: {r: 0.20784315, g: 1, b: 0, a: 1}
+  goodHitBGColor: {r: 0.59607846, g: 1, b: 0.48235297, a: 1}
+  decentHitColor: {r: 1, g: 0.8352941, b: 0.11764706, a: 1}
+  decentHitBGColor: {r: 1, g: 0.8745098, b: 0.36862746, a: 1}
+  mehHitColor: {r: 0.9098039, g: 1, b: 0.23137255, a: 1}
+  mehHitBGColor: {r: 0.8980392, g: 1, b: 0.31764707, a: 0}
+  barelyHitColor: {r: 1, g: 0.43529412, b: 0, a: 1}
+  barelyHitBGColor: {r: 1, g: 0.5137255, b: 0.19215687, a: 1}
+  errorHitColor: {r: 1, g: 0, b: 0, a: 1}
+  errorHitBGColor: {r: 1, g: 0.37421376, b: 0.37421376, a: 1}
