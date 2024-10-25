@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notePrefab: {fileID: 3067807202382027894, guid: 64e3ece32e30d5247b1b819c43c54ce2, type: 3}
-  map: {fileID: 2800000, guid: ac266ff2dcae69643aa13cc35efb8e68, type: 3}
+  maps: []
   conductorPrefab: {fileID: 11507425227744519, guid: b1430e53a56674b44b11d4852ecbbb58, type: 3}
-  beatsPerPixel: 0.25
+  pixelsPerBeat: 32
   downStrumAlpha: 0.5
   upStrumAlpha: 0.75
   zeroHue: 0

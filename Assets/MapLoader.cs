@@ -30,8 +30,11 @@ public class MapLoader : MonoBehaviour
     public int nineHue = 270;
     public int tenHue = 300;
     private int xOffset = 0;
-
     List<Note> notes= new List<Note>();
+    public string songFolder;
+    public string songFileName;
+    public string songName;
+    
 
     private IEnumerator LoadLevel(string sceneName, AudioClip song)
     {
@@ -56,20 +59,28 @@ public class MapLoader : MonoBehaviour
 
     async void Start ()
     {
-        string path = Application.streamingAssetsPath + "/Songs/Backseat/";
+        string path = songFolder + "/";
+        int i = 1;
         foreach(var file in System.IO.Directory.GetFiles(path))
         {
             if (file.EndsWith(".png"))
             {
                 if(file == "cover.png") return;
-                byte[] pngBytes = System.IO.File.ReadAllBytes(file);
-                Texture2D mapToAdd = new Texture2D(400, 4);
-                mapToAdd.name = "Backseat";
-                mapToAdd.LoadImage(pngBytes);
-                maps.Add(mapToAdd);
+                else
+                {
+                    byte[] pngBytes = System.IO.File.ReadAllBytes(file);
+                    Texture2D mapToAdd = new Texture2D(4000, 4)
+                    {
+                        name = songName + " " + i
+                    };
+                    mapToAdd.LoadImage(pngBytes);
+                    maps.Add(mapToAdd);
+                }
             }
+            i++;
         }
-        path = Application.streamingAssetsPath + "/Songs/Backseat/New_Project.ogg";
+        path = songFolder + "/" + songFileName;
+        print(path);
         await LoadClip(path);
     }
 
@@ -83,7 +94,7 @@ public class MapLoader : MonoBehaviour
         // wrap tasks in try/catch, otherwise it'll fail silently
         try
         {
-            while (!uwr.isDone) await Task.Delay(5);
+            while (!uwr.isDone) await Task.Delay(10);
 
             if (uwr.isNetworkError || uwr.isHttpError) Debug.Log($"{uwr.error}");
             else
