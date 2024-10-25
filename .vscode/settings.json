@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Kuitar.sln"
+    "dotnet.defaultSolution": "Kuitar.sln",
+    "dotnet.preferCSharpExtension": false
 }
