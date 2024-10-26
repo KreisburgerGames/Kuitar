@@ -11,6 +11,5 @@ public class SongLoader
     public string songCover;
     public string mapper;
     public float bpm;
-    public int pixelsPerBeat;
     public float firstBeatOffset;
 }

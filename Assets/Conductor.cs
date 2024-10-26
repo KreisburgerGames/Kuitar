@@ -73,11 +73,9 @@ public class Conductor : MonoBehaviour
 
     public List<Note> notes = new List<Note>();
 
-    public float beatsUntilReady = 5f;
+    public float reactionBeats = 5f;
 
     private Note previousNote;
-
-    public float beatsLateTime = 1.5f;
 
     public GameObject notesParent;
 
@@ -136,13 +134,7 @@ public class Conductor : MonoBehaviour
 
         foreach (Note note in notes.ToArray())
         {
-            if(songBeatsPos > note.beat + beatsLateTime)
-            {
-                notes.Remove(note);
-                MissedNote(note);
-                Destroy(note.gameObject);
-            }
-            if (note.beat <= songBeatsPos + beatsUntilReady)
+            if (note.beat <= songBeatsPos + reactionBeats)
             {
                 readyNotes.Add(note);
                 note.gameObject.SetActive(true);
@@ -426,7 +418,7 @@ public class Conductor : MonoBehaviour
         GetColorManager(note).Error();
     }
 
-    void MissedNote(Note note)
+    public void MissedNote(Note note)
     {
         GetColorManager(note).Error();
     }

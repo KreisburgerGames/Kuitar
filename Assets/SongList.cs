@@ -13,6 +13,7 @@ public class SongList : MonoBehaviour
     public GameObject songDisplay;
     public GameObject mapLoader;
     public float songStartOffset;
+    public string selectedDifficulty;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,6 @@ public class SongList : MonoBehaviour
             song.songCover = songLoad.songCover;
             song.mapper = songLoad.mapper;
             song.bpm = songLoad.bpm;
-            song.pixelsPerBeat = songLoad.pixelsPerBeat;
             song.firstBeatOffset = songLoad.firstBeatOffset;
             song.mapLoaderOBJ = mapLoader;
             song.gameObject.transform.SetParent(songsList, false);
@@ -49,14 +49,30 @@ public class SongList : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Easy()
     {
-        
+        selectedDifficulty = "easy";
     }
 
-    public void StartSong()
+    public void Normal()
     {
-        selectedSong.StartMap(songStartOffset);
+        selectedDifficulty = "normal";
+    }
+    public void Hard()
+    {
+        selectedDifficulty = "hard";
+    }
+    public void Harder()
+    {
+        selectedDifficulty = "harder";
+    }
+    public void Difficult()
+    {
+        selectedDifficulty = "difficult";
+    }
+
+    public void StartMap()
+    {
+        selectedSong.StartMap(songStartOffset, selectedDifficulty);
     }
 }

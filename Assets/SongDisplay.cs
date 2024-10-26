@@ -10,4 +10,9 @@ public class SongDisplay : MonoBehaviour
     public TMP_Text songName;
     public TMP_Text songArtist;
     public TMP_Text mapper;
+    public Button easy;
+    public Button normal;
+    public Button hard;
+    public Button harder;
+    public Button difficult;
 }

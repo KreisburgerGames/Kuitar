@@ -104,9 +104,15 @@ public class Note : MonoBehaviour
         }
     }
 
-    void Start()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if(other.gameObject.tag == "Late")
+        {
+            Conductor conductor = FindFirstObjectByType<Conductor>();
+            conductor.notes.Remove(this);
+            conductor.MissedNote(this);
+            Destroy(gameObject);
+        }
     }
 
     void Awake()

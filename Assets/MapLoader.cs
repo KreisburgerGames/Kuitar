@@ -36,7 +36,8 @@ public class MapLoader : MonoBehaviour
     public string songName;
     public float bpm;
     public float firstBeatOffset;
-
+    public string mapPath;
+    public float reactionBeats;
     private IEnumerator LoadLevel(string sceneName, AudioClip song, float songOffset, float bpm, float firstBeatOffset)
     {
         // Start loading the scene
@@ -52,6 +53,7 @@ public class MapLoader : MonoBehaviour
         conductor.gameObject.GetComponent<AudioSource>().clip = song;
         conductor.songStartOffset = songOffset;
         conductor.songBPM = bpm;
+        conductor.reactionBeats = reactionBeats;
         conductor.firstBeatOffset = firstBeatOffset;
         foreach(var note in notes)
         {
@@ -59,7 +61,7 @@ public class MapLoader : MonoBehaviour
             note.gameObject.transform.SetParent(GameObject.Find("Notes").transform);
             note.Init();
         }
-        SceneManager.UnloadSceneAsync("LoadGame");
+        SceneManager.UnloadSceneAsync("Select");
     }
 
     void Start()
@@ -67,11 +69,10 @@ public class MapLoader : MonoBehaviour
         string path = songFolder + "/";
         int i = 1;
         print("");
-        foreach(var file in System.IO.Directory.GetFiles(path))
+        foreach(var file in System.IO.Directory.GetFiles(mapPath))
         {
             if (file.EndsWith(".png"))
             {
-                if(file.EndsWith(coverName)) return;
                 byte[] pngBytes = System.IO.File.ReadAllBytes(file);
                 Texture2D mapToAdd = new Texture2D(4000, 4)
                 {
