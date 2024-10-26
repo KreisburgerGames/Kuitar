@@ -10,15 +10,7 @@ public class SongLoader
     public string artistName;
     public string songCover;
     public string mapper;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float bpm;
+    public int pixelsPerBeat;
+    public float firstBeatOffset;
 }

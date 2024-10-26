@@ -17,7 +17,7 @@ public class MapLoader : MonoBehaviour
     public float downStrumAlpha = 0.5f;
     [Range(0f, 1f)]
     public float upStrumAlpha = 0.75f;
-    
+    public string coverName;
     public int zeroHue = 0;
     public int oneHue = 30;
     public int twoHue = 60;
@@ -34,9 +34,10 @@ public class MapLoader : MonoBehaviour
     public string songFolder;
     public string songFileName;
     public string songName;
-    
+    public float bpm;
+    public float firstBeatOffset;
 
-    private IEnumerator LoadLevel(string sceneName, AudioClip song)
+    private IEnumerator LoadLevel(string sceneName, AudioClip song, float songOffset, float bpm, float firstBeatOffset)
     {
         // Start loading the scene
         AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -49,42 +50,48 @@ public class MapLoader : MonoBehaviour
         Conductor conductor = conductorGO.GetComponent<Conductor>();
         conductor.notesParent = GameObject.Find("Notes");
         conductor.gameObject.GetComponent<AudioSource>().clip = song;
+        conductor.songStartOffset = songOffset;
+        conductor.songBPM = bpm;
+        conductor.firstBeatOffset = firstBeatOffset;
         foreach(var note in notes)
         {
             note.conductor = conductor;
             note.gameObject.transform.SetParent(GameObject.Find("Notes").transform);
             note.Init();
         }
+        SceneManager.UnloadSceneAsync("LoadGame");
     }
 
-    async void Start ()
+    void Start()
     {
         string path = songFolder + "/";
         int i = 1;
+        print("");
         foreach(var file in System.IO.Directory.GetFiles(path))
         {
             if (file.EndsWith(".png"))
             {
-                if(file == "cover.png") return;
-                else
+                if(file.EndsWith(coverName)) return;
+                byte[] pngBytes = System.IO.File.ReadAllBytes(file);
+                Texture2D mapToAdd = new Texture2D(4000, 4)
                 {
-                    byte[] pngBytes = System.IO.File.ReadAllBytes(file);
-                    Texture2D mapToAdd = new Texture2D(4000, 4)
-                    {
-                        name = songName + " " + i
-                    };
-                    mapToAdd.LoadImage(pngBytes);
-                    maps.Add(mapToAdd);
-                }
+                    name = songName + " " + i
+                };
+                mapToAdd.LoadImage(pngBytes);
+                maps.Add(mapToAdd);
+                i++;
             }
-            i++;
         }
-        path = songFolder + "/" + songFileName;
-        print(path);
-        await LoadClip(path);
     }
 
-    async Task<AudioClip> LoadClip(string path)
+    public async void Init(float startOffset)
+    {
+        string path = songFolder + "/" + songFileName;
+        print(path);
+        await LoadClip(path, startOffset);
+    }
+
+    async Task<AudioClip> LoadClip(string path, float startOffset)
 {
     AudioClip clip = null;
     using (UnityEngine.Networking.UnityWebRequest uwr = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(path, AudioType.OGGVORBIS))
@@ -100,7 +107,7 @@ public class MapLoader : MonoBehaviour
             else
             {
                 clip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(uwr);
-                if(uwr.isDone) {GenerateMap(clip);}
+                if(uwr.isDone) {GenerateMap(clip, startOffset);}
             }
         }
         catch (Exception err)
@@ -112,7 +119,7 @@ public class MapLoader : MonoBehaviour
     return clip;
 }
 
-    void GenerateMap(AudioClip song)
+    void GenerateMap(AudioClip song, float startOffset)
     {
         foreach (Texture2D map in maps)
         {
@@ -126,9 +133,10 @@ public class MapLoader : MonoBehaviour
                     a = (float)Math.Round(a, 2);
                     h = (float)Math.Round(h * 360);
 
-                    if (a > .1f)
+                    
+                    if (a > .1f && startOffset <= (((float)x / pixelsPerBeat) + xOffset) * (60f/155f))
                     {
-                        print("a = " + a + " x = " + x.ToString());
+                        print(startOffset + " - " + (((float)x / pixelsPerBeat) + xOffset) * (60f/155f));
                         Note note = Instantiate(notePrefab).GetComponent<Note>();
                         note.beat = ((float)x / pixelsPerBeat) + xOffset;
                         int lane = y + 1;
@@ -161,10 +169,10 @@ public class MapLoader : MonoBehaviour
             }
             xOffset += map.width;
         }
-        StartMap(song);
+        StartMap(song, startOffset);
     }
-    void StartMap(AudioClip song)
+    void StartMap(AudioClip song, float songOffset)
     {
-        StartCoroutine(LoadLevel("Game", song));
+        StartCoroutine(LoadLevel("Game", song, songOffset, bpm, firstBeatOffset));
     }
 }

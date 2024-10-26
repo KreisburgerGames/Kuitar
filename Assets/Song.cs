@@ -12,6 +12,9 @@ public class Song : MonoBehaviour
     public string artistName;
     public string songCover;
     public string mapper;
+    public float bpm;
+    public int pixelsPerBeat;
+    public float firstBeatOffset;
     public Texture2D songCoverIMG;
     public GameObject mapLoaderOBJ;
     public GameObject songSelection;
@@ -35,14 +38,27 @@ public class Song : MonoBehaviour
 
     public void Selected()
     {
-        StartMap();
+        SongList songList = FindFirstObjectByType<SongList>();
+        songList.selectedSong = this;
+        GameObject songDisplayOBJ = songList.songDisplay;
+        SongDisplay songDisplay = songDisplayOBJ.GetComponent<SongDisplay>();
+        songDisplay.cover.texture = songCoverIMG;
+        songDisplay.songName.text = songName;
+        songDisplay.songArtist.text = artistName;
+        songDisplay.mapper.text = mapper;
+        songDisplayOBJ.SetActive(true);
     }
 
-    public void StartMap()
+    public void StartMap(float startOffset)
     {
         MapLoader mapLoader = Instantiate(mapLoaderOBJ).GetComponent<MapLoader>();
+        mapLoader.coverName = songCover;
         mapLoader.songFolder = folderPath;
         mapLoader.songFileName = songFile;
         mapLoader.songName = songName;
+        mapLoader.bpm = bpm;
+        mapLoader.firstBeatOffset = firstBeatOffset;
+        mapLoader.pixelsPerBeat = pixelsPerBeat;
+        mapLoader.Init(startOffset);
     }
 }

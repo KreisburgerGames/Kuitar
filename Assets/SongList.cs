@@ -10,8 +10,9 @@ public class SongList : MonoBehaviour
     public GameObject songItem;
     public float songItemOffset = 170f;
     public Song selectedSong;
-
+    public GameObject songDisplay;
     public GameObject mapLoader;
+    public float songStartOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +33,15 @@ public class SongList : MonoBehaviour
             song.artistName = songLoad.artistName;
             song.songCover = songLoad.songCover;
             song.mapper = songLoad.mapper;
+            song.bpm = songLoad.bpm;
+            song.pixelsPerBeat = songLoad.pixelsPerBeat;
+            song.firstBeatOffset = songLoad.firstBeatOffset;
             song.mapLoaderOBJ = mapLoader;
             song.gameObject.transform.SetParent(songsList, false);
             print(new Vector2(0, offset));
             song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             song.folderPath = name;
-            Texture2D loadedIMG = new Texture2D(350, 350);
+            Texture2D loadedIMG = new Texture2D(1, 1);
             byte[] pngBytes = File.ReadAllBytes(song.folderPath + "/" + song.songCover);
             loadedIMG.LoadImage(pngBytes);
             song.songCoverIMG = loadedIMG;
@@ -53,6 +57,6 @@ public class SongList : MonoBehaviour
 
     public void StartSong()
     {
-        selectedSong.StartMap();
+        selectedSong.StartMap(songStartOffset);
     }
 }

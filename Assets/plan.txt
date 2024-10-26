@@ -1,0 +1,3 @@
+change "song.folderPath = name;" in SongList.cs to SongList
+Have Song.cs load by difficulty
+Add difficulty buttons by checking for Easy Medium and Hard folders

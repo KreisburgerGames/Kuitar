@@ -52,6 +52,7 @@ MonoBehaviour:
   dspSongTime: 0
   song: {fileID: 7231717516183070174}
   firstBeatOffset: 2.165
+  songStartOffset: 0
   H0: 8
   H1: 49
   H2: 50
@@ -112,6 +113,10 @@ MonoBehaviour:
   roundToOneHundredRange: 95
   startDelay: 0
   perfectHit: {fileID: 6306884995665241820, guid: b189499493f417e4590c3b8481ebea12, type: 3}
+  perfectHitScore: 100
+  goodHitScore: 75
+  decentHitScore: 50
+  mehHitScore: 30
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0
@@ -122,7 +127,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 845fa4205700cc04393d81f47fba26db, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

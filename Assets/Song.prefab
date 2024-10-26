@@ -706,6 +706,6 @@ MonoBehaviour:
   songCover: 
   mapper: 
   songCoverIMG: {fileID: 0}
-  MapLoader: {fileID: 0}
+  mapLoaderOBJ: {fileID: 0}
   songSelection: {fileID: 0}
   songSelectionIMG: {fileID: 0}

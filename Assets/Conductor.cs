@@ -18,6 +18,7 @@ public class Conductor : MonoBehaviour
     public float dspSongTime;
     public AudioSource song;
     public float firstBeatOffset;
+    public float songStartOffset;
 
     [Header("Controls")]
     public KeyCode H0 = KeyCode.Backspace;
@@ -109,6 +110,8 @@ public class Conductor : MonoBehaviour
         //Calculate the number of seconds in each beat
         secondsPerBeat = 60f / songBPM;
 
+        song.time = songStartOffset;
+
         //Start the music
         song.Play();
 
@@ -122,7 +125,7 @@ public class Conductor : MonoBehaviour
     void Update()
     {
         //determine how many seconds since the song started
-        songPos = song.time - firstBeatOffset;
+        songPos = song.time - firstBeatOffset + songStartOffset;
 
         //determine how many beats since the song started
         songBeatsPos = songPos / secondsPerBeat;

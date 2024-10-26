@@ -320,10 +320,10 @@ Canvas:
   m_GameObject: {fileID: 182840968}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 201090596}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -534,6 +534,10 @@ MonoBehaviour:
   songsList: {fileID: 1458569926}
   songItem: {fileID: 8718332482842070326, guid: aacf1b62d8aa5eb4d86afd8091d95f7e, type: 3}
   songItemOffset: 170
+  selectedSong: {fileID: 0}
+  songDisplay: {fileID: 1384733029}
+  mapLoader: {fileID: 1612321449769057239, guid: 4a6d67a437bdb8040aa60fefe78e3a3c, type: 3}
+  songStartOffset: 0
 --- !u!4 &258970571
 Transform:
   m_ObjectHideFlags: 0
@@ -561,7 +565,7 @@ GameObject:
   - component: {fileID: 364487096}
   - component: {fileID: 364487095}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Song Artist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,7 +587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -80}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &364487095
@@ -899,7 +903,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 831986212}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 258970570}
+        m_TargetAssemblyTypeName: SongList, Assembly-CSharp
+        m_MethodName: StartSong
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &831986212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,6 +1133,7 @@ GameObject:
   - component: {fileID: 1384733030}
   - component: {fileID: 1384733032}
   - component: {fileID: 1384733031}
+  - component: {fileID: 1384733033}
   m_Layer: 5
   m_Name: Song Display
   m_TagString: Untagged
@@ -1186,6 +1203,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384733029}
   m_CullTransparentMesh: 1
+--- !u!114 &1384733033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384733029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce6a7c4c60a790429e9a8830345a221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cover: {fileID: 1756578582}
+  songName: {fileID: 1635519242}
+  songArtist: {fileID: 364487095}
+  mapper: {fileID: 1723570034}
 --- !u!1 &1458569925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00027618694}
+  m_AnchoredPosition: {x: 0, y: -0.00006461881}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1635519240
@@ -1233,7 +1266,7 @@ GameObject:
   - component: {fileID: 1635519243}
   - component: {fileID: 1635519242}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Song Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1255,7 +1288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 35}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1635519242
@@ -1437,8 +1470,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 197169305}
   m_HandleRect: {fileID: 197169304}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999988
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1493,7 +1526,7 @@ GameObject:
   - component: {fileID: 1723570035}
   - component: {fileID: 1723570034}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Mapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1515,7 +1548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -140}
+  m_AnchoredPosition: {x: 0, y: -125}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1723570034
@@ -1627,7 +1660,7 @@ GameObject:
   - component: {fileID: 1756578583}
   - component: {fileID: 1756578582}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

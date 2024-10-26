@@ -3,5 +3,8 @@
     "songCover" : "cover.png",
     "artistName" : "BoyWithUke",
     "songFile" : "New_Project.ogg",
-    "mapper" : "Kreisburger"
+    "mapper" : "Kreisburger",
+    "bpm" : 155,
+    "pixelsPerBeat" : 32,
+    "firstBeatOffset" : 2.165
 }
