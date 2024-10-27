@@ -21,6 +21,7 @@ public class Song : MonoBehaviour
     public GameObject songSelection;
     public RawImage songSelectionIMG;
     private Button button;
+    bool practiceMode;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +59,8 @@ public class Song : MonoBehaviour
     public void StartMap(float startOffset, string difficulty)
     {
         Destroy(FindFirstObjectByType<Camera>().GetComponent<AudioListener>());
+        SongList songList = FindFirstObjectByType<SongList>();
+        practiceMode = songList.practiceMode;
         MapLoader mapLoader = Instantiate(mapLoaderOBJ).GetComponent<MapLoader>();
         mapLoader.coverName = songCover;
         mapLoader.songFolder = folderPath;
@@ -73,6 +76,9 @@ public class Song : MonoBehaviour
         reader.Close();
         mapLoader.pixelsPerBeat = difficultySettings.pixelsPerBeat;
         mapLoader.reactionBeats = difficultySettings.reactionBeats;
-        mapLoader.Init(startOffset);
+        if(!practiceMode) startOffset = 0f;
+        mapLoader.practiceMode = practiceMode;
+        mapLoader.startOffset = startOffset;
+        mapLoader.Init();
     }
 }

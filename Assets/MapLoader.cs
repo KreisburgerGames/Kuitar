@@ -38,7 +38,9 @@ public class MapLoader : MonoBehaviour
     public float firstBeatOffset;
     public string mapPath;
     public float reactionBeats;
-    private IEnumerator LoadLevel(string sceneName, AudioClip song, float songOffset, float bpm, float firstBeatOffset)
+    public bool practiceMode = false;
+    public float startOffset;
+    private IEnumerator LoadLevel(string sceneName, AudioClip song, float bpm, float firstBeatOffset)
     {
         // Start loading the scene
         AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -51,7 +53,7 @@ public class MapLoader : MonoBehaviour
         Conductor conductor = conductorGO.GetComponent<Conductor>();
         conductor.notesParent = GameObject.Find("Notes");
         conductor.gameObject.GetComponent<AudioSource>().clip = song;
-        conductor.songStartOffset = songOffset;
+        conductor.songStartOffset = startOffset;
         conductor.songBPM = bpm;
         conductor.reactionBeats = reactionBeats;
         conductor.firstBeatOffset = firstBeatOffset;
@@ -66,7 +68,6 @@ public class MapLoader : MonoBehaviour
 
     void Start()
     {
-        string path = songFolder + "/";
         int i = 1;
         print("");
         foreach(var file in System.IO.Directory.GetFiles(mapPath))
@@ -85,43 +86,48 @@ public class MapLoader : MonoBehaviour
         }
     }
 
-    public async void Init(float startOffset)
+    public async void Init()
     {
         string path = songFolder + "/" + songFileName;
         print(path);
-        await LoadClip(path, startOffset);
+        await LoadClip(path);
     }
 
-    async Task<AudioClip> LoadClip(string path, float startOffset)
-{
-    AudioClip clip = null;
-    using (UnityEngine.Networking.UnityWebRequest uwr = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(path, AudioType.OGGVORBIS))
+    async Task<AudioClip> LoadClip(string path)
     {
-        uwr.SendWebRequest();
-
-        // wrap tasks in try/catch, otherwise it'll fail silently
-        try
+        AudioClip clip = null;
+        using (UnityEngine.Networking.UnityWebRequest uwr = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(path, AudioType.OGGVORBIS))
         {
-            while (!uwr.isDone) await Task.Delay(10);
+            uwr.SendWebRequest();
 
-            if (uwr.isNetworkError || uwr.isHttpError) Debug.Log($"{uwr.error}");
-            else
+            // wrap tasks in try/catch, otherwise it'll fail silently
+            try
             {
-                clip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(uwr);
-                if(uwr.isDone) {GenerateMap(clip, startOffset);}
+                while (!uwr.isDone) await Task.Delay(10);
+
+                if (uwr.isNetworkError || uwr.isHttpError) Debug.Log($"{uwr.error}");
+                else
+                {
+                    clip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(uwr);
+                    if(uwr.isDone)
+                    {
+                        print(mapPath + "notes.json");
+                        if(System.IO.File.Exists(mapPath + "notes.json")) LoadNotes(clip);
+                        else GenerateMap(clip);
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                Debug.Log($"{err.Message}, {err.StackTrace}");
             }
         }
-        catch (Exception err)
-        {
-            Debug.Log($"{err.Message}, {err.StackTrace}");
-        }
+        return clip;
     }
 
-    return clip;
-}
-
-    void GenerateMap(AudioClip song, float startOffset)
+    void GenerateMap(AudioClip song)
     {
+        string json = "{\"notes\": [ ";
         foreach (Texture2D map in maps)
         {
             for (int x = 0; x < map.width; x++)
@@ -133,47 +139,71 @@ public class MapLoader : MonoBehaviour
                     a = map.GetPixel(x, y).a;
                     a = (float)Math.Round(a, 2);
                     h = (float)Math.Round(h * 360);
-
                     
-                    if (a > .1f && startOffset <= (((float)x / pixelsPerBeat) + xOffset) * (60f/155f))
+                    if (a > .1f)
                     {
+                        json += " {";
                         print(startOffset + " - " + (((float)x / pixelsPerBeat) + xOffset) * (60f/155f));
-                        Note note = Instantiate(notePrefab).GetComponent<Note>();
-                        note.beat = ((float)x / pixelsPerBeat) + xOffset;
+                        json += "\"beat\" : " + (((float)x / pixelsPerBeat) + xOffset).ToString() + ", ";
                         int lane = y + 1;
-                        note.lane = lane;
-                        if (a == downStrumAlpha) { note.strum = true; note.downStrum = true; }
-                        else if (a == upStrumAlpha) { note.strum = true; note.downStrum = false; }
-                        else { note.strum = false; }
-                        string laneStr = null;
-                        if (lane == 1) laneStr = "L";
-                        else if (lane == 2) laneStr = "LM";
-                        else if (lane == 3) laneStr = "HM";
-                        else if (lane == 4) laneStr = "H";
+                        json += "\"lane\" : " + lane.ToString() + ", ";
+                        if (a == downStrumAlpha) { json += "\"strum\" : true, "; json += "\"downStrum\" : true, ";}
+                        else if (a == upStrumAlpha) { json += "\"strum\" : true, "; json += "\"downStrum\" : false, "; }
+                        else { json +="\"strum\" : false, "; json += "\"downStrum\" : false, "; }
 
-                        if (h >= zeroHue && h < oneHue || h == 360f) note.noteStr = laneStr + "0";
-                        else if (h >= oneHue && h < twoHue) note.noteStr = laneStr + "1";
-                        else if (h >= twoHue && h < threeHue) note.noteStr = laneStr + "2";
-                        else if (h >= threeHue && h < fourHue) note.noteStr = laneStr + "3";
-                        else if (h >= fourHue && h < fiveHue) note.noteStr = laneStr + "4";
-                        else if (h >= fiveHue && h < sixHue) note.noteStr = laneStr + "5";
-                        else if (h >= sixHue && h < sevenHue) note.noteStr = laneStr + "6";
-                        else if (h >= sevenHue && h < eightHue) note.noteStr = laneStr + "7";
-                        else if (h >= eightHue && h < nineHue) note.noteStr = laneStr + "8";
-                        else if (h >= nineHue && h < tenHue) note.noteStr = laneStr + "9";
-                        else if (h >= tenHue) note.noteStr = laneStr + "10";
-
-                        notes.Add(note);
-                        DontDestroyOnLoad(note);
+                        if (h >= zeroHue && h < oneHue || h == 360f) json += "\"note\" : 1 }, ";
+                        else if (h >= oneHue && h < twoHue) json += "\"note\" : 2 }, ";
+                        else if (h >= twoHue && h < threeHue) json += "\"note\" : 3 }, ";
+                        else if (h >= threeHue && h < fourHue) json += "\"note\" : 4 }, ";
+                        else if (h >= fourHue && h < fiveHue) json += "\"note\" : 5 }, ";
+                        else if (h >= fiveHue && h < sixHue) json += "\"note\" : 6 }, ";
+                        else if (h >= sixHue && h < sevenHue) json += "\"note\" : 7 }, ";
+                        else if (h >= sevenHue && h < eightHue) json += "\"note\" : 8 }, ";
+                        else if (h >= eightHue && h < nineHue) json += "\"note\" : 9 }, ";
+                        else if (h >= nineHue && h < tenHue) json += "\"note\" : 10 }, ";
+                        else if (h >= tenHue) json += "\"note\" : 0 }, ";
                     }
                 }
             }
             xOffset += map.width;
         }
-        StartMap(song, startOffset);
+        json = json.Remove(json.Length - 2, 1);
+        json += "] }";
+        System.IO.File.WriteAllText(mapPath + "/notes.json", json);
+        LoadNotes(song);
     }
-    void StartMap(AudioClip song, float songOffset)
+    
+    void LoadNotes(AudioClip song)
     {
-        StartCoroutine(LoadLevel("Game", song, songOffset, bpm, firstBeatOffset));
+        StreamReader reader = new StreamReader(mapPath + "/notes.json");
+        TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+        reader.Close();
+        Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
+        foreach (NoteLoad noteLoad in notesLoaded.notes)
+        {
+            if((noteLoad.beat * (60f/bpm)) - (reactionBeats * (60f/bpm)) + firstBeatOffset > startOffset || !practiceMode)
+            {
+                print(noteLoad.beat * (60f/bpm));
+                Note note = Instantiate(notePrefab).GetComponent<Note>();
+                note.beat = noteLoad.beat;
+                note.lane = noteLoad.lane;
+                note.strum = noteLoad.strum;
+                note.downStrum = noteLoad.downStrum;
+                string laneStr;
+                if (note.lane == 1) laneStr = "L";
+                else if (note.lane == 2) laneStr = "LM";
+                else if (note.lane == 3) laneStr = "HM";
+                else laneStr = "H";
+                note.noteStr = laneStr + noteLoad.note.ToString();
+                notes.Add(note);
+                DontDestroyOnLoad(note);
+            }
+        }
+        StartMap(song); 
+    }
+
+    void StartMap(AudioClip song)
+    {
+        StartCoroutine(LoadLevel("Game", song, bpm, firstBeatOffset));
     }
 }

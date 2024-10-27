@@ -14,6 +14,7 @@ public class SongList : MonoBehaviour
     public GameObject mapLoader;
     public float songStartOffset;
     public string selectedDifficulty;
+    public bool practiceMode = false;
 
     // Start is called before the first frame update
     void Start()
