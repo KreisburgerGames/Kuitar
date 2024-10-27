@@ -752,6 +752,7 @@ MonoBehaviour:
   practiceMode: 0
   selectedSongClip: {fileID: 0}
   practiceModeHandler: {fileID: 1064406756}
+  audioSource: {fileID: 258970572}
 --- !u!4 &258970571
 Transform:
   m_ObjectHideFlags: 0
@@ -778,7 +779,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

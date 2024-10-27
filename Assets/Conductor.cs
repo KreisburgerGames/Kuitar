@@ -98,6 +98,7 @@ public class Conductor : MonoBehaviour
     public int goodHitScore = 75;
     public int decentHitScore = 50;
     public int mehHitScore = 30;
+    public float rewindDistance = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -108,7 +109,10 @@ public class Conductor : MonoBehaviour
         //Calculate the number of seconds in each beat
         secondsPerBeat = 60f / songBPM;
 
-        song.time = songStartOffset;
+        float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance);
+        print(songStartOffset - (rewindDistance * (clampedOffset/firstBeatOffset)));
+        if(firstBeatOffset > 0) song.time = songStartOffset - (rewindDistance * (clampedOffset/firstBeatOffset));
+        else song.time = songStartOffset - (rewindDistance * songStartOffset);
 
         //Start the music
         song.Play();
@@ -123,7 +127,7 @@ public class Conductor : MonoBehaviour
     void Update()
     {
         //determine how many seconds since the song started
-        songPos = song.time - firstBeatOffset + songStartOffset;
+        songPos = song.time - firstBeatOffset;
 
         //determine how many beats since the song started
         songBeatsPos = songPos / secondsPerBeat;
