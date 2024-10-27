@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +24,7 @@ public class Song : MonoBehaviour
     public RawImage songSelectionIMG;
     private Button button;
     bool practiceMode;
+    public AudioClip songClip;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,12 +33,39 @@ public class Song : MonoBehaviour
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Artist").GetComponent<TMP_Text>().text = artistName;
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Mapper").GetComponent<TMP_Text>().text = mapper;
         button = GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button").GetComponent<Button>();
+        GetSongClip();
     }
 
-    // Update is called once per frame
-    void Update()
+    async void GetSongClip()
     {
+        songClip = await LoadClip(folderPath + "/" + songFile);
+        print(songClip.length);
+    }
 
+    async Task<AudioClip> LoadClip(string path)
+    {
+        AudioClip clip = null;
+        using (UnityEngine.Networking.UnityWebRequest uwr = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(path, AudioType.OGGVORBIS))
+        {
+            uwr.SendWebRequest();
+
+            // wrap tasks in try/catch, otherwise it'll fail silently
+            try
+            {
+                while (!uwr.isDone) await Task.Delay(10);
+
+                if (uwr.isNetworkError || uwr.isHttpError) Debug.Log($"{uwr.error}");
+                else
+                {
+                    clip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(uwr);
+                }
+            }
+            catch (Exception err)
+            {
+                Debug.Log($"{err.Message}, {err.StackTrace}");
+            }
+        }
+        return clip;
     }
 
     public void Selected()
@@ -53,7 +83,15 @@ public class Song : MonoBehaviour
         songDisplay.hard.interactable = Directory.Exists(folderPath + "/hard");
         songDisplay.harder.interactable = Directory.Exists(folderPath + "/harder");
         songDisplay.difficult.interactable = Directory.Exists(folderPath + "/difficult");
+        songList.selectedSongClip = songClip;
         songDisplayOBJ.SetActive(true);
+        PracticeModeHandler practiceModeHandler = FindAnyObjectByType<PracticeModeHandler>();
+        practiceModeHandler.selectedSong = this;
+        practiceModeHandler.selectedSongClip = songClip;
+        practiceModeHandler.selectedTime = 0;
+        practiceModeHandler.SetTime();
+        songList.audioSource.clip = songClip;
+        songList.audioSource.Play();
     }
 
     public void StartMap(float startOffset, string difficulty)
@@ -72,7 +110,6 @@ public class Song : MonoBehaviour
         StreamReader reader = new StreamReader(mapLoader.mapPath + "difficulty.json");
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         DifficultySettings difficultySettings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
-        print(difficultySettings.reactionBeats + " " + difficultySettings.pixelsPerBeat);
         reader.Close();
         mapLoader.pixelsPerBeat = difficultySettings.pixelsPerBeat;
         mapLoader.reactionBeats = difficultySettings.reactionBeats;

@@ -69,7 +69,6 @@ public class MapLoader : MonoBehaviour
     void Start()
     {
         int i = 1;
-        print("");
         foreach(var file in System.IO.Directory.GetFiles(mapPath))
         {
             if (file.EndsWith(".png"))
@@ -89,7 +88,6 @@ public class MapLoader : MonoBehaviour
     public async void Init()
     {
         string path = songFolder + "/" + songFileName;
-        print(path);
         await LoadClip(path);
     }
 
@@ -111,7 +109,6 @@ public class MapLoader : MonoBehaviour
                     clip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(uwr);
                     if(uwr.isDone)
                     {
-                        print(mapPath + "notes.json");
                         if(System.IO.File.Exists(mapPath + "notes.json")) LoadNotes(clip);
                         else GenerateMap(clip);
                     }
@@ -143,7 +140,6 @@ public class MapLoader : MonoBehaviour
                     if (a > .1f)
                     {
                         json += " {";
-                        print(startOffset + " - " + (((float)x / pixelsPerBeat) + xOffset) * (60f/155f));
                         json += "\"beat\" : " + (((float)x / pixelsPerBeat) + xOffset).ToString() + ", ";
                         int lane = y + 1;
                         json += "\"lane\" : " + lane.ToString() + ", ";
@@ -183,7 +179,6 @@ public class MapLoader : MonoBehaviour
         {
             if((noteLoad.beat * (60f/bpm)) - (reactionBeats * (60f/bpm)) + firstBeatOffset > startOffset || !practiceMode)
             {
-                print(noteLoad.beat * (60f/bpm));
                 Note note = Instantiate(notePrefab).GetComponent<Note>();
                 note.beat = noteLoad.beat;
                 note.lane = noteLoad.lane;

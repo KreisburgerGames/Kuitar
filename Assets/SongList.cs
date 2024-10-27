@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using System.Threading.Tasks;
+using System;
 
 public class SongList : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class SongList : MonoBehaviour
     public float songStartOffset;
     public string selectedDifficulty;
     public bool practiceMode = false;
+    public AudioClip selectedSongClip;
+    public PracticeModeHandler practiceModeHandler;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +27,9 @@ public class SongList : MonoBehaviour
         float offset = 0f;
         foreach(string name in Directory.GetDirectories(Application.streamingAssetsPath + "/" + "Songs/"))
         {
-            print(name);
-            
             StreamReader reader = new StreamReader(name + "/info.json");
             TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
             reader.Close();
-            print(jsonFile.text);
             SongLoader songLoad = JsonUtility.FromJson<SongLoader>(jsonFile.text);
             Song song = Instantiate(songItem).GetComponent<Song>();
             song.songFile = songLoad.songFile;
@@ -39,7 +41,6 @@ public class SongList : MonoBehaviour
             song.firstBeatOffset = songLoad.firstBeatOffset;
             song.mapLoaderOBJ = mapLoader;
             song.gameObject.transform.SetParent(songsList, false);
-            print(new Vector2(0, offset));
             song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             song.folderPath = name;
             Texture2D loadedIMG = new Texture2D(1, 1);
@@ -74,6 +75,8 @@ public class SongList : MonoBehaviour
 
     public void StartMap()
     {
+        practiceMode = practiceModeHandler.practiceToggle.isOn;
+        songStartOffset = practiceModeHandler.selectedTime;
         selectedSong.StartMap(songStartOffset, selectedDifficulty);
     }
 }
