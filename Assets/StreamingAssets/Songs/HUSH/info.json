@@ -1,0 +1,9 @@
+{
+    "songName" : "HUSH",
+    "songCover" : "cover.png",
+    "artistName" : "Kreisburger",
+    "songFile" : "HUSH.ogg",
+    "mapper" : "Kreisburger",
+    "bpm" : 184,
+    "firstBeatOffset" : 0
+}

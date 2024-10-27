@@ -1,4 +1,4 @@
-bpm = 155
+bpm = 184
 pixelsPerBeat = 32
 secondsPerBeat = 60 / bpm
 offset = 0

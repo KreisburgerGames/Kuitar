@@ -109,10 +109,19 @@ public class Conductor : MonoBehaviour
         //Calculate the number of seconds in each beat
         secondsPerBeat = 60f / songBPM;
 
-        float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance);
-        print(songStartOffset - (rewindDistance * (clampedOffset/firstBeatOffset)));
-        if(firstBeatOffset > 0) song.time = songStartOffset - (rewindDistance * (clampedOffset/firstBeatOffset));
-        else song.time = songStartOffset - (rewindDistance * songStartOffset);
+        
+        if(firstBeatOffset > 0){
+            float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance);
+            song.time = songStartOffset - (rewindDistance * (clampedOffset/firstBeatOffset));
+        }
+        else if(songStartOffset - rewindDistance > 0)
+        {
+            song.time = songStartOffset - rewindDistance;
+        }
+        else
+        {
+            song.time = 0f;
+        }
 
         //Start the music
         song.Play();

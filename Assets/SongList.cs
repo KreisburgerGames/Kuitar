@@ -25,7 +25,7 @@ public class SongList : MonoBehaviour
     void Start()
     {
         float offset = 0f;
-        foreach(string name in Directory.GetDirectories(Application.streamingAssetsPath + "/" + "Songs/"))
+        foreach(string name in Directory.GetDirectories(Application.streamingAssetsPath + "/" + "Songs"))
         {
             StreamReader reader = new StreamReader(name + "/info.json");
             TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
@@ -43,6 +43,7 @@ public class SongList : MonoBehaviour
             song.gameObject.transform.SetParent(songsList, false);
             song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             song.folderPath = name;
+            song.gameObject.name = song.artistName + " - " + song.mapper + " - " + song.songFile;
             Texture2D loadedIMG = new Texture2D(1, 1);
             byte[] pngBytes = File.ReadAllBytes(song.folderPath + "/" + song.songCover);
             loadedIMG.LoadImage(pngBytes);

@@ -68,6 +68,7 @@ public class MapLoader : MonoBehaviour
 
     void Start()
     {
+        if(System.IO.File.Exists(mapPath + "notes.json")) return;
         int i = 1;
         foreach(var file in System.IO.Directory.GetFiles(mapPath))
         {
@@ -147,17 +148,17 @@ public class MapLoader : MonoBehaviour
                         else if (a == upStrumAlpha) { json += "\"strum\" : true, "; json += "\"downStrum\" : false, "; }
                         else { json +="\"strum\" : false, "; json += "\"downStrum\" : false, "; }
 
-                        if (h >= zeroHue && h < oneHue || h == 360f) json += "\"note\" : 1 }, ";
-                        else if (h >= oneHue && h < twoHue) json += "\"note\" : 2 }, ";
-                        else if (h >= twoHue && h < threeHue) json += "\"note\" : 3 }, ";
-                        else if (h >= threeHue && h < fourHue) json += "\"note\" : 4 }, ";
-                        else if (h >= fourHue && h < fiveHue) json += "\"note\" : 5 }, ";
-                        else if (h >= fiveHue && h < sixHue) json += "\"note\" : 6 }, ";
-                        else if (h >= sixHue && h < sevenHue) json += "\"note\" : 7 }, ";
-                        else if (h >= sevenHue && h < eightHue) json += "\"note\" : 8 }, ";
-                        else if (h >= eightHue && h < nineHue) json += "\"note\" : 9 }, ";
-                        else if (h >= nineHue && h < tenHue) json += "\"note\" : 10 }, ";
-                        else if (h >= tenHue) json += "\"note\" : 0 }, ";
+                        if (h >= zeroHue && h < oneHue || h == 360f) json += "\"note\" : 0 }, ";
+                        else if (h >= oneHue && h < twoHue) json += "\"note\" : 1 }, ";
+                        else if (h >= twoHue && h < threeHue) json += "\"note\" : 2 }, ";
+                        else if (h >= threeHue && h < fourHue) json += "\"note\" : 3 }, ";
+                        else if (h >= fourHue && h < fiveHue) json += "\"note\" : 4 }, ";
+                        else if (h >= fiveHue && h < sixHue) json += "\"note\" : 5 }, ";
+                        else if (h >= sixHue && h < sevenHue) json += "\"note\" : 6 }, ";
+                        else if (h >= sevenHue && h < eightHue) json += "\"note\" : 7 }, ";
+                        else if (h >= eightHue && h < nineHue) json += "\"note\" : 8 }, ";
+                        else if (h >= nineHue && h < tenHue) json += "\"note\" : 9 }, ";
+                        else if (h >= tenHue) json += "\"note\" : 10 }, ";
                     }
                 }
             }
