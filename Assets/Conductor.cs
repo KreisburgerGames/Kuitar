@@ -93,7 +93,8 @@ public class Conductor : MonoBehaviour
     public float startDelay;
 
     public GameObject perfectHit;
-
+    public GameObject goodHit;
+    public GameObject decentHit;
     public int perfectHitScore = 100;
     public int goodHitScore = 75;
     public int decentHitScore = 50;
@@ -413,9 +414,9 @@ public class Conductor : MonoBehaviour
     void ParticlesAndText(int hitScore, Note note)
     {
         Instantiate(perfectHit, note.gameObject.transform.position, Quaternion.identity);
-        if(hitScore == 100) GetColorManager(note).PerfectHit();
-        else if (hitScore >= goodHitScore) GetColorManager(note).GoodHit();
-        else if (hitScore >= decentHitScore) GetColorManager(note).DecentHit();
+        if(hitScore == 100) { GetColorManager(note).PerfectHit(); Instantiate(perfectHit);{transform.position = note.gameObject.transform.position;}}
+        else if (hitScore >= goodHitScore) {GetColorManager(note).GoodHit(); Instantiate(goodHit);{transform.position = note.gameObject.transform.position;}}
+        else if (hitScore >= decentHitScore) {GetColorManager(note).DecentHit(); Instantiate(decentHit);{transform.position = note.gameObject.transform.position;}}
         else if (hitScore >= mehHitScore) GetColorManager(note).MehHit();
         else GetColorManager(note).BarelyHit();
         
