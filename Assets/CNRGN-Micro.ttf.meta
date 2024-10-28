@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d24581fb00d0fca41a574b16e91a6ea1
+guid: 2aa3db9860a7df94586591098817a8e4
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Ronnie
+  - CNRGN Micro
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
