@@ -413,10 +413,9 @@ public class Conductor : MonoBehaviour
 
     void ParticlesAndText(int hitScore, Note note)
     {
-        Instantiate(perfectHit, note.gameObject.transform.position, Quaternion.identity);
-        if(hitScore == 100) { GetColorManager(note).PerfectHit(); Instantiate(perfectHit);{transform.position = note.gameObject.transform.position;}}
-        else if (hitScore >= goodHitScore) {GetColorManager(note).GoodHit(); Instantiate(goodHit);{transform.position = note.gameObject.transform.position;}}
-        else if (hitScore >= decentHitScore) {GetColorManager(note).DecentHit(); Instantiate(decentHit);{transform.position = note.gameObject.transform.position;}}
+        if(hitScore == 100) { GetColorManager(note).PerfectHit(); Instantiate(perfectHit, note.gameObject.transform.position, Quaternion.identity);}
+        else if (hitScore >= goodHitScore) {GetColorManager(note).GoodHit(); Instantiate(goodHit, note.gameObject.transform.position, Quaternion.identity);}
+        else if (hitScore >= decentHitScore) {GetColorManager(note).DecentHit(); Instantiate(decentHit, note.gameObject.transform.position, Quaternion.identity);}
         else if (hitScore >= mehHitScore) GetColorManager(note).MehHit();
         else GetColorManager(note).BarelyHit();
         
