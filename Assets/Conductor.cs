@@ -221,10 +221,10 @@ public class Conductor : MonoBehaviour
             {
                 EmptyStrum();
             }
-            else if(strumNote && (Input.GetKeyDown(H0))) GetColorManagerFromString("1").Error();
-            else if (strumNote && (Input.GetKeyDown(HM0))) GetColorManagerFromString("2").Error();
-            else if (strumNote && (Input.GetKeyDown(LM0))) GetColorManagerFromString("3").Error();
-            else if (strumNote && (Input.GetKeyDown(L0))) GetColorManagerFromString("4").Error();
+            else if(strumNote && Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
+            else if (strumNote && Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
+            else if (strumNote && Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
+            else if (strumNote && Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
         }
         if(Input.GetKeyDown(H0) && !notesReady) GetColorManagerFromString("1").Error();
         else if (Input.GetKeyDown(HM0) && !notesReady) GetColorManagerFromString("2").Error();
