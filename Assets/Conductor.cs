@@ -6,6 +6,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -100,6 +101,7 @@ public class Conductor : MonoBehaviour
     public int decentHitScore = 50;
     public int mehHitScore = 30;
     public float rewindDistance = 2f;
+    bool notesReady = false;
 
     // Start is called before the first frame update
     void Start()
@@ -156,15 +158,16 @@ public class Conductor : MonoBehaviour
             }
             else note.gameObject.SetActive(false);
         }
-        if(readyNotes.Count == 0) return;
         List<Note> hittingNotes = new List<Note>();
         isStrumming = false;
-        if(readyNotes[0].strum)
+        if (readyNotes.Count > 0 && readyNotes[0].strum)
         {
             isStrumming = true;
             foreach(Note note2 in readyNotes)
             {
-                if(previousNote != null)
+                float checkhitScore = CalculateScore(GetEndLaneX(note2) - note2.gameObject.transform.position.x, note2.lane);
+                if (checkhitScore == 0) break;
+                if (previousNote != null)
                 {
                     if(note2.beat == previousNote.beat)
                     {
@@ -181,12 +184,14 @@ public class Conductor : MonoBehaviour
             // Enforce same strum direction
             foreach(Note newNote in hittingNotes) newNote.downStrum = hittingNotes[0].downStrum;
         }
-        else
+        else if(readyNotes.Count > 0)
         {
             isStrumming = false;
             foreach(Note note2 in readyNotes)
             {
-                if(previousNote != null)
+                float checkhitScore = CalculateScore(GetEndLaneX(note2) - note2.gameObject.transform.position.x, note2.lane);
+                if (checkhitScore == 0) break;
+                if (previousNote != null)
                 {
                     if(note2.beat == previousNote.beat)
                     {
@@ -198,26 +203,51 @@ public class Conductor : MonoBehaviour
                         break;
                     }
                 }
-                else {hittingNotes.Add(note2); previousNote = note2; }
+                else if(checkhitScore != 0) {hittingNotes.Add(note2); previousNote = note2; }
             }
         }
-        if(isStrumming)
+        else hittingNotes.Clear();
+        print(hittingNotes.Count);
+        if (hittingNotes.Count > 0) notesReady = true; else notesReady = false;
+        bool strum = Input.GetKeyDown(DownStrum) || Input.GetKeyDown(UpStrum);
+        if (strum && !notesReady)
+        {
+            EmptyStrum();
+        }
+        if(hittingNotes.Count > 0)
+        {
+            bool strumNote = hittingNotes[0].strum;
+            if (!strumNote && strum)
+            {
+                EmptyStrum();
+            }
+            else if(strumNote && (Input.GetKeyDown(H0))) GetColorManagerFromString("1").Error();
+            else if (strumNote && (Input.GetKeyDown(HM0))) GetColorManagerFromString("2").Error();
+            else if (strumNote && (Input.GetKeyDown(LM0))) GetColorManagerFromString("3").Error();
+            else if (strumNote && (Input.GetKeyDown(L0))) GetColorManagerFromString("4").Error();
+        }
+        if(Input.GetKeyDown(H0) && !notesReady) GetColorManagerFromString("1").Error();
+        else if (Input.GetKeyDown(HM0) && !notesReady) GetColorManagerFromString("2").Error();
+        else if (Input.GetKeyDown(LM0) && !notesReady) GetColorManagerFromString("3").Error();
+        else if (Input.GetKeyDown(L0) && !notesReady) GetColorManagerFromString("4").Error();
+        if (isStrumming)
         {
             if(Input.GetKeyDown(DownStrum) || Input.GetKeyDown(UpStrum))
             {
                 // I have no fucking clue why this works but if I don't reverse down strum to upstrum input it doesn't work
-                if(hittingNotes[0].downStrum && Input.GetKey(UpStrum) || !hittingNotes[0].downStrum && Input.GetKey(DownStrum))
+                if(hittingNotes.Count > 0 && hittingNotes[0].downStrum && Input.GetKey(UpStrum) || hittingNotes.Count > 0 && !hittingNotes[0].downStrum && Input.GetKey(DownStrum))
                 {
                     foreach(Note note in hittingNotes)
                     {
                         int hitScore;
-                        if(note.lane == 1)
+                        float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        if(checkHitScore == 0) return;
+                        if (note.lane == 1)
                         {
                             if(currentH == note.note)
                             {
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
-                                if(hitScore == 0) { return; }
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
@@ -236,7 +266,6 @@ public class Conductor : MonoBehaviour
                             {
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
-                                if(hitScore == 0) { return; }
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
@@ -255,7 +284,6 @@ public class Conductor : MonoBehaviour
                             {
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
-                                if(hitScore == 0) { return; }
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
@@ -274,7 +302,6 @@ public class Conductor : MonoBehaviour
                             {
                                 hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                                 print(hitScore);
-                                if(hitScore == 0) { return; }
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
@@ -307,13 +334,14 @@ public class Conductor : MonoBehaviour
             foreach(Note note in hittingNotes)
             {
                 int hitScore;
-                if(note.lane == 1 && Input.GetKeyDown(H0))
+                float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                if (checkHitScore == 0) return;
+                if (note.lane == 1 && Input.GetKeyDown(H0))
                 {
                     if(currentH == note.note)
                     {
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
-                        if(hitScore == 0) { return; }
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
@@ -332,7 +360,6 @@ public class Conductor : MonoBehaviour
                     {
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
-                        if(hitScore == 0) { return; }
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
@@ -351,7 +378,6 @@ public class Conductor : MonoBehaviour
                     {
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
-                        if(hitScore == 0) { return; }
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
@@ -370,7 +396,6 @@ public class Conductor : MonoBehaviour
                     {
                         hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
                         print(hitScore);
-                        if(hitScore == 0) { return; }
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
@@ -399,12 +424,17 @@ public class Conductor : MonoBehaviour
         return GameObject.Find("Lane " + note.lane + " End").gameObject.GetComponent<NoteEndColorManager>();
     }
 
+    NoteEndColorManager GetColorManagerFromString(string lane)
+    {
+        return GameObject.Find("Lane " + lane + " End").gameObject.GetComponent<NoteEndColorManager>();
+    }
+
     int CalculateScore(float distanceFromNote, int lane)
     {
         decimal dist = (decimal)distanceFromNote;
         decimal distRounded = Math.Round(dist, accuracyRoundingDigits);
         float absDist = Mathf.Abs((float)distRounded);
-        if(absDist > missDistance) {print("Miss"); return 0;}
+        if(absDist > missDistance) {return 0;}
         int hitScore = (int)Math.Round((missDistance - absDist)/missDistance * 100);
         if(hitScore > roundToOneHundredRange) hitScore = 100;
         score += hitScore;
@@ -418,7 +448,6 @@ public class Conductor : MonoBehaviour
         else if (hitScore >= decentHitScore) {GetColorManager(note).DecentHit(); Instantiate(decentHit, note.gameObject.transform.position, Quaternion.identity);}
         else if (hitScore >= mehHitScore) GetColorManager(note).MehHit();
         else GetColorManager(note).BarelyHit();
-        
     }
 
     void WrongNote(Note note)
@@ -434,6 +463,14 @@ public class Conductor : MonoBehaviour
     public void MissedNote(Note note)
     {
         GetColorManager(note).Error();
+    }
+
+    public void EmptyStrum()
+    {
+        foreach(NoteEndColorManager colorManager in GameObject.FindObjectsOfType<NoteEndColorManager>())
+        {
+            colorManager.Error();
+        }
     }
 
     void DetermineKeyStrokes()
