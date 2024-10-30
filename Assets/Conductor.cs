@@ -102,6 +102,8 @@ public class Conductor : MonoBehaviour
     public int mehHitScore = 30;
     public float rewindDistance = 2f;
     bool notesReady = false;
+    public List<Note> totalNotes = new List<Note>();
+    public float songStarted;
 
     // Start is called before the first frame update
     void Start()
@@ -125,6 +127,7 @@ public class Conductor : MonoBehaviour
         {
             song.time = 0f;
         }
+        songStarted = song.time;
 
         //Start the music
         song.Play();
@@ -207,7 +210,6 @@ public class Conductor : MonoBehaviour
             }
         }
         else hittingNotes.Clear();
-        print(hittingNotes.Count);
         if (hittingNotes.Count > 0) notesReady = true; else notesReady = false;
         bool strum = Input.GetKeyDown(DownStrum) || Input.GetKeyDown(UpStrum);
         if (strum && !notesReady)

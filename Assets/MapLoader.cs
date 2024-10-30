@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 
@@ -40,9 +41,15 @@ public class MapLoader : MonoBehaviour
     public float reactionBeats;
     public bool practiceMode = false;
     public float startOffset;
+
     private IEnumerator LoadLevel(string sceneName, AudioClip song, float bpm, float firstBeatOffset)
     {
         // Start loading the scene
+        foreach(AudioSource source in FindObjectsOfType<AudioSource>())
+        {
+            Destroy(source);
+        }
+        
         AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         // Wait until the level finish loading
         while (!asyncLoadLevel.isDone)
@@ -84,6 +91,7 @@ public class MapLoader : MonoBehaviour
                 i++;
             }
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     public async void Init()
@@ -170,7 +178,7 @@ public class MapLoader : MonoBehaviour
         LoadNotes(song);
     }
     
-    void LoadNotes(AudioClip song)
+    public void LoadNotes(AudioClip song)
     {
         StreamReader reader = new StreamReader(mapPath + "/notes.json");
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
