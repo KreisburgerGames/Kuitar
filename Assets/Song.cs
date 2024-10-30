@@ -39,7 +39,6 @@ public class Song : MonoBehaviour
     async void GetSongClip()
     {
         songClip = await LoadClip(folderPath + "/" + songFile);
-        print(songClip.length);
     }
 
     async Task<AudioClip> LoadClip(string path)

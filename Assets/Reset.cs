@@ -17,11 +17,11 @@ public class Reset : MonoBehaviour
             pause = FindFirstObjectByType<PauseMenuManager>();
             foundPauseManager = true;
             Init(pause.mapPath, pause.songFileName, pause.bpm, pause.firstBeatOffset, pause.practiceMode, pause.startOffset, pause.songFolder);
-            Destroy(pause.gameObject);
         }
     }
     public void Init(string mapPath, string songFile, float bpm, float firstBeatOffset, bool practiceMode, float startOffset, string songFolder)
     {
+        Destroy(pause.gameObject);
         MapLoader mapLoader = Instantiate(mapLoaderOBJ).GetComponent<MapLoader>();
         mapLoader.songFolder = songFolder;
         mapLoader.mapPath = mapPath;

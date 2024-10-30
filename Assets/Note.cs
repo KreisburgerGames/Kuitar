@@ -93,11 +93,11 @@ public class Note : MonoBehaviour
         if(noteStr == "L9") {note = conductor.L9; lane = 4; numberSprite.sprite = NoteNineIMG; }
         if(noteStr == "L10") {note = conductor.L10; lane = 4; numberSprite.sprite = NoteTenIMG; }
         
-        if(lane == 1) transform.position = GameObject.Find("Lane 1").transform.position; targetPos = GameObject.Find("Lane 1 End").transform.position;
-        if(lane == 2) transform.position = GameObject.Find("Lane 2").transform.position; targetPos = GameObject.Find("Lane 2 End").transform.position;
-        if(lane == 3) transform.position = GameObject.Find("Lane 3").transform.position; targetPos = GameObject.Find("Lane 3 End").transform.position;
-        if(lane == 4) transform.position = GameObject.Find("Lane 4").transform.position; targetPos = GameObject.Find("Lane 4 End").transform.position;
-    
+        if(lane == 1) transform.position = GameObject.Find("Lanes/Lane 1").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 1 End").transform.position;
+        if(lane == 2) transform.position = GameObject.Find("Lanes/Lane 2").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 2 End").transform.position;
+        if(lane == 3) transform.position = GameObject.Find("Lanes/Lane 3").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 3 End").transform.position;
+        if(lane == 4) transform.position = GameObject.Find("Lanes/Lane 4").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 4 End").transform.position;
+        print(targetPos.x);
         if(strum)
         {
             if(downStrum) bgSprite.sprite = DownStrumIMG; else bgSprite.sprite = UpStrumIMG;
