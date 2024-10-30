@@ -10,6 +10,20 @@ public class PauseMenuManager : MonoBehaviour
     private AudioSource song;
     private bool foundSong = false;
 
+    public string songFileName;
+    public string songName;
+    public float bpm;
+    public float firstBeatOffset;
+    public string mapPath;
+    public float reactionBeats;
+    public bool practiceMode = false;
+    public float startOffset;
+    public int pixelsPerBeat;
+    public string songFolder;
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     void Update()
     {
         if(!foundSong && FindFirstObjectByType<AudioSource>() != null)
@@ -23,6 +37,11 @@ public class PauseMenuManager : MonoBehaviour
     {
         if(isPaused) Resume();
         else Pause();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Reset");
     }
 
     public void Pause()

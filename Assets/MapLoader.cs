@@ -18,7 +18,6 @@ public class MapLoader : MonoBehaviour
     public float downStrumAlpha = 0.5f;
     [Range(0f, 1f)]
     public float upStrumAlpha = 0.75f;
-    public string coverName;
     public int zeroHue = 0;
     public int oneHue = 30;
     public int twoHue = 60;
@@ -64,13 +63,33 @@ public class MapLoader : MonoBehaviour
         conductor.songBPM = bpm;
         conductor.reactionBeats = reactionBeats;
         conductor.firstBeatOffset = firstBeatOffset;
+        SetPauseManager(FindFirstObjectByType<PauseMenuManager>());
         foreach(var note in notes)
         {
             note.conductor = conductor;
             note.gameObject.transform.SetParent(GameObject.Find("Notes").transform);
             note.Init();
         }
-        SceneManager.UnloadSceneAsync("Select");
+        if(SceneManager.GetActiveScene().name == "Select") SceneManager.UnloadSceneAsync("Select");
+        else SceneManager.UnloadSceneAsync("Reset");
+    }
+
+    private void SetPauseManager(PauseMenuManager pause)
+    {
+        pause.mapPath = mapPath;
+        pause.songFileName = songFileName;
+        pause.songName = songName;
+        pause.bpm = bpm;
+        pause.firstBeatOffset = firstBeatOffset;
+        StreamReader reader = new StreamReader(mapPath+ "difficulty.json");
+        TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+        DifficultySettings difficultySettings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
+        reader.Close();
+        pause.pixelsPerBeat = difficultySettings.pixelsPerBeat;
+        pause.reactionBeats = difficultySettings.reactionBeats;
+        pause.startOffset = startOffset;
+        pause.practiceMode = practiceMode;
+        pause.songFolder = songFolder;
     }
 
     void Start()

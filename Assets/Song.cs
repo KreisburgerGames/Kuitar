@@ -100,7 +100,6 @@ public class Song : MonoBehaviour
         SongList songList = FindFirstObjectByType<SongList>();
         practiceMode = songList.practiceMode;
         MapLoader mapLoader = Instantiate(mapLoaderOBJ).GetComponent<MapLoader>();
-        mapLoader.coverName = songCover;
         mapLoader.songFolder = folderPath;
         mapLoader.mapPath = folderPath + "/" + difficulty + "/";
         mapLoader.songFileName = songFile;
