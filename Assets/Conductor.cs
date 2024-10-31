@@ -407,7 +407,10 @@ public class Conductor : MonoBehaviour
                         Destroy(note.gameObject);
                     }
                 }
-                
+                else if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
+                else if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
+                else if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
+                else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
             }
         }
         previousNote = null;
