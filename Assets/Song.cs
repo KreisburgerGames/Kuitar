@@ -88,6 +88,9 @@ public class Song : MonoBehaviour
         practiceModeHandler.selectedSong = this;
         practiceModeHandler.selectedSongClip = songClip;
         practiceModeHandler.selectedTime = 0;
+        practiceModeHandler.timeSelect.value = 0;
+        practiceModeHandler.practiceToggle.isOn = false;
+        practiceModeHandler.TogglePracticeMode();
         practiceModeHandler.SetTime();
         songList.audioSource.clip = songClip;
         songList.audioSource.Play();
