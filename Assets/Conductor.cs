@@ -56,11 +56,11 @@ public class Conductor : MonoBehaviour
     public KeyCode L3 = KeyCode.C;
     public KeyCode L4 = KeyCode.V;
     public KeyCode L5 = KeyCode.B;
-    public KeyCode L6 = KeyCode.B;
-    public KeyCode L7 = KeyCode.N;
-    public KeyCode L8 = KeyCode.M;
-    public KeyCode L9 = KeyCode.Comma;
-    public KeyCode L10 = KeyCode.Period;
+    public KeyCode L6 = KeyCode.N;
+    public KeyCode L7 = KeyCode.M;
+    public KeyCode L8 = KeyCode.Comma;
+    public KeyCode L9 = KeyCode.Period;
+    public KeyCode L10 = KeyCode.Slash;
     public KeyCode DownStrum = KeyCode.UpArrow;
     public KeyCode UpStrum = KeyCode.DownArrow;
 
