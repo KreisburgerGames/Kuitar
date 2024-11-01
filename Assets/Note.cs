@@ -45,7 +45,7 @@ public class Note : MonoBehaviour
 
     public void Init()
     {
-        if(noteStr == "H0") {note = conductor.H0; lane = 1; strum = false; numberSprite.sprite = NoteZeroIMG; }
+        if(noteStr == "H0") {note = conductor.H0; lane = 1; numberSprite.sprite = NoteZeroIMG; }
         if(noteStr == "H1") {note = conductor.H1; lane = 1; numberSprite.sprite = NoteOneIMG; }
         if(noteStr == "H2") {note = conductor.H2; lane = 1; numberSprite.sprite = NoteTwoIMG; }
         if(noteStr == "H3") {note = conductor.H3; lane = 1; numberSprite.sprite = NoteThreeIMG; }
@@ -57,7 +57,7 @@ public class Note : MonoBehaviour
         if(noteStr == "H9") {note = conductor.H9; lane = 1; numberSprite.sprite = NoteNineIMG; }
         if(noteStr == "H10") {note = conductor.H10; lane = 1; numberSprite.sprite = NoteTenIMG; }
 
-        if(noteStr == "HM0") {note = conductor.HM0; lane = 2; strum = false; numberSprite.sprite = NoteZeroIMG; }
+        if(noteStr == "HM0") {note = conductor.HM0; lane = 2; numberSprite.sprite = NoteZeroIMG; }
         if(noteStr == "HM1") {note = conductor.HM1; lane = 2; numberSprite.sprite = NoteOneIMG; }
         if(noteStr == "HM2") {note = conductor.HM2; lane = 2; numberSprite.sprite = NoteTwoIMG; }
         if(noteStr == "HM3") {note = conductor.HM3; lane = 2; numberSprite.sprite = NoteThreeIMG; }
@@ -69,7 +69,7 @@ public class Note : MonoBehaviour
         if(noteStr == "HM9") {note = conductor.HM9; lane = 2; numberSprite.sprite = NoteNineIMG; }
         if(noteStr == "HM10") {note = conductor.HM10; lane = 2; numberSprite.sprite = NoteTenIMG; }
 
-        if(noteStr == "LM0") {note = conductor.LM0; lane = 3; strum = false; numberSprite.sprite = NoteZeroIMG; }
+        if(noteStr == "LM0") {note = conductor.LM0; lane = 3; numberSprite.sprite = NoteZeroIMG; }
         if(noteStr == "LM1") {note = conductor.LM1; lane = 3; numberSprite.sprite = NoteOneIMG; }
         if(noteStr == "LM2") {note = conductor.LM2; lane = 3; numberSprite.sprite = NoteTwoIMG; }
         if(noteStr == "LM3") {note = conductor.LM3; lane = 3; numberSprite.sprite = NoteThreeIMG; }
@@ -81,7 +81,7 @@ public class Note : MonoBehaviour
         if(noteStr == "LM9") {note = conductor.LM9; lane = 3; numberSprite.sprite = NoteNineIMG; }
         if(noteStr == "LM10") {note = conductor.LM10; lane = 3; numberSprite.sprite = NoteTenIMG; }
 
-        if(noteStr == "L0") {note = conductor.L0; lane = 4; strum = false; numberSprite.sprite = NoteZeroIMG; }
+        if(noteStr == "L0") {note = conductor.L0; lane = 4; numberSprite.sprite = NoteZeroIMG; }
         if(noteStr == "L1") {note = conductor.L1; lane = 4; numberSprite.sprite = NoteOneIMG; }
         if(noteStr == "L2") {note = conductor.L2; lane = 4; numberSprite.sprite = NoteTwoIMG; }
         if(noteStr == "L3") {note = conductor.L3; lane = 4; numberSprite.sprite = NoteThreeIMG; }
