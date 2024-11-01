@@ -90,7 +90,7 @@ public class Conductor : MonoBehaviour
     public int goodHitScore = 75;
     public int decentHitScore = 50;
     public int mehHitScore = 30;
-    public float rewindDistance;
+    public float rewindDistance = 2f;
     bool notesReady = false;
 
     // Start is called before the first frame update
@@ -104,12 +104,12 @@ public class Conductor : MonoBehaviour
 
         
         if(firstBeatOffset > 0){
-            float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance - 1);
-            song.time = songStartOffset - ((rewindDistance) * (clampedOffset/firstBeatOffset));
+            float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance - 1f);
+            song.time = songStartOffset - ((rewindDistance - 1f) * (clampedOffset/firstBeatOffset));
         }
         else if(songStartOffset - rewindDistance > 0)
         {
-            song.time = songStartOffset - rewindDistance;
+            song.time = songStartOffset - rewindDistance - 1f;
         }
         else
         {

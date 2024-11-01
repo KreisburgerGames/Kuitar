@@ -64,7 +64,7 @@ public class MapLoader : MonoBehaviour
         conductor.songBPM = bpm;
         conductor.reactionBeats = reactionBeats;
         conductor.firstBeatOffset = firstBeatOffset;
-        conductor.rewindDistance = noteRewindTime - 1;
+        conductor.rewindDistance = noteRewindTime;
         SetPauseManager(FindFirstObjectByType<PauseMenuManager>());
         foreach(var note in notes)
         {
