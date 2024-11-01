@@ -40,7 +40,7 @@ public class MapLoader : MonoBehaviour
     public float reactionBeats;
     public bool practiceMode = false;
     public float startOffset;
-    public float rewindTime = 2f;
+    public float noteRewindTime = 2f;
 
     private IEnumerator LoadLevel(string sceneName, AudioClip song, float bpm, float firstBeatOffset)
     {
@@ -64,7 +64,7 @@ public class MapLoader : MonoBehaviour
         conductor.songBPM = bpm;
         conductor.reactionBeats = reactionBeats;
         conductor.firstBeatOffset = firstBeatOffset;
-        conductor.rewindDistance = rewindTime;
+        conductor.rewindDistance = noteRewindTime - 1;
         SetPauseManager(FindFirstObjectByType<PauseMenuManager>());
         foreach(var note in notes)
         {
@@ -209,7 +209,7 @@ public class MapLoader : MonoBehaviour
         {
             float fixedRewindTime;
             bool beginning = false;
-            if(startOffset - rewindTime < 0) fixedRewindTime = 0; else fixedRewindTime = rewindTime;
+            if(startOffset - noteRewindTime < 0) fixedRewindTime = 0; else fixedRewindTime = noteRewindTime;
             if (fixedRewindTime == 0) beginning = true;
             if((noteLoad.beat * (60f/bpm)) - (reactionBeats * (60f / bpm)) >= startOffset - (60f/bpm) - fixedRewindTime || !practiceMode || beginning)
             {
