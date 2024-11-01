@@ -104,12 +104,12 @@ public class Conductor : MonoBehaviour
 
         
         if(firstBeatOffset > 0){
-            float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance);
-            song.time = songStartOffset - (rewindDistance * (clampedOffset/firstBeatOffset));
+            float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance - 1f);
+            song.time = songStartOffset - ((rewindDistance - 1f) * (clampedOffset/firstBeatOffset));
         }
         else if(songStartOffset - rewindDistance > 0)
         {
-            song.time = songStartOffset - rewindDistance;
+            song.time = songStartOffset - rewindDistance - 1f;
         }
         else
         {

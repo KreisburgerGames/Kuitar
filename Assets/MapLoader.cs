@@ -207,7 +207,11 @@ public class MapLoader : MonoBehaviour
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            if((noteLoad.beat * (60f/bpm)) - (reactionBeats * (60f / bpm)) >= startOffset - rewindTime || !practiceMode)
+            float fixedRewindTime;
+            bool beginning = false;
+            if(startOffset - rewindTime < 0) fixedRewindTime = 0; else fixedRewindTime = rewindTime;
+            if (fixedRewindTime == 0) beginning = true;
+            if((noteLoad.beat * (60f/bpm)) - (reactionBeats * (60f / bpm)) >= startOffset - (60f/bpm) - fixedRewindTime || !practiceMode || beginning)
             {
                 Note note = Instantiate(notePrefab).GetComponent<Note>();
                 note.beat = noteLoad.beat;

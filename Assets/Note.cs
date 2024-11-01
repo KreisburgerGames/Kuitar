@@ -97,7 +97,6 @@ public class Note : MonoBehaviour
         if(lane == 2) transform.position = GameObject.Find("Lanes/Lane 2").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 2 End").transform.position;
         if(lane == 3) transform.position = GameObject.Find("Lanes/Lane 3").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 3 End").transform.position;
         if(lane == 4) transform.position = GameObject.Find("Lanes/Lane 4").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 4 End").transform.position;
-        print(targetPos.x);
         if(strum)
         {
             if(downStrum) bgSprite.sprite = DownStrumIMG; else bgSprite.sprite = UpStrumIMG;
