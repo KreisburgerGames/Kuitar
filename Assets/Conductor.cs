@@ -68,8 +68,6 @@ public class Conductor : MonoBehaviour
 
     public float reactionBeats = 5f;
 
-    private Note previousNote;
-
     public GameObject notesParent;
 
     public KeyCode currentH;
@@ -152,6 +150,7 @@ public class Conductor : MonoBehaviour
         }
         List<Note> hittingNotes = new List<Note>();
         isStrumming = false;
+        Note previousNote = null;
         if (readyNotes.Count > 0 && readyNotes[0].strum)
         {
             isStrumming = true;
@@ -405,7 +404,6 @@ public class Conductor : MonoBehaviour
                 else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
             }
         }
-        previousNote = null;
     }
 
     float GetEndLaneX(Note note)
