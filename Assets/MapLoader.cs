@@ -41,6 +41,7 @@ public class MapLoader : MonoBehaviour
     public bool practiceMode = false;
     public float startOffset;
     public float noteRewindTime = 2f;
+    public float laneEdgeMargin = 1f;
 
     private IEnumerator LoadLevel(string sceneName, AudioClip song, float bpm, float firstBeatOffset)
     {
@@ -72,6 +73,11 @@ public class MapLoader : MonoBehaviour
             note.gameObject.transform.SetParent(GameObject.Find("Notes").transform);
             note.Init();
         }
+        Camera camera = FindAnyObjectByType<Camera>();
+        GameObject lanes = GameObject.FindGameObjectWithTag("Lanes");
+        GameObject laneEnds = GameObject.FindGameObjectWithTag("Lane Ends");
+        lanes.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(0, 0)).x + laneEdgeMargin, 0);
+        laneEnds.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x - laneEdgeMargin, 0);
         if(SceneManager.GetActiveScene().name == "Select") SceneManager.UnloadSceneAsync("Select");
         else SceneManager.UnloadSceneAsync("Reset");
     }

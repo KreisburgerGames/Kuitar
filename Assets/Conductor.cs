@@ -92,6 +92,10 @@ public class Conductor : MonoBehaviour
     public int mehHitScore = 30;
     public float rewindDistance = 2f;
     bool notesReady = false;
+    private GameObject noteLate;
+    public float noteMissDist = 1f;
+    private Camera camera;
+    private bool cameraFound = false;
 
     // Start is called before the first frame update
     void Start()
@@ -123,11 +127,20 @@ public class Conductor : MonoBehaviour
         {
             notes.Add(note);
         }
+        noteLate = GameObject.Find("Note Late");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!cameraFound && FindFirstObjectByType<Camera>() != null)
+        {
+            camera = FindFirstObjectByType<Camera>();
+            print(camera.pixelWidth);
+            noteLate.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x + noteMissDist, noteLate.transform.position.y);
+            cameraFound = true;
+        }
         //determine how many seconds since the song started
         songPos = song.time - firstBeatOffset;
 
