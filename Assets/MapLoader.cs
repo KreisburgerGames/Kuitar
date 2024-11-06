@@ -43,6 +43,7 @@ public class MapLoader : MonoBehaviour
     public float noteRewindTime = 2f;
     public float laneEdgeMargin = 1f;
 
+    // Thanks random unity form guy
     private IEnumerator LoadLevel(string sceneName, AudioClip song, float bpm, float firstBeatOffset)
     {
         // Start loading the scene
@@ -80,6 +81,7 @@ public class MapLoader : MonoBehaviour
 
     private void SetPauseManager(PauseMenuManager pause)
     {
+        // Pause... :kek:
         pause.mapPath = mapPath;
         pause.songFileName = songFileName;
         pause.songName = songName;
@@ -102,6 +104,7 @@ public class MapLoader : MonoBehaviour
         int i = 1;
         foreach(var file in System.IO.Directory.GetFiles(mapPath))
         {
+            // I accidentally made an error here before and kept trying to load cover art as the map, that will destroy your memory PLEASE DONT DO IT
             if (file.EndsWith(".png"))
             {
                 byte[] pngBytes = System.IO.File.ReadAllBytes(file);
@@ -117,12 +120,14 @@ public class MapLoader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    // INIT????
     public async void Init()
     {
         string path = songFolder + "/" + songFileName;
         await LoadClip(path);
     }
 
+    // thanks other random unity form guy
     async Task<AudioClip> LoadClip(string path)
     {
         AudioClip clip = null;
