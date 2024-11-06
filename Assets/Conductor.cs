@@ -97,14 +97,13 @@ public class Conductor : MonoBehaviour
     private Camera camera;
     public float laneEdgeMargin;
     private bool cameraFound = false;
+    // Is this enough varibles for u pookie?
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        //Load the AudioSource attached to the Conductor GameObject
         song = GetComponent<AudioSource>();
 
-        //Calculate the number of seconds in each beat
         secondsPerBeat = 60f / songBPM;
 
         
@@ -121,7 +120,6 @@ public class Conductor : MonoBehaviour
             song.time = 0f;
         }
 
-        //Start the music
         song.Play();
 
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
@@ -132,7 +130,6 @@ public class Conductor : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!cameraFound && FindFirstObjectByType<Camera>() != null)
@@ -146,10 +143,9 @@ public class Conductor : MonoBehaviour
             laneEnds.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x - laneEdgeMargin, 0);
             cameraFound = true;
         }
-        //determine how many seconds since the song started
+
         songPos = song.time - firstBeatOffset;
 
-        //determine how many beats since the song started
         songBeatsPos = songPos / secondsPerBeat;
 
         List<Note> readyNotes = new List<Note>();
@@ -169,6 +165,7 @@ public class Conductor : MonoBehaviour
         List<Note> hittingNotes = new List<Note>();
         isStrumming = false;
         Note previousNote = null;
+        // gl reading this code, I can barley read this fucking thing
         if (readyNotes.Count > 0 && readyNotes[0].strum)
         {
             isStrumming = true;
@@ -337,7 +334,7 @@ public class Conductor : MonoBehaviour
                 }
             }
         }
-        else
+        else // Lmao copy paste code go brrrrrrrrr
         {
             foreach(Note note in hittingNotes)
             {
@@ -445,6 +442,7 @@ public class Conductor : MonoBehaviour
         decimal distRounded = Math.Round(dist, accuracyRoundingDigits);
         float absDist = Mathf.Abs((float)distRounded);
         if(absDist > missDistance) {return 0;}
+        // I feel so smart writing this
         int hitScore = (int)Math.Round((missDistance - absDist)/missDistance * 100);
         if(hitScore > roundToOneHundredRange) hitScore = 100;
         score += hitScore;
@@ -459,7 +457,7 @@ public class Conductor : MonoBehaviour
         else if (hitScore >= mehHitScore) GetColorManager(note).MehHit();
         else GetColorManager(note).BarelyHit();
     }
-
+    
     void WrongNote(Note note)
     {
         GetColorManager(note).Error();
@@ -485,7 +483,7 @@ public class Conductor : MonoBehaviour
 
     void DetermineKeyStrokes()
     {
-        
+        // There might be a better way to do this but fuck that I like unoptimized games :3
         if(Input.GetKey(H10)) currentH = H10;
         else if(Input.GetKey(H9)) currentH = H9;
         else if(Input.GetKey(H8)) currentH = H8;
