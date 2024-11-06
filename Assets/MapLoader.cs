@@ -66,6 +66,7 @@ public class MapLoader : MonoBehaviour
         conductor.reactionBeats = reactionBeats;
         conductor.firstBeatOffset = firstBeatOffset;
         conductor.rewindDistance = noteRewindTime;
+        conductor.laneEdgeMargin = laneEdgeMargin;
         SetPauseManager(FindFirstObjectByType<PauseMenuManager>());
         foreach(var note in notes)
         {
@@ -73,11 +74,6 @@ public class MapLoader : MonoBehaviour
             note.gameObject.transform.SetParent(GameObject.Find("Notes").transform);
             note.Init();
         }
-        Camera camera = FindAnyObjectByType<Camera>();
-        GameObject lanes = GameObject.FindGameObjectWithTag("Lanes");
-        GameObject laneEnds = GameObject.FindGameObjectWithTag("Lane Ends");
-        lanes.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(0, 0)).x + laneEdgeMargin, 0);
-        laneEnds.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x - laneEdgeMargin, 0);
         if(SceneManager.GetActiveScene().name == "Select") SceneManager.UnloadSceneAsync("Select");
         else SceneManager.UnloadSceneAsync("Reset");
     }

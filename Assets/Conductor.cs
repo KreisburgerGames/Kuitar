@@ -95,6 +95,7 @@ public class Conductor : MonoBehaviour
     private GameObject noteLate;
     public float noteMissDist = 1f;
     private Camera camera;
+    public float laneEdgeMargin;
     private bool cameraFound = false;
 
     // Start is called before the first frame update
@@ -139,6 +140,10 @@ public class Conductor : MonoBehaviour
             camera = FindFirstObjectByType<Camera>();
             print(camera.pixelWidth);
             noteLate.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x + noteMissDist, noteLate.transform.position.y);
+            GameObject lanes = GameObject.FindGameObjectWithTag("Lanes");
+            GameObject laneEnds = GameObject.FindGameObjectWithTag("Lane Ends");
+            lanes.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(0, 0)).x + laneEdgeMargin, 0);
+            laneEnds.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x - laneEdgeMargin, 0);
             cameraFound = true;
         }
         //determine how many seconds since the song started
