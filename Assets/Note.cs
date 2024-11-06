@@ -45,6 +45,7 @@ public class Note : MonoBehaviour
 
     public void Init()
     {
+        // There HAS to be another way right???
         if(noteStr == "H0") {note = conductor.H0; lane = 1; numberSprite.sprite = NoteZeroIMG; }
         if(noteStr == "H1") {note = conductor.H1; lane = 1; numberSprite.sprite = NoteOneIMG; }
         if(noteStr == "H2") {note = conductor.H2; lane = 1; numberSprite.sprite = NoteTwoIMG; }

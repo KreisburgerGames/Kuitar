@@ -14,3 +14,13 @@ while True:
     i = input("Press Enter to enter again. Enter Q to quit. ")
     if (i == "Q" or i == "q"):
         exit()
+        
+        
+        
+
+
+
+
+
+# gl mapping, ty for giving my game a try :)
+# PS: I highly recomend using pixel_finder_timecode.py instead, thank me later
