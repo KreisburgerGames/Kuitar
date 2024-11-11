@@ -43,6 +43,7 @@ public class Draw : MonoBehaviour
 
     public void Generate()
     {
+        if (clip == null) return;
         Texture2D texture = PaintWaveformSpectrum(clip, width, height, waveformColor);
         texture.filterMode = FilterMode.Point;
         img.overrideSprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));

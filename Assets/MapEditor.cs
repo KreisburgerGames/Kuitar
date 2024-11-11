@@ -29,6 +29,7 @@ public class MapEditor : MonoBehaviour
     Vector2 originalWaveformPos;
     Vector2 originalWaveformScale;
     public Draw draw;
+    public RectTransform tracker;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,8 +60,8 @@ public class MapEditor : MonoBehaviour
         audioSource.Pause();
         audioSource.time = 0f;
         LoadNotes();
-        FindFirstObjectByType<Draw>().clip = audioSource.clip;
-        FindFirstObjectByType<Draw>().Generate();
+        draw.clip = audioSource.clip;
+        draw.Generate();
     }
 
     void LoadNotes()
@@ -111,6 +112,14 @@ public class MapEditor : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
         noteParent.transform.position = new Vector3((metersPerSecond * audioSource.time) + offset, 0, 0);
+        TrackerGoToSong();
+    }
+
+    void TrackerGoToSong()
+    {
+        if(audioSource == null || audioSource.clip == null) return;
+        float songPercentage = (audioSource.time + (offset/metersPerSecond)) / audioSource.clip.length;
+        tracker.anchoredPosition = new Vector2(zoomRect.sizeDelta.x * songPercentage, tracker.anchoredPosition.y);
     }
 
     void Zoom()
