@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Conductor : MonoBehaviour
 {
@@ -97,6 +98,7 @@ public class Conductor : MonoBehaviour
     private Camera camera;
     public float laneEdgeMargin;
     private bool cameraFound = false;
+    private bool canEnd = false;
     // Is this enough varibles for u pookie?
 
 
@@ -132,6 +134,8 @@ public class Conductor : MonoBehaviour
 
     void Update()
     {
+        if(song.time > 0) canEnd = true;
+        if(canEnd && song.time == 0f) SceneManager.LoadScene("Select", LoadSceneMode.Single);
         if(!cameraFound && FindFirstObjectByType<Camera>() != null)
         {
             camera = FindFirstObjectByType<Camera>();
