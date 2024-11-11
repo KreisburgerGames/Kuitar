@@ -107,7 +107,7 @@ MonoBehaviour:
   currentLM: 0
   currentL: 0
   accuracyRoundingDigits: 2
-  missDistance: 3
+  missDistance: 2
   score: 0
   roundToOneHundredRange: 95
   startDelay: 0
@@ -119,6 +119,8 @@ MonoBehaviour:
   decentHitScore: 50
   mehHitScore: 30
   rewindDistance: 2
+  noteMissDist: 1
+  laneEdgeMargin: 0
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0
