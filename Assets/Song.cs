@@ -25,15 +25,34 @@ public class Song : MonoBehaviour
     private Button button;
     bool practiceMode;
     public AudioClip songClip;
+    public bool editor = false;
+    public bool waitingForClip = false;
     // Start is called before the first frame update
     void Start()
     {
+        if(editor) {return;}
         GetComponentInChildren<RawImage>().texture = songCoverIMG;
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Name").GetComponent<TMP_Text>().text = songName;
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Artist").GetComponent<TMP_Text>().text = artistName;
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Mapper").GetComponent<TMP_Text>().text = mapper;
         button = GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button").GetComponent<Button>();
         GetSongClip();
+    }
+
+    void Update()
+    {
+        if(waitingForClip && songClip != null)
+        {
+            GetComponent<AudioSource>().clip = songClip;
+            GetComponent<MapEditor>().Ready();
+            waitingForClip = false;
+        }
+    }
+
+    public void EditorInit()
+    {
+        GetSongClip();
+        waitingForClip = true;
     }
 
     async void GetSongClip()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7483530134717881084}
   - component: {fileID: 4766521074033752389}
   - component: {fileID: -8178061268737508003}
+  - component: {fileID: 5410257371567081281}
   m_Layer: 6
   m_Name: Dummy Note
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0c6ac32659075fe4c9d17dd7edcab431, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -159,6 +160,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &5410257371567081281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067807202382027894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4ea00682c0e5f4bb3db802ef23aea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: {fileID: 8314809265329064629}
+  note: 0
+  lane: 0
+  NoteZeroIMG: {fileID: 21300000, guid: 28fa5708f9dde48418223f861973de95, type: 3}
+  NoteOneIMG: {fileID: 21300000, guid: 5c2091d2ebeca6142980dcca5586fbd1, type: 3}
+  NoteTwoIMG: {fileID: 21300000, guid: cafa087d532a004419a85333a00fa08a, type: 3}
+  NoteThreeIMG: {fileID: 21300000, guid: 4507b4baaa478db4caced5011d2d6c20, type: 3}
+  NoteFourIMG: {fileID: 21300000, guid: 803813877bbed244e83e48e38c20ffaa, type: 3}
+  NoteFiveIMG: {fileID: 21300000, guid: 396ca3b519a82a44593be4ec0e84930a, type: 3}
+  NoteSixIMG: {fileID: 21300000, guid: 4835fed29d1084d42a1f63fc2d7a00b9, type: 3}
+  NoteSevenIMG: {fileID: 21300000, guid: 9e59dcee5ec01704fa23e7c65dba9741, type: 3}
+  NoteEightIMG: {fileID: 21300000, guid: d0b30db5cf3963c47bc44eafb17e5852, type: 3}
+  NoteNineIMG: {fileID: 21300000, guid: 829c67fa183644842a8110874e0b37d5, type: 3}
+  NoteTenIMG: {fileID: 21300000, guid: 9e8e249e525dff74d8f3a12e402d40ae, type: 3}
+  DownStrumIMG: {fileID: 21300000, guid: 9e3496fdd71a06d4faa811085587fe66, type: 3}
+  UpStrumIMG: {fileID: 21300000, guid: 31fb4942ac7b90e49b89f506c491e21e, type: 3}
+  regularBGIMG: {fileID: 21300000, guid: 0c6ac32659075fe4c9d17dd7edcab431, type: 3}
+  strum: 0
+  downStrum: 0
 --- !u!1 &8408143141577441471
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +263,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 9e8e249e525dff74d8f3a12e402d40ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
