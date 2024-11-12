@@ -34,6 +34,8 @@ public class MapEditor : MonoBehaviour
     Vector3 originalWaveformScale;
     Vector3 originalAnchorScale;
     public int drawWidth, drawHeight;
+    public float lastPos = 0f;
+    bool waveformDownPos = false;
 
     // Start is called before the first frame update
     void Start()
@@ -101,7 +103,13 @@ public class MapEditor : MonoBehaviour
     void Update()
     {
         zoomLevel = anchor.localScale.x;
-        if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Space))
+        noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
+        if (audioSource.clip != null)
+        {
+            float audioTime = audioSource.time;
+            TrackerGoToSong(audioTime);
+        }
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Space))
         {
             zoomRect.localPosition = originalWaveformPos;
             anchor.localScale = originalAnchorScale;
@@ -111,35 +119,51 @@ public class MapEditor : MonoBehaviour
             draw.Generate();
             return;
         }
-        if(Mathf.Abs(Input.mouseScrollDelta.y) > 0)
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Mathf.Abs(Input.mouseScrollDelta.y) > 0)
+            {
+                WaveformScroll();
+            }
+            if(Input.GetKeyDown(KeyCode.Space) && audioSource.isPlaying)
+            {
+                audioSource.Pause();
+                lastPos = audioSource.time;
+            }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                zoomRect.anchoredPosition = new Vector2(zoomRect.anchoredPosition.x, -zoomRect.anchoredPosition.y);
+            }
+            return;
+        }
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                zoomRect.anchoredPosition = new Vector2(zoomRect.anchoredPosition.x, -zoomRect.anchoredPosition.y);
+            }
+            return;
+        }
+        if (Mathf.Abs(Input.mouseScrollDelta.y) > 0)
         {
             if(!Input.GetKey(KeyCode.LeftControl)) Scroll();
             else Zoom();
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(audioSource.isPlaying) audioSource.Pause();
-            else audioSource.UnPause();
-        }
-        if(Mathf.Abs(Input.mouseScrollDelta.x) > 0)
-        {
-            if(Input.GetKey(KeyCode.LeftControl)) WaveformScroll();
+            if(audioSource.isPlaying) { audioSource.Pause(); audioSource.time = lastPos; }
+            else { lastPos = audioSource.time; audioSource.UnPause(); }
         }
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
-        noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
-        if (audioSource.clip != null)
-        {
-            float audioTime = audioSource.time;
-            TrackerGoToSong(audioTime);
-        }
     }
 
     void TrackerGoToSong(float audioTime)
     {
         float songPercentage = audioTime / audioSource.clip.length;
         float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
-        tracker.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x) + beatOffset, tracker.anchoredPosition.y);
+        float widthOffset = tracker.sizeDelta.x / 2f;
+        tracker.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x) + beatOffset - widthOffset, tracker.anchoredPosition.y);
     }
 
     void Zoom()
@@ -168,7 +192,7 @@ public class MapEditor : MonoBehaviour
 
     void WaveformScroll()
     {
-        float increment = Input.mouseScrollDelta.x * waveformScrollIncrement;
+        float increment = Input.mouseScrollDelta.y * waveformScrollIncrement;
         zoomRect.localPosition = (Vector2)zoomRect.localPosition + (Vector2.right * increment);
     }
 

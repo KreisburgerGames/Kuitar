@@ -1029,10 +1029,10 @@ MonoBehaviour:
   noteParent: {fileID: 638048957}
   metersPerSecond: 5
   zoomLevel: 0
-  scrollSnapIncrement: 1
+  scrollSnapIncrement: 32
   offset: 0
-  songFolder: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH
-  mapPath: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH\easy
+  songFolder: C:\Users\dkreisberg\Documents\Kuitar\Assets\StreamingAssets\Songs\HUSH
+  mapPath: C:\Users\dkreisberg\Documents\Kuitar\Assets\StreamingAssets\Songs\HUSH\easy
   position: 0
   waveformZoomIncrement: 0.1
   zoomRect: {fileID: 25283802}
@@ -1042,6 +1042,7 @@ MonoBehaviour:
   anchor: {fileID: 742970181}
   drawWidth: 2000
   drawHeight: 1000
+  lastPos: 0
 --- !u!4 &1889671769
 Transform:
   m_ObjectHideFlags: 0
