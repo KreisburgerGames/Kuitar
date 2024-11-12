@@ -1029,7 +1029,7 @@ MonoBehaviour:
   noteParent: {fileID: 638048957}
   metersPerSecond: 5
   zoomLevel: 0
-  scrollSnapIncrement: 16
+  scrollSnapIncrement: 1
   offset: 0
   songFolder: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH
   mapPath: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH\easy
