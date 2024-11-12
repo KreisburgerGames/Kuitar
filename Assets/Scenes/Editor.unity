@@ -910,6 +910,7 @@ GameObject:
   - component: {fileID: 1714736238}
   - component: {fileID: 1714736237}
   - component: {fileID: 1714736236}
+  - component: {fileID: 1714736239}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -992,6 +993,22 @@ Transform:
   - {fileID: 965544191}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1714736239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714736235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &1889671767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,10 +1046,11 @@ MonoBehaviour:
   noteParent: {fileID: 638048957}
   metersPerSecond: 5
   zoomLevel: 0
-  scrollSnapIncrement: 32
+  scrollSnapIncrement: 4
+  ArrowIncrement: 32
   offset: 0
-  songFolder: C:\Users\dkreisberg\Documents\Kuitar\Assets\StreamingAssets\Songs\HUSH
-  mapPath: C:\Users\dkreisberg\Documents\Kuitar\Assets\StreamingAssets\Songs\HUSH\easy
+  songFolder: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH
+  mapPath: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH\easy
   position: 0
   waveformZoomIncrement: 0.1
   zoomRect: {fileID: 25283802}
@@ -1043,6 +1061,7 @@ MonoBehaviour:
   drawWidth: 2000
   drawHeight: 1000
   lastPos: 0
+  selectedNotes: []
 --- !u!4 &1889671769
 Transform:
   m_ObjectHideFlags: 0

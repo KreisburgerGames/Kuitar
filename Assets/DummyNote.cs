@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class DummyNote : MonoBehaviour
+public class DummyNote : MonoBehaviour, IPointerClickHandler
 {
     public SpriteRenderer number;
     public int note;
@@ -24,6 +27,8 @@ public class DummyNote : MonoBehaviour
     public bool strum;
     public bool downStrum;
     SpriteRenderer Bg;
+    MapEditor mapEditor;
+    public GameObject selectedHighlight;
 
     public void Init()
     {
@@ -51,5 +56,43 @@ public class DummyNote : MonoBehaviour
         else if(lane == 2) transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 2 End").transform.position.y);
         else if(lane == 3) transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 3 End").transform.position.y);
         else if(lane == 4) transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 4 End").transform.position.y);
+
+        mapEditor = FindFirstObjectByType<MapEditor>();
     }
+
+    void Update()
+    {
+        bool selected = false;
+        foreach(DummyNote note in mapEditor.selectedNotes)
+        {
+            if (note == this)
+            {
+                selected = true;
+            }
+        }
+        if(selected) selectedHighlight.SetActive(true); else selectedHighlight.SetActive(false);
+    }
+
+    void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+    {
+        bool selected = false;
+        foreach(DummyNote note in mapEditor.selectedNotes)
+        {
+            if (note == this)
+            {
+                selected = true;
+            }
+        }
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            if(!selected) mapEditor.selectedNotes.Add(this);
+            else mapEditor.selectedNotes.Remove(this);
+        }
+        else
+        {
+            mapEditor.selectedNotes.Clear();
+            mapEditor.selectedNotes.Add(this);
+        }
+    }
+
 }

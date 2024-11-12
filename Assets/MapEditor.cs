@@ -16,6 +16,7 @@ public class MapEditor : MonoBehaviour
     public float metersPerSecond = 5f;
     public float zoomLevel;
     public float scrollSnapIncrement;
+    public float ArrowIncrement = 32f;
     public float offset;
     public string songFolder = "";
     public string mapPath = "";
@@ -36,6 +37,7 @@ public class MapEditor : MonoBehaviour
     public int drawWidth, drawHeight;
     public float lastPos = 0f;
     bool waveformDownPos = false;
+    public List<DummyNote> selectedNotes = new List<DummyNote>();
 
     // Start is called before the first frame update
     void Start()
@@ -109,14 +111,22 @@ public class MapEditor : MonoBehaviour
             float audioTime = audioSource.time;
             TrackerGoToSong(audioTime);
         }
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            zoomRect.localPosition = originalWaveformPos;
-            anchor.localScale = originalAnchorScale;
-            zoomRect.sizeDelta = originalWaveformScale;
-            draw.width = drawWidth;
-            draw.height = drawHeight;
-            draw.Generate();
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                zoomRect.localPosition = originalWaveformPos;
+                anchor.localScale = originalAnchorScale;
+                zoomRect.sizeDelta = originalWaveformScale;
+                draw.width = drawWidth;
+                draw.height = drawHeight;
+                draw.Generate();
+            }
+            if(Input.GetKeyDown(KeyCode.D))
+            {
+                selectedNotes.Clear();
+            }
+            if(Mathf.Abs(Input.mouseScrollDelta.y) > 0) Zoom();
             return;
         }
         if (Input.GetKey(KeyCode.LeftShift))
@@ -146,13 +156,21 @@ public class MapEditor : MonoBehaviour
         }
         if (Mathf.Abs(Input.mouseScrollDelta.y) > 0)
         {
-            if(!Input.GetKey(KeyCode.LeftControl)) Scroll();
-            else Zoom();
+            Scroll();
+            
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
             if(audioSource.isPlaying) { audioSource.Pause(); audioSource.time = lastPos; }
             else { lastPos = audioSource.time; audioSource.UnPause(); }
+        }
+        if(Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+        {
+            foreach(DummyNote note in selectedNotes)
+            {
+                Destroy(note.gameObject);
+            }
+            selectedNotes.Clear();
         }
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
@@ -176,7 +194,7 @@ public class MapEditor : MonoBehaviour
 
     void IncrementRight()
     {
-        float increment = secondsPerBeat/scrollSnapIncrement * 1;
+        float increment = secondsPerBeat/ArrowIncrement * 1;
         if(audioSource.time + increment < 0) audioSource.time = 0;
         if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
         else audioSource.time += increment;
@@ -184,7 +202,7 @@ public class MapEditor : MonoBehaviour
 
     void IncrementLeft()
     {
-        float increment = secondsPerBeat/scrollSnapIncrement * -1;
+        float increment = secondsPerBeat/ArrowIncrement * -1;
         if(audioSource.time + increment < 0) audioSource.time = 0;
         if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
         else audioSource.time += increment;
