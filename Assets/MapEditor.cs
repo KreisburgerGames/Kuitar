@@ -38,6 +38,11 @@ public class MapEditor : MonoBehaviour
     public float lastPos = 0f;
     bool waveformDownPos = false;
     public List<DummyNote> selectedNotes = new List<DummyNote>();
+    public int selectedNoteNumber;
+    public GameObject dummyNotePrefab;
+    bool selectToStrum = false;
+    bool selectedDownStrum = false;
+    int i = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -85,7 +90,6 @@ public class MapEditor : MonoBehaviour
         reader.Close();
         DifficultySettings difficultySettings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
         metersPerSecond = difficultySettings.reactionBeats;
-        int i = 1;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
             DummyNote note = Instantiate(notePrefab).GetComponent<DummyNote>();
@@ -172,8 +176,56 @@ public class MapEditor : MonoBehaviour
             }
             selectedNotes.Clear();
         }
+        if(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            selectToStrum = true;
+            selectedDownStrum = true;
+        }
+        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            selectToStrum = true;
+            selectedDownStrum = false;
+        }else if(Input.GetKeyDown(KeyCode.X))
+        {
+            selectToStrum = false;
+        }
+        
+        SelectNote();
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
+    }
+
+    void SelectNote()
+    {
+        if(Input.GetKeyDown(KeyCode.C)) selectedNoteNumber = 0;
+        else if(Input.GetKeyDown(KeyCode.Alpha1)) selectedNoteNumber = 1;
+        else if(Input.GetKeyDown(KeyCode.Alpha2)) selectedNoteNumber = 2;
+        else if(Input.GetKeyDown(KeyCode.Alpha3)) selectedNoteNumber = 3;
+        else if(Input.GetKeyDown(KeyCode.Alpha4)) selectedNoteNumber = 4;
+        else if(Input.GetKeyDown(KeyCode.Alpha5)) selectedNoteNumber = 5;
+        else if(Input.GetKeyDown(KeyCode.Alpha6)) selectedNoteNumber = 6;
+        else if(Input.GetKeyDown(KeyCode.Alpha7)) selectedNoteNumber = 7;
+        else if(Input.GetKeyDown(KeyCode.Alpha8)) selectedNoteNumber = 8;
+        else if(Input.GetKeyDown(KeyCode.Alpha9)) selectedNoteNumber = 9;
+        else if(Input.GetKeyDown(KeyCode.Alpha0)) selectedNoteNumber = 10;
+    }
+
+    public void PlaceNote(int lane)
+    {
+        DummyNote note = Instantiate(notePrefab).GetComponent<DummyNote>();
+        note.gameObject.transform.SetParent(noteParent.transform, true);
+        note.gameObject.transform.localPosition = new Vector2((audioSource.time * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
+        note.lane = lane;
+        note.note = selectedNoteNumber;
+        if(!selectToStrum) note.strum = false;
+        else
+        {
+            if(selectedDownStrum) { note.strum = true; note.downStrum = true; }
+            else { note.strum = true; note.downStrum = false; }
+        }
+        note.gameObject.name = "Note " + i.ToString();
+        i++;
+        note.Init();
     }
 
     void TrackerGoToSong(float audioTime)
