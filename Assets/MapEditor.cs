@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
@@ -27,9 +28,13 @@ public class MapEditor : MonoBehaviour
     public RectTransform zoomRect;
     public float waveformScrollIncrement = 3f;
     Vector2 originalWaveformPos;
-    Vector2 originalWaveformScale;
     public Draw draw;
     public RectTransform tracker;
+    public RectTransform anchor;
+    Vector3 originalWaveformScale;
+    Vector3 originalAnchorScale;
+    public int drawWidth, drawHeight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +56,7 @@ public class MapEditor : MonoBehaviour
         noteParent.transform.position = new Vector2(offset, 0);
         originalWaveformPos = zoomRect.localPosition;
         originalWaveformScale = zoomRect.sizeDelta;
+        originalAnchorScale = anchor.localScale;
         draw.Generate();
     }
 
@@ -60,7 +66,7 @@ public class MapEditor : MonoBehaviour
         audioSource.Pause();
         audioSource.time = 0f;
         LoadNotes();
-        draw.clip = audioSource.clip;
+        draw.audioSource = audioSource;
         draw.Generate();
     }
 
@@ -70,6 +76,11 @@ public class MapEditor : MonoBehaviour
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         reader.Close();
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
+        reader = new StreamReader(mapPath + "/difficulty.json");
+        jsonFile = new TextAsset(reader.ReadToEnd());
+        reader.Close();
+        DifficultySettings difficultySettings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
+        metersPerSecond = difficultySettings.reactionBeats;
         int i = 1;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
@@ -89,10 +100,15 @@ public class MapEditor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        zoomLevel = anchor.localScale.x;
         if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Space))
         {
             zoomRect.localPosition = originalWaveformPos;
+            anchor.localScale = originalAnchorScale;
             zoomRect.sizeDelta = originalWaveformScale;
+            draw.width = drawWidth;
+            draw.height = drawHeight;
+            draw.Generate();
             return;
         }
         if(Mathf.Abs(Input.mouseScrollDelta.y) > 0)
@@ -111,22 +127,27 @@ public class MapEditor : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
-        noteParent.transform.position = new Vector3((metersPerSecond * audioSource.time) + offset, 0, 0);
-        TrackerGoToSong();
+        noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
+        if (audioSource.clip != null)
+        {
+            float audioTime = audioSource.time;
+            TrackerGoToSong(audioTime);
+        }
     }
 
-    void TrackerGoToSong()
+    void TrackerGoToSong(float audioTime)
     {
-        if(audioSource == null || audioSource.clip == null) return;
-        float songPercentage = (audioSource.time + (offset/metersPerSecond)) / audioSource.clip.length;
-        tracker.anchoredPosition = new Vector2(zoomRect.sizeDelta.x * songPercentage, tracker.anchoredPosition.y);
+        float songPercentage = audioTime / audioSource.clip.length;
+        float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
+        tracker.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x) + beatOffset, tracker.anchoredPosition.y);
     }
 
     void Zoom()
     {
         float increment = Input.mouseScrollDelta.y * waveformZoomIncrement;
-        zoomRect.sizeDelta = new Vector2(zoomRect.sizeDelta.x + increment, zoomRect.sizeDelta.y);
-        draw.Generate();
+        float newX = anchor.localScale.x + increment;
+        newX = Mathf.Clamp(newX, 1f, 30f);
+        anchor.localScale = new Vector3(newX, anchor.localScale.y, 1f);
     }
 
     void IncrementRight()
