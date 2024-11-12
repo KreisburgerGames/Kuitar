@@ -131,6 +131,7 @@ public class MapEditor : MonoBehaviour
                 selectedNotes.Clear();
             }
             if(Mathf.Abs(Input.mouseScrollDelta.y) > 0) Zoom();
+            if(Input.GetKeyDown(KeyCode.S)) Save();
             return;
         }
         if (Input.GetKey(KeyCode.LeftShift))
@@ -193,6 +194,32 @@ public class MapEditor : MonoBehaviour
         SelectNote();
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
+    }
+
+    void Save()
+    {
+        File.Delete(mapPath + "/notes.json");
+        string json = "{\"notes\": [ ";
+        foreach(DummyNote note in noteParent.GetComponentsInChildren<DummyNote>())
+        {
+            json += " {";
+            float beat = (Mathf.Abs(note.transform.localPosition.x) + offset) / metersPerSecond / secondsPerBeat;
+            json += "\"beat\" : " + beat.ToString() + ", ";
+            int lane = note.lane;
+            json += "\"lane\" : " + lane.ToString() + ", ";
+            if(note.strum)
+            {
+                if(note.downStrum) {json += "\"strum\" : true, "; json += "\"downStrum\" : true, ";}
+                else {json += "\"strum\" : true, "; json += "\"downStrum\" : false, ";}
+            }
+            else json += "\"strum\" : false, "; json += "\"downStrum\" : false, ";
+            int noteNum = note.note;
+            json += "\"note\" : "  + noteNum.ToString() + "}, ";
+        }
+        json = json.Remove(json.Length - 2, 1);
+        json += "] }";
+        File.WriteAllText(mapPath + "/notes.json", json);
+        print("Saved at " + mapPath + "/notes.json");
     }
 
     void SelectNote()
