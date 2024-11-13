@@ -16,11 +16,20 @@ public class EditorSongDisplay : MonoBehaviour
     public Button hard;
     public Button harder;
     public Button difficult;
-    SongList songList;
+    [Header("Map Info")]
+    public TMP_InputField IDInput;
+    public TMP_InputField songNameInput;
+    public TMP_InputField songCoverInput;
+    public TMP_InputField artistNameInput;
+    public TMP_InputField songFileInput;
+    public TMP_InputField mapperInput;
+    public TMP_InputField BPMInput;
+    public TMP_InputField reactionBeatsInput;
+    SongListEditor songList;
 
     void Start()
     {
-        songList = FindFirstObjectByType<SongList>();
+        songList = FindFirstObjectByType<SongListEditor>();
     }
 
     void Update()

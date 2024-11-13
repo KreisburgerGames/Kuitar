@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using System;
+using Unity.VisualScripting;
 
 public class SongListEditor : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class SongListEditor : MonoBehaviour
             TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
             reader.Close();
             SongLoader songLoad = JsonUtility.FromJson<SongLoader>(jsonFile.text);
-            Song song = Instantiate(songItem).GetComponent<Song>();
+            EditorSong song = Instantiate(songItem).GetComponent<EditorSong>();
             song.songFile = songLoad.songFile;
             song.songName = songLoad.songName;
             song.artistName = songLoad.artistName;
@@ -48,22 +49,32 @@ public class SongListEditor : MonoBehaviour
     public void Easy()
     {
         selectedDifficulty = "easy";
+        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
     }
 
     public void Normal()
     {
         selectedDifficulty = "normal";
+        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
     }
     public void Hard()
     {
         selectedDifficulty = "hard";
+        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
     }
     public void Harder()
     {
         selectedDifficulty = "harder";
+        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
     }
     public void Difficult()
     {
         selectedDifficulty = "difficult";
+        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
+    }
+
+    public void OpenEditor()
+    {
+        
     }
 }

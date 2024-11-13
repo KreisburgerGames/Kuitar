@@ -22,7 +22,6 @@ public class EditorSong : MonoBehaviour
     public GameObject mapLoaderOBJ;
     public GameObject songSelection;
     public RawImage songSelectionIMG;
-    private Button button;
     bool practiceMode;
     public AudioClip songClip;
     public bool editor = false;
@@ -35,7 +34,6 @@ public class EditorSong : MonoBehaviour
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Name").GetComponent<TMP_Text>().text = songName;
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Artist").GetComponent<TMP_Text>().text = artistName;
         GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button/Mapper").GetComponent<TMP_Text>().text = mapper;
-        button = GameObject.Find("Camera/Canvas/Scroll View/Viewport/Content/" + gameObject.name + "/Button").GetComponent<Button>();
         GetSongClip();
     }
 
@@ -101,7 +99,60 @@ public class EditorSong : MonoBehaviour
         songDisplay.hard.interactable = Directory.Exists(folderPath + "/hard");
         songDisplay.harder.interactable = Directory.Exists(folderPath + "/harder");
         songDisplay.difficult.interactable = Directory.Exists(folderPath + "/difficult");
+        StreamReader reader = new StreamReader(folderPath + "/info.json");
+        TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+        reader.Close();
+        SongLoader songLoad = JsonUtility.FromJson<SongLoader>(jsonFile.text);
+        songDisplay.IDInput.text = songLoad.id;
+        songDisplay.songNameInput.text = songLoad.songName;
+        songDisplay.songCoverInput.text = songLoad.songCover;
+        songDisplay.artistNameInput.text = songLoad.artistName;
+        songDisplay.songFileInput.text = songLoad.songFile;
+        songDisplay.mapperInput.text = songLoad.mapper;
+        songDisplay.BPMInput.text = songLoad.bpm.ToString();
+        SetReactionBeats(songList, songDisplay);
         songDisplayOBJ.SetActive(true);
+    }
+
+    public void SetReactionBeats(SongListEditor songList, EditorSongDisplay display)
+    {
+        DifficultySettings settings;
+        if(songList.selectedDifficulty == "easy")
+        {
+            StreamReader reader = new StreamReader(folderPath + "/easy/difficulty.json");
+            TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+            settings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
+            reader.Close();
+        }
+        else if(songList.selectedDifficulty == "normal")
+        {
+            StreamReader reader = new StreamReader(folderPath + "/normal/difficulty.json");
+            TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+            settings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
+            reader.Close();
+        }
+        else if(songList.selectedDifficulty == "hard")
+        {
+            StreamReader reader = new StreamReader(folderPath + "/hard/difficulty.json");
+            TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+            settings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
+            reader.Close();
+        }
+        else if(songList.selectedDifficulty == "harder")
+        {
+            StreamReader reader = new StreamReader(folderPath + "/harder/difficulty.json");
+            TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+            settings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
+            reader.Close();
+        }
+        else
+        {
+            StreamReader reader = new StreamReader(folderPath + "/difficult/difficulty.json");
+            TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+            settings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
+            reader.Close();
+        }
+        display.reactionBeatsInput.text = settings.reactionBeats.ToString();
     }
 
     public void StartMap(float startOffset, string difficulty)

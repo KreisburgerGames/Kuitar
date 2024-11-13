@@ -87,7 +87,7 @@ public class MapLoader : MonoBehaviour
         pause.songName = songName;
         pause.bpm = bpm;
         pause.firstBeatOffset = firstBeatOffset;
-        StreamReader reader = new StreamReader(mapPath+ "difficulty.json");
+        StreamReader reader = new StreamReader(mapPath + "difficulty.json");
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         DifficultySettings difficultySettings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
         reader.Close();

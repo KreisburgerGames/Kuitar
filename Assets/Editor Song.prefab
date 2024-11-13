@@ -330,8 +330,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Song, Assembly-CSharp
+      - m_Target: {fileID: 4172858103368824540}
+        m_TargetAssemblyTypeName: EditorSong, Assembly-CSharp
         m_MethodName: Selected
         m_Mode: 1
         m_Arguments:

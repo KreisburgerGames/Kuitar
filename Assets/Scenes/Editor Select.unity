@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 145787522}
   - component: {fileID: 145787521}
   m_Layer: 5
-  m_Name: Start
+  m_Name: Open Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -623,9 +623,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SongList, Assembly-CSharp
-        m_MethodName: StartMap
+      - m_Target: {fileID: 258970573}
+        m_TargetAssemblyTypeName: SongListEditor, Assembly-CSharp
+        m_MethodName: OpenEditor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1394,12 +1394,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d930fcb28d78b640b0126b0f721cbab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songsList: {fileID: 0}
-  songItem: {fileID: 0}
+  songsList: {fileID: 1458569926}
+  songItem: {fileID: 8718332482842070326, guid: a92bd219912e9dd41addebb25dc2363f, type: 3}
   songItemOffset: 170
   selectedSong: {fileID: 0}
-  songDisplay: {fileID: 0}
-  selectedDifficulty: 
+  songDisplay: {fileID: 1097367791}
+  selectedDifficulty: easy
 --- !u!1 &264543933
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,8 +2729,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SongList, Assembly-CSharp
+      - m_Target: {fileID: 258970573}
+        m_TargetAssemblyTypeName: SongListEditor, Assembly-CSharp
         m_MethodName: Hard
         m_Mode: 1
         m_Arguments:
@@ -3666,8 +3666,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SongList, Assembly-CSharp
+      - m_Target: {fileID: 258970573}
+        m_TargetAssemblyTypeName: SongListEditor, Assembly-CSharp
         m_MethodName: Easy
         m_Mode: 1
         m_Arguments:
@@ -4072,15 +4072,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29dce7b7a7e8b5243b27917f4a1ad98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cover: {fileID: 0}
-  songName: {fileID: 0}
-  songArtist: {fileID: 0}
-  mapper: {fileID: 0}
-  easy: {fileID: 0}
-  normal: {fileID: 0}
-  hard: {fileID: 0}
-  harder: {fileID: 0}
-  difficult: {fileID: 0}
+  cover: {fileID: 1790266234}
+  songName: {fileID: 703964261}
+  songArtist: {fileID: 2091112800}
+  mapper: {fileID: 640792819}
+  easy: {fileID: 793610702}
+  normal: {fileID: 1780882902}
+  hard: {fileID: 443916511}
+  harder: {fileID: 1216873343}
+  difficult: {fileID: 1206498629}
+  IDInput: {fileID: 164588774}
+  songNameInput: {fileID: 1125743427}
+  songCoverInput: {fileID: 380259582}
+  artistNameInput: {fileID: 104848948}
+  songFileInput: {fileID: 1303407226}
+  mapperInput: {fileID: 393892988}
+  BPMInput: {fileID: 1990190010}
+  reactionBeatsInput: {fileID: 318362545}
 --- !u!1 &1125743425
 GameObject:
   m_ObjectHideFlags: 0
@@ -4733,8 +4741,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SongList, Assembly-CSharp
+      - m_Target: {fileID: 258970573}
+        m_TargetAssemblyTypeName: SongListEditor, Assembly-CSharp
         m_MethodName: Difficult
         m_Mode: 1
         m_Arguments:
@@ -4866,8 +4874,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SongList, Assembly-CSharp
+      - m_Target: {fileID: 258970573}
+        m_TargetAssemblyTypeName: SongListEditor, Assembly-CSharp
         m_MethodName: Harder
         m_Mode: 1
         m_Arguments:
@@ -5746,7 +5754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00028855604}
+  m_AnchoredPosition: {x: 0, y: -0.00003739038}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1486246623
@@ -6462,8 +6470,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SongList, Assembly-CSharp
+      - m_Target: {fileID: 258970573}
+        m_TargetAssemblyTypeName: SongListEditor, Assembly-CSharp
         m_MethodName: Normal
         m_Mode: 1
         m_Arguments:
