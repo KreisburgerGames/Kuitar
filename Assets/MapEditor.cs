@@ -172,7 +172,6 @@ public class MapEditor : MonoBehaviour
         if (Mathf.Abs(Input.mouseScrollDelta.y) > 0)
         {
             Scroll();
-            
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
@@ -293,6 +292,7 @@ public class MapEditor : MonoBehaviour
         if(audioSource.time + increment < 0) audioSource.time = 0;
         if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
         else audioSource.time += increment;
+        lastPos = audioSource.time;
     }
 
     void IncrementLeft()
@@ -301,6 +301,7 @@ public class MapEditor : MonoBehaviour
         if(audioSource.time + increment < 0) audioSource.time = 0;
         if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
         else audioSource.time += increment;
+        lastPos = audioSource.time;
     }
 
     void WaveformScroll()
@@ -315,5 +316,6 @@ public class MapEditor : MonoBehaviour
         if(audioSource.time + increment < 0) audioSource.time = 0;
         if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
         else audioSource.time += increment;
+        lastPos = audioSource.time;
     }
 }
