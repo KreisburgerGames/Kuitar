@@ -1293,8 +1293,8 @@ MonoBehaviour:
   scrollSnapIncrement: 4
   ArrowIncrement: 32
   offset: 0
-  songFolder: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH
-  mapPath: C:\Users\Dylan\Kuitar\Assets\StreamingAssets\Songs\HUSH\easy
+  songFolder: C:\Users\Kreis\Documents\GitHub\Kuitar\Assets\StreamingAssets\Songs\HUSH
+  mapPath: C:\Users\Kreis\Documents\GitHub\Kuitar\Assets\StreamingAssets\Songs\HUSH\easy
   position: 0
   waveformZoomIncrement: 0.1
   zoomRect: {fileID: 25283802}

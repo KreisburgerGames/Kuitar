@@ -178,7 +178,7 @@ public class MapLoader : MonoBehaviour
                     {
                         json += " {";
                         json += "\"beat\" : " + (((float)x / pixelsPerBeat) + xOffset).ToString() + ", ";
-                        int lane = y + 1;
+                        int lane = 4 - y + 1;
                         json += "\"lane\" : " + lane.ToString() + ", ";
                         if (a == downStrumAlpha) { json += "\"strum\" : true, "; json += "\"downStrum\" : true, ";}
                         else if (a == upStrumAlpha) { json += "\"strum\" : true, "; json += "\"downStrum\" : false, "; }
@@ -226,10 +226,10 @@ public class MapLoader : MonoBehaviour
                 note.strum = noteLoad.strum;
                 note.downStrum = noteLoad.downStrum;
                 string laneStr;
-                if (note.lane == 1) laneStr = "L";
-                else if (note.lane == 2) laneStr = "LM";
-                else if (note.lane == 3) laneStr = "HM";
-                else laneStr = "H";
+                if (note.lane == 1) laneStr = "H";
+                else if (note.lane == 2) laneStr = "HM";
+                else if (note.lane == 3) laneStr = "LM";
+                else laneStr = "L";
                 note.noteStr = laneStr + noteLoad.note.ToString();
                 notes.Add(note);
                 DontDestroyOnLoad(note);
