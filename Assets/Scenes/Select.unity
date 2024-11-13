@@ -774,15 +774,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 258970569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d930fcb28d78b640b0126b0f721cbab, type: 3}
+  m_Script: {fileID: 11500000, guid: 324bf07177a9a8a479619a62c6a9317e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songsList: {fileID: 0}
-  songItem: {fileID: 0}
+  songsList: {fileID: 1458569926}
+  songItem: {fileID: 8718332482842070326, guid: aacf1b62d8aa5eb4d86afd8091d95f7e, type: 3}
   songItemOffset: 170
   selectedSong: {fileID: 0}
-  songDisplay: {fileID: 0}
+  songDisplay: {fileID: 910956904}
+  mapLoader: {fileID: 1612321449769057239, guid: 4a6d67a437bdb8040aa60fefe78e3a3c, type: 3}
+  songStartOffset: 0
   selectedDifficulty: 
+  practiceMode: 0
+  selectedSongClip: {fileID: 0}
+  practiceModeHandler: {fileID: 1064406756}
+  audioSource: {fileID: 258970572}
 --- !u!1 &439791835
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +872,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 258970573}
         m_TargetAssemblyTypeName: SongList, Assembly-CSharp
         m_MethodName: Difficult
         m_Mode: 1
@@ -999,7 +1005,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 258970573}
         m_TargetAssemblyTypeName: SongList, Assembly-CSharp
         m_MethodName: Normal
         m_Mode: 1
@@ -1132,7 +1138,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 258970573}
         m_TargetAssemblyTypeName: SongList, Assembly-CSharp
         m_MethodName: StartMap
         m_Mode: 1
@@ -1912,7 +1918,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1064406756}
         m_TargetAssemblyTypeName: PracticeModeHandler, Assembly-CSharp
         m_MethodName: TogglePracticeMode
         m_Mode: 1
@@ -2044,10 +2050,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd0d50058875354d99f4aceb07af462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songList: {fileID: 0}
-  time: {fileID: 0}
-  timeSelect: {fileID: 0}
-  practiceToggle: {fileID: 0}
+  songList: {fileID: 258970573}
+  time: {fileID: 974681850}
+  timeSelect: {fileID: 1303962289}
+  practiceToggle: {fileID: 1025710252}
   selectedSongClip: {fileID: 0}
   selectedSong: {fileID: 0}
   selectedTime: 0
@@ -2686,7 +2692,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 258970573}
         m_TargetAssemblyTypeName: SongList, Assembly-CSharp
         m_MethodName: Harder
         m_Mode: 1
@@ -2994,7 +3000,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1064406756}
         m_TargetAssemblyTypeName: PracticeModeHandler, Assembly-CSharp
         m_MethodName: SetTime
         m_Mode: 1
@@ -3210,7 +3216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000020141957}
+  m_AnchoredPosition: {x: 0, y: 0.00004289525}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1461195183
@@ -3538,7 +3544,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 197169304}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999975
+  m_Size: 0.99999726
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3664,7 +3670,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 258970573}
         m_TargetAssemblyTypeName: SongList, Assembly-CSharp
         m_MethodName: Hard
         m_Mode: 1
@@ -3797,7 +3803,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 258970573}
         m_TargetAssemblyTypeName: SongList, Assembly-CSharp
         m_MethodName: Easy
         m_Mode: 1
