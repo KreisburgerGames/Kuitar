@@ -29,6 +29,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     SpriteRenderer Bg;
     MapEditor mapEditor;
     public GameObject selectedHighlight;
+    public bool selected = false;
 
     public void Init()
     {
@@ -62,7 +63,8 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
 
     void Update()
     {
-        bool selected = false;
+        selected = false;
+        if (mapEditor == null) mapEditor = FindFirstObjectByType<MapEditor>();
         foreach(DummyNote note in mapEditor.selectedNotes)
         {
             if (note == this)
@@ -75,14 +77,6 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        bool selected = false;
-        foreach(DummyNote note in mapEditor.selectedNotes)
-        {
-            if (note == this)
-            {
-                selected = true;
-            }
-        }
         if(Input.GetKey(KeyCode.LeftShift))
         {
             if(!selected) mapEditor.selectedNotes.Add(this);

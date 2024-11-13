@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -130,7 +132,7 @@ public class MapEditor : MonoBehaviour
             {
                 selectedNotes.Clear();
             }
-            if(Mathf.Abs(Input.mouseScrollDelta.y) > 0) Zoom();
+            if (Mathf.Abs(Input.mouseScrollDelta.y) > 0) Zoom();
             if(Input.GetKeyDown(KeyCode.S)) Save();
             return;
         }
@@ -148,6 +150,14 @@ public class MapEditor : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 zoomRect.anchoredPosition = new Vector2(zoomRect.anchoredPosition.x, -zoomRect.anchoredPosition.y);
+            }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                Undo.PerformUndo();
+            }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                Undo.PerformRedo();
             }
             return;
         }
@@ -171,11 +181,7 @@ public class MapEditor : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
         {
-            foreach(DummyNote note in selectedNotes)
-            {
-                Destroy(note.gameObject);
-            }
-            selectedNotes.Clear();
+            DeleteSelectedNotes();
         }
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -190,7 +196,6 @@ public class MapEditor : MonoBehaviour
         {
             selectToStrum = false;
         }
-        
         SelectNote();
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
@@ -220,6 +225,16 @@ public class MapEditor : MonoBehaviour
         json += "] }";
         File.WriteAllText(mapPath + "/notes.json", json);
         print("Saved at " + mapPath + "/notes.json");
+    }
+
+    void DeleteSelectedNotes()
+    {
+        foreach (DummyNote note in selectedNotes)
+        {
+            note.selected = false;
+            Undo.DestroyObjectImmediate(note.gameObject);
+        }
+        selectedNotes.Clear();
     }
 
     void SelectNote()
@@ -253,6 +268,7 @@ public class MapEditor : MonoBehaviour
         note.gameObject.name = "Note " + i.ToString();
         i++;
         note.Init();
+        Undo.RegisterCreatedObjectUndo(note.gameObject, "Note " + i.ToString());
     }
 
     void TrackerGoToSong(float audioTime)
