@@ -25,19 +25,4 @@ public class EditorSongDisplay : MonoBehaviour
     public TMP_InputField mapperInput;
     public TMP_InputField BPMInput;
     public TMP_InputField reactionBeatsInput;
-    SongListEditor songList;
-
-    void Start()
-    {
-        songList = FindFirstObjectByType<SongListEditor>();
-    }
-
-    void Update()
-    {
-        if(songList.selectedDifficulty == "easy") EventSystem.current.SetSelectedGameObject(easy.gameObject);
-        else if(songList.selectedDifficulty == "normal") EventSystem.current.SetSelectedGameObject(normal.gameObject);
-        else if(songList.selectedDifficulty == "hard") EventSystem.current.SetSelectedGameObject(hard.gameObject);
-        else if(songList.selectedDifficulty == "harder") EventSystem.current.SetSelectedGameObject(harder.gameObject);
-        else if(songList.selectedDifficulty == "difficult") EventSystem.current.SetSelectedGameObject(difficult.gameObject);
-    }
 }
