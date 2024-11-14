@@ -16,11 +16,38 @@ public class SongListEditor : MonoBehaviour
     public GameObject songDisplay;
     public string selectedDifficulty;
     private GameObject tempSong;
-
+    public Color unselectedColor;
+    public Color selectedColor;
+    public Color disabledColor;
+    public Image easy;
+    public Image normal;
+    public Image hard;
+    public Image harder;
+    public Image difficult;
+    public GameObject easyAdd;
+    public GameObject normalAdd;
+    public GameObject hardAdd;
+    public GameObject harderAdd;
+    public GameObject difficultAdd;
+    
     // Start is called before the first frame update
     void Start()
     {
         LoadSongs();
+    }
+    
+    void Update()
+    {
+        ColorButtons();
+    }
+
+    void ColorButtons()
+    {
+        if(easy.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "easy") easy.color = selectedColor; else easy.color = unselectedColor; easyAdd.SetActive(false);} else {easy.color = disabledColor; easyAdd.SetActive(true);}
+        if(normal.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "normal") normal.color = selectedColor; else normal.color = unselectedColor; normalAdd.SetActive(false);} else {normal.color = disabledColor; normalAdd.SetActive(true);}
+        if(hard.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "hard") hard.color = selectedColor; else hard.color = unselectedColor; hardAdd.SetActive(false);} else {hard.color = disabledColor; hardAdd.SetActive(true);}
+        if(harder.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "harder") harder.color = selectedColor; else harder.color = unselectedColor; harderAdd.SetActive(false);} else {harder.color = disabledColor; harderAdd.SetActive(true);}
+        if(difficult.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "difficult")difficult.color = selectedColor; else difficult.color = unselectedColor; difficultAdd.SetActive(false);} else {difficult.color = disabledColor; difficultAdd.SetActive(true);}
     }
 
     public EditorSong loadSong(string path)
