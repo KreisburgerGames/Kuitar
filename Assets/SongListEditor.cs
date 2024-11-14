@@ -42,6 +42,9 @@ public class SongListEditor : MonoBehaviour
     public TMP_InputField newFolderInput;
     public GameObject deleteConfirmScreen;
     public string currentMapPath;
+    public GameObject deleteDifficulty;
+    public string difficultyToDelete;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -54,6 +57,11 @@ public class SongListEditor : MonoBehaviour
     {
         ColorButtons();
         CheckDeletions();
+    }
+
+    public void ToggleDeleteMap()
+    {
+        if(deleteDifficulty.activeSelf) deleteDifficulty.SetActive(false); else deleteDifficulty.SetActive(true);
     }
 
     public void DeleteSelectedMap()
@@ -178,19 +186,26 @@ public class SongListEditor : MonoBehaviour
 
     public void DeleteDifficulty(string difficulty)
     {
-        string newPath = selectedSong.folderPath + "/" + difficulty;
+        difficultyToDelete = difficulty;
+        ToggleDeleteMap();
+    }
+
+    public void DeleteDifficultyConfirm()
+    {
+        string newPath = selectedSong.folderPath + "/" + difficultyToDelete;
         print(newPath);
         if(File.Exists(newPath + ".meta")) File.Delete(newPath + ".meta");
         DirectoryInfo directory = new DirectoryInfo(newPath);
         File.SetAttributes(newPath, FileAttributes.Normal);
         directory.Delete(true);
         while (Directory.Exists(newPath)) Thread.Sleep(0);
-        if(easy.gameObject.GetComponent<Button>().interactable && difficulty != "easy")  Easy();
-        else if(normal.gameObject.GetComponent<Button>().interactable && difficulty != "normal") Normal();
-        else if(hard.gameObject.GetComponent<Button>().interactable && difficulty != "hard") Hard();
-        else if(harder.gameObject.GetComponent<Button>().interactable && difficulty != "harder") Harder();
-        else if(difficult.gameObject.GetComponent<Button>().interactable && difficulty != "difficult") Difficult();
+        if(easy.gameObject.GetComponent<Button>().interactable && difficultyToDelete != "easy")  Easy();
+        else if(normal.gameObject.GetComponent<Button>().interactable && difficultyToDelete != "normal") Normal();
+        else if(hard.gameObject.GetComponent<Button>().interactable && difficultyToDelete != "hard") Hard();
+        else if(harder.gameObject.GetComponent<Button>().interactable && difficultyToDelete != "harder") Harder();
+        else if(difficult.gameObject.GetComponent<Button>().interactable && difficultyToDelete != "difficult") Difficult();
         selectedSong.Selected();
+        ToggleDeleteMap();
     }
 
     public EditorSong loadSong(string path)

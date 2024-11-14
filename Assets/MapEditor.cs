@@ -46,8 +46,12 @@ public class MapEditor : MonoBehaviour
     bool selectedDownStrum = false;
     int i = 1;
 
-    // Start is called before the first frame update
-    void Start()
+    public void OpenEditor()
+    {
+        
+    }
+
+    public void Init()
     {
         song = GetComponent<Song>();
         audioSource = GetComponent<AudioSource>();
