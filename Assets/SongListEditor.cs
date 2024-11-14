@@ -36,18 +36,24 @@ public class SongListEditor : MonoBehaviour
     public GameObject harderRemove;
     public GameObject difficultRemove;
     private EditorSongDisplay editorSongDisplay;
+    public GameObject newSongPrefab;
     
     // Start is called before the first frame update
     void Start()
     {
-        LoadSongs();
         editorSongDisplay = songDisplay.GetComponent<EditorSongDisplay>();
+        LoadSongs();
     }
     
     void Update()
     {
         ColorButtons();
         CheckDeletions();
+    }
+
+    public void NewSong()
+    {
+
     }
 
     void ColorButtons()
@@ -188,6 +194,9 @@ public class SongListEditor : MonoBehaviour
             offset -= songItemOffset;
             song.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, song.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
         }
+        GameObject newSong = Instantiate(newSongPrefab);
+        newSong.transform.SetParent(songsList, false);
+        newSong.transform.localPosition = new Vector2(0, offset - 150);
     }
 
     public void Save()

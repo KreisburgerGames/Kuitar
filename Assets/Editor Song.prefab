@@ -330,7 +330,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4172858103368824540}
+      - m_Target: {fileID: 8844408460116341170}
         m_TargetAssemblyTypeName: EditorSong, Assembly-CSharp
         m_MethodName: Selected
         m_Mode: 1
@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 6478308936774763280}
   - component: {fileID: 2032217656017205565}
   - component: {fileID: 13920455539068353}
-  - component: {fileID: 4172858103368824540}
+  - component: {fileID: 8844408460116341170}
   m_Layer: 5
   m_Name: Editor Song
   m_TagString: Untagged
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4172858103368824540
+--- !u!114 &8844408460116341170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
