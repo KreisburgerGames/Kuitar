@@ -343,6 +343,7 @@ public class SongListEditor : MonoBehaviour
 
     public void OpenEditor()
     {
-        
+        DontDestroyOnLoad(selectedSong.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 }
