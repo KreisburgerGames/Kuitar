@@ -13,6 +13,6 @@ public class NewSong : MonoBehaviour
 
     public void NewSongClicked()
     {
-        songListEditor.NewSong();
+        songListEditor.ToggleNewSong();
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using Unity.VisualScripting;
 using System.Threading;
+using TMPro;
 
 public class SongListEditor : MonoBehaviour
 {
@@ -37,6 +38,10 @@ public class SongListEditor : MonoBehaviour
     public GameObject difficultRemove;
     private EditorSongDisplay editorSongDisplay;
     public GameObject newSongPrefab;
+    public GameObject newSongScreen;
+    public TMP_InputField newFolderInput;
+    public GameObject deleteConfirmScreen;
+    public string currentMapPath;
     
     // Start is called before the first frame update
     void Start()
@@ -51,9 +56,46 @@ public class SongListEditor : MonoBehaviour
         CheckDeletions();
     }
 
-    public void NewSong()
+    public void DeleteSelectedMap()
     {
+        FindFirstObjectByType<EditorSongDisplay>().gameObject.SetActive(false);
+        Destroy(selectedSong.gameObject);
+        selectedSong = null;
+        if(File.Exists(currentMapPath + ".meta")) File.Delete(currentMapPath.TrimEnd(currentMapPath[currentMapPath.Length - 1]) + ".meta");
+        DirectoryInfo directory = new DirectoryInfo(currentMapPath);
+        File.SetAttributes(currentMapPath, FileAttributes.Normal);
+        directory.Delete(true);
+        while (Directory.Exists(currentMapPath)) Thread.Sleep(0);
+        currentMapPath = "";
+        ToggleDeleteConfrim();
+        LoadSongs();
+    }
 
+    public void ToggleDeleteConfrim()
+    {
+        if(deleteConfirmScreen.activeSelf) deleteConfirmScreen.SetActive(false); else deleteConfirmScreen.SetActive(true);
+    }
+
+    public void ToggleNewSong()
+    {
+        if(newSongScreen.activeSelf) newSongScreen.SetActive(false); else newSongScreen.SetActive(true);
+    }
+
+    async public void NewSong()
+    {
+        string folderPath = Application.streamingAssetsPath + "/Songs/" + newFolderInput.text;
+        if(Directory.Exists(folderPath)) return;
+        Directory.CreateDirectory(folderPath);
+        string infoJsonTemplate = "{\"songName\" : \"Song Name\", \"songCover\" : \"cover.png\", \"artistName\" : \"Song Artist\", \"songFile\" : \"song.ogg\", \"mapper\" : \"Mapper\", \"bpm\" : 100, \"firstBeatOffset\" : 0, \"id\" : \"NewSong.YourUniqueID\"}";
+        await File.WriteAllTextAsync(folderPath + "/info.json", infoJsonTemplate);
+        string mapPath = folderPath + "/easy";
+        await Task.Run(() => Directory.CreateDirectory(mapPath));
+        string difficultyJsonTemplate = "{\"pixelsPerBeat\" : 32, \"reactionBeats\" : 8}";
+        await File.WriteAllTextAsync(mapPath + "/difficulty.json", difficultyJsonTemplate);
+        string notesJsonTemplate = "{\"notes\" : []}";
+        await File.WriteAllTextAsync(mapPath + "/notes.json", notesJsonTemplate);
+        ToggleNewSong();
+        LoadSongs();
     }
 
     void ColorButtons()
@@ -116,7 +158,6 @@ public class SongListEditor : MonoBehaviour
 
     async public void AddDifficulty(string difficulty)
     {
-        print("e");
         string newPath = selectedSong.folderPath + "/" + difficulty;
         await Task.Run(() => Directory.CreateDirectory(newPath));
         string difficultyJsonTemplate = "{\"pixelsPerBeat\" : 32, \"reactionBeats\" : 8}";
@@ -169,6 +210,10 @@ public class SongListEditor : MonoBehaviour
     public void LoadSongs()
     {
         float offset = 0f;
+        foreach(NewSong newSongRef in FindObjectsOfType<NewSong>())
+        {
+            Destroy(newSongRef.gameObject);
+        }
         foreach(string name in Directory.GetDirectories(Application.streamingAssetsPath + "/" + "Songs"))
         {
             StreamReader reader = new StreamReader(name + "/info.json");
@@ -187,16 +232,20 @@ public class SongListEditor : MonoBehaviour
             song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             song.folderPath = name;
             song.gameObject.name = songLoad.id;
-            Texture2D loadedIMG = new Texture2D(1, 1);
-            byte[] pngBytes = File.ReadAllBytes(song.folderPath + "/" + song.songCover);
-            loadedIMG.LoadImage(pngBytes);
-            song.songCoverIMG = loadedIMG;
+            if(File.Exists(name + "/" + songLoad.songCover))
+            {
+                Texture2D loadedIMG = new Texture2D(1, 1);
+                byte[] pngBytes = File.ReadAllBytes(song.folderPath + "/" + song.songCover);
+                loadedIMG.LoadImage(pngBytes);
+                song.songCoverIMG = loadedIMG;
+            }
             offset -= songItemOffset;
             song.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, song.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
         }
         GameObject newSong = Instantiate(newSongPrefab);
         newSong.transform.SetParent(songsList, false);
         newSong.transform.localPosition = new Vector2(0, offset - 150);
+        newSong.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, newSong.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
     }
 
     public void Save()

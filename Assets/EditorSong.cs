@@ -88,6 +88,7 @@ public class EditorSong : MonoBehaviour
     {
         SongListEditor songList = FindFirstObjectByType<SongListEditor>();
         songList.selectedSong = this;
+        songList.currentMapPath = folderPath;
         GameObject songDisplayOBJ = songList.songDisplay;
         EditorSongDisplay songDisplay = songDisplayOBJ.GetComponent<EditorSongDisplay>();
         songDisplay.cover.texture = songCoverIMG;
