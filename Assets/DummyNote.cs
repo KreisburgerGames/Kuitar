@@ -30,6 +30,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     MapEditor mapEditor;
     public GameObject selectedHighlight;
     public bool selected = false;
+    public float beat;
 
     public void Init()
     {
