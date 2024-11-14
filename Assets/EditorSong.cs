@@ -94,6 +94,7 @@ public class EditorSong : MonoBehaviour
         songDisplay.songName.text = songName;
         songDisplay.songArtist.text = artistName;
         songDisplay.mapper.text = mapper;
+        print(folderPath + "/easy");
         songDisplay.easy.interactable = Directory.Exists(folderPath + "/easy");
         songDisplay.normal.interactable = Directory.Exists(folderPath + "/normal");
         songDisplay.hard.interactable = Directory.Exists(folderPath + "/hard");

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 using System;
 using Unity.VisualScripting;
+using System.Threading;
 
 public class SongListEditor : MonoBehaviour
 {
@@ -111,9 +112,7 @@ public class SongListEditor : MonoBehaviour
     {
         print("e");
         string newPath = selectedSong.folderPath + "/" + difficulty;
-        DirectoryInfo d = null;
-        await Task.Run(() => d = Directory.CreateDirectory(newPath));
-        d.Attributes = FileAttributes.Normal;
+        await Task.Run(() => Directory.CreateDirectory(newPath));
         string difficultyJsonTemplate = "{\"pixelsPerBeat\" : 32, \"reactionBeats\" : 8}";
         await File.WriteAllTextAsync(newPath + "/difficulty.json", difficultyJsonTemplate);
         string notesJsonTemplate = "{\"notes\" : []}";
@@ -121,15 +120,20 @@ public class SongListEditor : MonoBehaviour
         selectedSong.Selected();
     }
 
-    async public void DeleteDifficulty(string difficulty)
+    public void DeleteDifficulty(string difficulty)
     {
         string newPath = selectedSong.folderPath + "/" + difficulty;
-        await Task.Run(() => Directory.Delete(newPath, true));
-        if(easy.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "easy")  Easy();
-        else if(normal.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "normal") Normal();
-        else if(hard.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "hard") Hard();
-        else if(harder.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "harder") Harder();
-        else if(difficult.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "difficult") Difficult();
+        print(newPath);
+        if(File.Exists(newPath + ".meta")) File.Delete(newPath + ".meta");
+        DirectoryInfo directory = new DirectoryInfo(newPath);
+        File.SetAttributes(newPath, FileAttributes.Normal);
+        directory.Delete(true);
+        while (Directory.Exists(newPath)) Thread.Sleep(0);
+        if(easy.gameObject.GetComponent<Button>().interactable && difficulty != "easy")  Easy();
+        else if(normal.gameObject.GetComponent<Button>().interactable && difficulty != "normal") Normal();
+        else if(hard.gameObject.GetComponent<Button>().interactable && difficulty != "hard") Hard();
+        else if(harder.gameObject.GetComponent<Button>().interactable && difficulty != "harder") Harder();
+        else if(difficult.gameObject.GetComponent<Button>().interactable && difficulty != "difficult") Difficult();
         selectedSong.Selected();
     }
 
