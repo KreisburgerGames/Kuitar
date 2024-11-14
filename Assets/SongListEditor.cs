@@ -8,6 +8,7 @@ using System;
 using Unity.VisualScripting;
 using System.Threading;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SongListEditor : MonoBehaviour
 {
@@ -345,5 +346,18 @@ public class SongListEditor : MonoBehaviour
     {
         DontDestroyOnLoad(selectedSong.gameObject);
         DontDestroyOnLoad(gameObject);
+        StartCoroutine(OpenEditorTask());
+    }
+
+    private IEnumerator OpenEditorTask()
+    {
+        
+        SceneManager.LoadScene("Editor");
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.01f);
+        MapEditor editor = FindFirstObjectByType<MapEditor>();
+        editor.songFolder = selectedSong.folderPath;
+        editor.mapPath = selectedSong.folderPath + "/" + selectedDifficulty;
+        editor.Init();
     }
 }

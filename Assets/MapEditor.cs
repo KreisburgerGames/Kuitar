@@ -53,6 +53,8 @@ public class MapEditor : MonoBehaviour
 
     public void Init()
     {
+        if(FindFirstObjectByType<SongListEditor>() != null) Destroy(FindFirstObjectByType<SongListEditor>().gameObject);
+        if(FindFirstObjectByType<EditorSong>() != null) Destroy(FindFirstObjectByType<EditorSong>().gameObject);
         song = GetComponent<Song>();
         audioSource = GetComponent<AudioSource>();
         song.folderPath = songFolder;
