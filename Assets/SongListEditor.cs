@@ -29,16 +29,24 @@ public class SongListEditor : MonoBehaviour
     public GameObject hardAdd;
     public GameObject harderAdd;
     public GameObject difficultAdd;
+    public GameObject easyRemove;
+    public GameObject normalRemove;
+    public GameObject hardRemove;
+    public GameObject harderRemove;
+    public GameObject difficultRemove;
+    private EditorSongDisplay editorSongDisplay;
     
     // Start is called before the first frame update
     void Start()
     {
         LoadSongs();
+        editorSongDisplay = songDisplay.GetComponent<EditorSongDisplay>();
     }
     
     void Update()
     {
         ColorButtons();
+        CheckDeletions();
     }
 
     void ColorButtons()
@@ -48,6 +56,81 @@ public class SongListEditor : MonoBehaviour
         if(hard.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "hard") hard.color = selectedColor; else hard.color = unselectedColor; hardAdd.SetActive(false);} else {hard.color = disabledColor; hardAdd.SetActive(true);}
         if(harder.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "harder") harder.color = selectedColor; else harder.color = unselectedColor; harderAdd.SetActive(false);} else {harder.color = disabledColor; harderAdd.SetActive(true);}
         if(difficult.gameObject.GetComponent<Button>().interactable) { if(selectedDifficulty == "difficult")difficult.color = selectedColor; else difficult.color = unselectedColor; difficultAdd.SetActive(false);} else {difficult.color = disabledColor; difficultAdd.SetActive(true);}
+    }
+
+    void CheckDeletions()
+    {
+        if(easy.gameObject.GetComponent<Button>().interactable)
+        {
+            bool onlyDifficulty = true;
+            if(normal.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(hard.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(harder.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(difficult.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(!onlyDifficulty) easyRemove.SetActive(true); else easyRemove.SetActive(false);
+        } else easyRemove.SetActive(false);
+        if(normal.gameObject.GetComponent<Button>().interactable)
+        {
+            bool onlyDifficulty = true;
+            if(easy.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(hard.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(harder.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(difficult.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(!onlyDifficulty) normalRemove.SetActive(true); else normalRemove.SetActive(false);
+        } else normalRemove.SetActive(false);
+        if(hard.gameObject.GetComponent<Button>().interactable)
+        {
+            bool onlyDifficulty = true;
+            if(normal.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(easy.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(harder.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(difficult.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(!onlyDifficulty) hardRemove.SetActive(true); else hardRemove.SetActive(false);
+        } else hardRemove.SetActive(false);
+        if(harder.gameObject.GetComponent<Button>().interactable)
+        {
+            bool onlyDifficulty = true;
+            if(normal.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(hard.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(easy.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(difficult.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(!onlyDifficulty) harderRemove.SetActive(true); else harderRemove.SetActive(false);
+        } else harderRemove.SetActive(false);
+        if(difficult.gameObject.GetComponent<Button>().interactable)
+        {
+            bool onlyDifficulty = true;
+            if(normal.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(hard.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(harder.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(easy.gameObject.GetComponent<Button>().interactable) onlyDifficulty = false;
+            if(!onlyDifficulty) difficultRemove.SetActive(true); else difficultRemove.SetActive(false);
+        } else difficultRemove.SetActive(false);
+    }
+
+    async public void AddDifficulty(string difficulty)
+    {
+        print("e");
+        string newPath = selectedSong.folderPath + "/" + difficulty;
+        DirectoryInfo d = null;
+        await Task.Run(() => d = Directory.CreateDirectory(newPath));
+        d.Attributes = FileAttributes.Normal;
+        string difficultyJsonTemplate = "{\"pixelsPerBeat\" : 32, \"reactionBeats\" : 8}";
+        await File.WriteAllTextAsync(newPath + "/difficulty.json", difficultyJsonTemplate);
+        string notesJsonTemplate = "{\"notes\" : []}";
+        await File.WriteAllTextAsync(newPath + "/notes.json", notesJsonTemplate);
+        selectedSong.Selected();
+    }
+
+    async public void DeleteDifficulty(string difficulty)
+    {
+        string newPath = selectedSong.folderPath + "/" + difficulty;
+        await Task.Run(() => Directory.Delete(newPath, true));
+        if(easy.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "easy")  Easy();
+        else if(normal.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "normal") Normal();
+        else if(hard.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "hard") Hard();
+        else if(harder.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "harder") Harder();
+        else if(difficult.gameObject.GetComponent<Button>().interactable && selectedDifficulty != "difficult") Difficult();
+        selectedSong.Selected();
     }
 
     public EditorSong loadSong(string path)
@@ -153,22 +236,22 @@ public class SongListEditor : MonoBehaviour
     public void Normal()
     {
         selectedDifficulty = "normal";
-        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
+        selectedSong.SetReactionBeats(this, editorSongDisplay);
     }
     public void Hard()
     {
         selectedDifficulty = "hard";
-        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
+        selectedSong.SetReactionBeats(this, editorSongDisplay);
     }
     public void Harder()
     {
         selectedDifficulty = "harder";
-        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
+        selectedSong.SetReactionBeats(this, editorSongDisplay);
     }
     public void Difficult()
     {
         selectedDifficulty = "difficult";
-        selectedSong.SetReactionBeats(this, songDisplay.GetComponent<EditorSongDisplay>());
+        selectedSong.SetReactionBeats(this, editorSongDisplay);
     }
 
     public void OpenEditor()
