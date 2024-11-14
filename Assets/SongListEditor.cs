@@ -58,16 +58,24 @@ public class SongListEditor : MonoBehaviour
 
     public void DeleteSelectedMap()
     {
+        StartCoroutine(OnDelete());
+    }
+
+    private IEnumerator OnDelete()
+    {
         FindFirstObjectByType<EditorSongDisplay>().gameObject.SetActive(false);
         Destroy(selectedSong.gameObject);
         selectedSong = null;
-        if(File.Exists(currentMapPath + ".meta")) File.Delete(currentMapPath.TrimEnd(currentMapPath[currentMapPath.Length - 1]) + ".meta");
+        if(File.Exists(currentMapPath + ".meta")) File.Delete(currentMapPath + ".meta");
         DirectoryInfo directory = new DirectoryInfo(currentMapPath);
         File.SetAttributes(currentMapPath, FileAttributes.Normal);
         directory.Delete(true);
-        while (Directory.Exists(currentMapPath)) Thread.Sleep(0);
+        while(Directory.Exists(currentMapPath)) Thread.Sleep(0);
         currentMapPath = "";
         ToggleDeleteConfrim();
+        foreach(EditorSong song in FindObjectsOfType<EditorSong>()) Destroy(song.gameObject);
+        yield return new WaitForEndOfFrame();
+        Thread.Sleep(10);
         LoadSongs();
     }
 
@@ -95,7 +103,8 @@ public class SongListEditor : MonoBehaviour
         string notesJsonTemplate = "{\"notes\" : []}";
         await File.WriteAllTextAsync(mapPath + "/notes.json", notesJsonTemplate);
         ToggleNewSong();
-        LoadSongs();
+        foreach(EditorSong song in FindObjectsOfType<EditorSong>()) Destroy(song.gameObject);
+        StartCoroutine(WaitLoad());
     }
 
     void ColorButtons()
@@ -285,7 +294,8 @@ public class SongListEditor : MonoBehaviour
     
     private IEnumerator WaitLoad()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.01f);
         LoadSongs();
     }
 
