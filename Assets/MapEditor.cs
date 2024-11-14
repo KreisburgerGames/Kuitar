@@ -85,6 +85,7 @@ public class MapEditor : MonoBehaviour
 
     public void TimeScrollbar()
     {
+        if(audioSource.isPlaying) return;
         float songLength = song.songClip.length;
         float selectedTime = MathF.Round(timeScrollbar.value * songLength, 2);
         song.GetComponent<AudioSource>().time = selectedTime;
@@ -152,6 +153,7 @@ public class MapEditor : MonoBehaviour
     {
         UpdateText();
         SetDirAndNoteText();
+        timeScrollbar.value = audioSource.time / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
         noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
         if (audioSource.clip != null)
@@ -375,7 +377,7 @@ public class MapEditor : MonoBehaviour
 
     void Scroll()
     {
-        float increment = secondsPerBeat/scrollSnapIncrement * Input.mouseScrollDelta.y;
+        float increment = secondsPerBeat * scrollSnapIncrement * Input.mouseScrollDelta.y;
         if(audioSource.time + increment < 0) audioSource.time = 0;
         if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
         else audioSource.time += increment;
