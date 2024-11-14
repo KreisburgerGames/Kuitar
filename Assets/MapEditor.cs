@@ -307,7 +307,7 @@ public class MapEditor : MonoBehaviour
 
     void SelectNote()
     {
-        if(EventSystem.current.currentSelectedGameObject.tag == "Input") return;
+        if(EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.tag == "Input") return;
         if(Input.GetKeyDown(KeyCode.C)) selectedNoteNumber = 0;
         else if(Input.GetKeyDown(KeyCode.Alpha1)) selectedNoteNumber = 1;
         else if(Input.GetKeyDown(KeyCode.Alpha2)) selectedNoteNumber = 2;
