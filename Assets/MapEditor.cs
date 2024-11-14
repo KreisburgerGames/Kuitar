@@ -9,6 +9,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MapEditor : MonoBehaviour
@@ -253,16 +254,19 @@ public class MapEditor : MonoBehaviour
         {
             note.gameObject.transform.localPosition = new Vector2((note.beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
         }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void ScrollSpeedChanged()
     {
         scrollSnapIncrement = float.Parse(scrollSpeedInput.text);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void arrowIncrementChanged()
     {
         arrowIncrement = int.Parse(arrowIncrementInput.text);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     void Save()
@@ -303,6 +307,7 @@ public class MapEditor : MonoBehaviour
 
     void SelectNote()
     {
+        if(EventSystem.current.currentSelectedGameObject.tag == "Input") return;
         if(Input.GetKeyDown(KeyCode.C)) selectedNoteNumber = 0;
         else if(Input.GetKeyDown(KeyCode.Alpha1)) selectedNoteNumber = 1;
         else if(Input.GetKeyDown(KeyCode.Alpha2)) selectedNoteNumber = 2;

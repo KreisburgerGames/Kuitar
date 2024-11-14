@@ -8,6 +8,7 @@ TagManager:
   - Cache
   - Lane Ends
   - Lanes
+  - Input
   layers:
   - Default
   - TransparentFX
