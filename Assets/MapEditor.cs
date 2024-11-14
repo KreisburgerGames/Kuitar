@@ -53,6 +53,8 @@ public class MapEditor : MonoBehaviour
     public TMP_InputField noteSpacingInput;
     public TMP_InputField scrollSpeedInput;
     public TMP_InputField arrowIncrementInput;
+    public TMP_Text selectedDir;
+    public TMP_Text selectedNote;
     int i = 1;
 
     public void Init()
@@ -134,10 +136,22 @@ public class MapEditor : MonoBehaviour
         }
     }
 
+    void SetDirAndNoteText()
+    {
+        // Direction
+        if(!selectToStrum) selectedDir.text = "Pluck";
+        else if (selectedDownStrum) selectedDir.text = "Down";
+        else selectedDir.text = "Up";
+
+        // Note
+        selectedNote.text = selectedNoteNumber.ToString();
+    }
+
     // Update is called once per frame
     void Update()
     {
         UpdateText();
+        SetDirAndNoteText();
         zoomLevel = anchor.localScale.x;
         noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
         if (audioSource.clip != null)
