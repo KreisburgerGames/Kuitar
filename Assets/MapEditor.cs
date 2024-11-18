@@ -32,7 +32,7 @@ public class MapEditor : MonoBehaviour, ICommand
     public float waveformScrollIncrement = 3f;
     Vector2 originalWaveformPos;
     public Draw draw;
-    public RectTransform tracker;
+    public RectTransform trackerAnchor;
     public RectTransform anchor;
     Vector3 originalWaveformScale;
     Vector3 originalAnchorScale;
@@ -54,7 +54,8 @@ public class MapEditor : MonoBehaviour, ICommand
     public TMP_Text selectedNote;
     public Image waveform;
     public CommandInvoker invoker;
-    public float trackerSizeScaler = 1f;
+    public float trackerSizeScaler = 100f;
+    public RectTransform tracker;
     int i = 1;
 
     public void Init()
@@ -318,9 +319,8 @@ public class MapEditor : MonoBehaviour, ICommand
     void TrackerGoToSong(float audioTime)
     {
         float songPercentage = audioTime / audioSource.clip.length;
-        float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
-        float widthOffset = 0.5f;
-        tracker.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x) + beatOffset - widthOffset, tracker.anchoredPosition.y);
+        //float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
+        trackerAnchor.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x), trackerAnchor.anchoredPosition.y);
     }
 
     void Zoom()
