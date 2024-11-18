@@ -1807,61 +1807,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &775050075
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 775050077}
-  - component: {fileID: 775050076}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &775050076
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775050075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Editor Manager (GameObject)
-    - Modified Tracker Size Scaler in Editor Manager
-    - Modified Tracker Size Scaler in Editor Manager
-    - Select Image (GameObject)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified Local Scale.y in Image
---- !u!4 &775050077
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775050075}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &783314613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3075,6 +3020,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4791044232189494708, guid: d2a7774bd754e094b88fd11d2a3b687d, type: 3}
+      propertyPath: width
+      value: 1280
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791044232189494708, guid: d2a7774bd754e094b88fd11d2a3b687d, type: 3}
+      propertyPath: height
+      value: 720
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791044232189494708, guid: d2a7774bd754e094b88fd11d2a3b687d, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1889671771}
@@ -3539,6 +3492,65 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!1 &1821838103
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1821838105}
+  - component: {fileID: 1821838104}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1821838104
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821838103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select EditorSettings (GameObject)
+    - Select Editor Manager (GameObject)
+    - Select Waveform (GameObject)
+    - Modified Width in Waveform
+    - Modified Width in Waveform
+    - Modified Width in Waveform
+    - Modified Width in Waveform
+    - Modified Width in Waveform
+    - Modified Height in Waveform
+    - Modified Height in Waveform
+    - Modified Height in Waveform
+--- !u!4 &1821838105
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821838103}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857981494
 GameObject:
   m_ObjectHideFlags: 0
@@ -3846,4 +3858,4 @@ SceneRoots:
   - {fileID: 638048958}
   - {fileID: 997741141}
   - {fileID: 1546542017}
-  - {fileID: 775050077}
+  - {fileID: 1821838105}
