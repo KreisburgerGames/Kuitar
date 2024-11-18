@@ -106,6 +106,7 @@ public class MapEditor : MonoBehaviour, ICommand
         audioSource.time = 0f;
         LoadNotes();
         draw.audioSource = audioSource;
+        draw.Generate(songFolder);
     }
 
     void LoadNotes()

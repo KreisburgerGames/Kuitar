@@ -412,7 +412,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &204195441
+--- !u!1 &92539831
 GameObject:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,8 +420,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 204195443}
-  - component: {fileID: 204195442}
+  - component: {fileID: 92539833}
+  - component: {fileID: 92539832}
   m_Layer: 0
   m_Name: UndoProRecords
   m_TagString: Untagged
@@ -429,13 +429,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &204195442
+--- !u!114 &92539832
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204195441}
+  m_GameObject: {fileID: 92539831}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
@@ -445,29 +445,20 @@ MonoBehaviour:
   undoState:
     redoRecords: []
     undoRecords:
-    - Select Waveform (GameObject)
-    - Select Waveform (GameObject)
-    - Delete Game Objects
-    - Select Note (Asset)
-    - ' Drag Instantiate'
-    - ' Drag Instantiate'
-    - Select Waveform (GameObject)
-    - Drag and Drop Waveform
-    - Change Waveform Parent
-    - Modified Audio Source in Waveform
     - Select EventSystem (GameObject)
+    - Select Notes Parent (GameObject)
     - Select Editor Manager (GameObject)
-    - Modified Waveform in Editor Manager
-    - Modified Tracker in Editor Manager
-    - Modified Zoom Rect in Editor Manager
-    - Modified Zoom Rect in Editor Manager
---- !u!4 &204195443
+    - Select Main Camera (GameObject)
+    - Select Waveform (GameObject)
+    - Select Editor Manager (GameObject)
+    - Modified Draw in Editor Manager
+--- !u!4 &92539833
 Transform:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204195441}
+  m_GameObject: {fileID: 92539831}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -3181,6 +3172,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7079320580854123496, guid: d2a7774bd754e094b88fd11d2a3b687d, type: 3}
   m_PrefabInstance: {fileID: 1679221765}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1679221769 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4791044232189494708, guid: d2a7774bd754e094b88fd11d2a3b687d, type: 3}
+  m_PrefabInstance: {fileID: 1679221765}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1807d93f8e7154cadbacc3f7a55318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1688390889
 GameObject:
   m_ObjectHideFlags: 0
@@ -3489,6 +3491,7 @@ GameObject:
   - component: {fileID: 1889671769}
   - component: {fileID: 1889671768}
   - component: {fileID: 1889671771}
+  - component: {fileID: 1889671772}
   m_Layer: 0
   m_Name: Editor Manager
   m_TagString: Untagged
@@ -3523,7 +3526,7 @@ MonoBehaviour:
   waveformZoomIncrement: 0.1
   zoomRect: {fileID: 1679221768}
   waveformScrollIncrement: 3
-  draw: {fileID: 0}
+  draw: {fileID: 1679221769}
   tracker: {fileID: 1679221767}
   anchor: {fileID: 742970181}
   drawWidth: 2000
@@ -3653,6 +3656,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1889671772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889671767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21d61ea904f94f44be9cace9ea7009a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  folderPath: 
+  songFile: 
+  songName: 
+  artistName: 
+  songCover: 
+  mapper: 
+  bpm: 0
+  firstBeatOffset: 0
+  songCoverIMG: {fileID: 0}
+  mapLoaderOBJ: {fileID: 0}
+  songSelection: {fileID: 0}
+  songSelectionIMG: {fileID: 0}
+  songClip: {fileID: 0}
+  editor: 1
+  waitingForClip: 0
 --- !u!1 &1911872847
 GameObject:
   m_ObjectHideFlags: 0
@@ -3714,4 +3744,4 @@ SceneRoots:
   - {fileID: 638048958}
   - {fileID: 997741141}
   - {fileID: 1546542017}
-  - {fileID: 204195443}
+  - {fileID: 92539833}
