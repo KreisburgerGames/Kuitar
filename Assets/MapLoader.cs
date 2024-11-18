@@ -131,7 +131,7 @@ public class MapLoader : MonoBehaviour
     async Task<AudioClip> LoadClip(string path)
     {
         AudioClip clip = null;
-        using (UnityEngine.Networking.UnityWebRequest uwr = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(path, AudioType.OGGVORBIS))
+        using (UnityEngine.Networking.UnityWebRequest uwr = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV))
         {
             uwr.SendWebRequest();
 

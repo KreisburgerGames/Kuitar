@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>FftSharp</id>
+    <version>1.1.6</version>
+    <authors>Scott Harden</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>icon.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/swharden/FftSharp</projectUrl>
+    <description>A .NET Standard library for computing the Fast Fourier Transform (FFT) of real or complex data</description>
+    <releaseNotes>https://github.com/swharden/FftSharp/releases</releaseNotes>
+    <tags>fft ifft fourier transform audio signal sound filter window hanning hamming</tags>
+    <repository type="git" url="https://github.com/swharden/FftSharp" commit="77c56f37f209263918048f8a32dbb4130d44c106" />
+    <dependencies>
+      <group targetFramework="net5.0" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.Memory" version="4.5.5" exclude="Build,Analyzers" />
+        <dependency id="System.ValueTuple" version="4.5.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

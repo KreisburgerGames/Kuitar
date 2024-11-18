@@ -1,18 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Threading;
 
-public class MapEditor : MonoBehaviour
+public class MapEditor : MonoBehaviour, ICommand
 {
     Camera camera;
     public GameObject laneEnds;
@@ -56,7 +52,11 @@ public class MapEditor : MonoBehaviour
     public TMP_InputField arrowIncrementInput;
     public TMP_Text selectedDir;
     public TMP_Text selectedNote;
+    private SpectrogramIMGGenerator specGen;
+    public Image waveform;
+    public CommandInvoker invoker;
     int i = 1;
+    private bool hasSpectrogram = true;
 
     public void Init()
     {
@@ -81,7 +81,21 @@ public class MapEditor : MonoBehaviour
         originalWaveformPos = zoomRect.localPosition;
         originalWaveformScale = zoomRect.sizeDelta;
         originalAnchorScale = anchor.localScale;
-        draw.Generate();
+        specGen = Instantiate(new GameObject().AddComponent<SpectrogramIMGGenerator>());
+        specGen.gameObject.name = "Spec Gen";
+        //if(!File.Exists(songFolder + "/spectrogram.png")) { GenerateSpectrogram(); return; }
+        hasSpectrogram = false;
+    }
+
+    private void GenerateSpectrogram()
+    {
+        specGen.GetSpectrum(song.folderPath, song.songFile);
+        while(!File.Exists(song.folderPath + "/spectrogram.png")) Thread.Sleep(0);
+        string filename = "Assets/Resources/Heightmaps/filename.png";
+        var rawData = File.ReadAllBytes(filename);
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(rawData);
+        waveform.overrideSprite = Sprite.Create(tex, new Rect(0f, 0f, tex.width, tex.height), new Vector2(0.5f, 0.5f));;
     }
 
     public void TimeScrollbar()
@@ -107,8 +121,8 @@ public class MapEditor : MonoBehaviour
         audioSource.Pause();
         audioSource.time = 0f;
         LoadNotes();
-        draw.audioSource = audioSource;
-        draw.Generate();
+        //draw.audioSource = audioSource;
+        //GenerateSpectrogram();
     }
 
     void LoadNotes()
@@ -124,16 +138,7 @@ public class MapEditor : MonoBehaviour
         metersPerSecond = difficultySettings.reactionBeats;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            DummyNote note = Instantiate(notePrefab).GetComponent<DummyNote>();
-            note.gameObject.transform.SetParent(noteParent.transform, true);
-            note.gameObject.transform.localPosition = new Vector2((noteLoad.beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
-            note.lane = noteLoad.lane;
-            note.note = noteLoad.note;
-            note.beat = noteLoad.beat;
-            note.strum = noteLoad.strum;
-            note.downStrum = noteLoad.downStrum;
-            note.gameObject.name = "Note " + i.ToString();
-            note.Init();
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat * secondsPerBeat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i));
             i++;
         }
     }
@@ -169,9 +174,7 @@ public class MapEditor : MonoBehaviour
                 zoomRect.localPosition = originalWaveformPos;
                 anchor.localScale = originalAnchorScale;
                 zoomRect.sizeDelta = originalWaveformScale;
-                draw.width = drawWidth;
-                draw.height = drawHeight;
-                draw.Generate();
+                //GenerateSpectrogram();
             }
             if(Input.GetKeyDown(KeyCode.D))
             {
@@ -299,8 +302,8 @@ public class MapEditor : MonoBehaviour
     {
         foreach (DummyNote note in selectedNotes)
         {
-            note.selected = false;
-            Undo.DestroyObjectImmediate(note.gameObject);
+            PlaceNote.RemoveNote(note.gameObject.transform.localPosition);
+            i--;
         }
         selectedNotes.Clear();
     }
@@ -321,23 +324,10 @@ public class MapEditor : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Alpha0)) selectedNoteNumber = 10;
     }
 
-    public void PlaceNote(int lane)
+    public void PlaceNoteAction(int lane)
     {
-        DummyNote note = Instantiate(notePrefab).GetComponent<DummyNote>();
-        note.gameObject.transform.SetParent(noteParent.transform, true);
-        note.gameObject.transform.localPosition = new Vector2((audioSource.time * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
-        note.lane = lane;
-        note.note = selectedNoteNumber;
-        if(!selectToStrum) note.strum = false;
-        else
-        {
-            if(selectedDownStrum) { note.strum = true; note.downStrum = true; }
-            else { note.strum = true; note.downStrum = false; }
-        }
-        note.gameObject.name = "Note " + i.ToString();
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, audioSource.time, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i));
         i++;
-        note.Init();
-        Undo.RegisterCreatedObjectUndo(note.gameObject, "Note " + i.ToString());
     }
 
     void TrackerGoToSong(float audioTime)
@@ -388,4 +378,20 @@ public class MapEditor : MonoBehaviour
         else audioSource.time += increment;
         lastPos = audioSource.time;
     }
+
+    public void Execute()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PerformUndo()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PerformRedo()
+    {
+        throw new NotImplementedException();
+    }
+
 }

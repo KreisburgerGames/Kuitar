@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.seneral.undopro": {
+      "version": "https://github.com/Seneral/UndoPro.git#release-pkg",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e32df3892bedc7cf0eec374e1504de1f69b56ded"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.2",
       "depth": 1,
