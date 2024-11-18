@@ -54,6 +54,7 @@ public class MapEditor : MonoBehaviour, ICommand
     public TMP_Text selectedNote;
     public Image waveform;
     public CommandInvoker invoker;
+    public float trackerSizeScaler = 1f;
     int i = 1;
 
     public void Init()
@@ -146,6 +147,7 @@ public class MapEditor : MonoBehaviour, ICommand
         timeScrollbar.value = audioSource.time / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
         noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
+        tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
             float audioTime = audioSource.time;
@@ -317,7 +319,7 @@ public class MapEditor : MonoBehaviour, ICommand
     {
         float songPercentage = audioTime / audioSource.clip.length;
         float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
-        float widthOffset = tracker.sizeDelta.x / 2f;
+        float widthOffset = 0.5f;
         tracker.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x) + beatOffset - widthOffset, tracker.anchoredPosition.y);
     }
 

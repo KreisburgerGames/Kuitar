@@ -69,7 +69,7 @@ public class Draw : MonoBehaviour
     {
         if (audioSource.clip == null) return;
         Texture2D texture = PaintWaveformSpectrum(audioSource, width, height, waveformColor, folderPath);
-        texture.filterMode = FilterMode.Point;
+        texture.filterMode = FilterMode.Trilinear;
         img.overrideSprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 }
