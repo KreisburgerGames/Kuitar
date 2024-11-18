@@ -1,18 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Threading;
 
-public class MapEditor : MonoBehaviour
+public class MapEditor : MonoBehaviour, ICommand
 {
     Camera camera;
     public GameObject laneEnds;
@@ -36,7 +32,7 @@ public class MapEditor : MonoBehaviour
     public float waveformScrollIncrement = 3f;
     Vector2 originalWaveformPos;
     public Draw draw;
-    public RectTransform tracker;
+    public RectTransform trackerAnchor;
     public RectTransform anchor;
     Vector3 originalWaveformScale;
     Vector3 originalAnchorScale;
@@ -56,6 +52,10 @@ public class MapEditor : MonoBehaviour
     public TMP_InputField arrowIncrementInput;
     public TMP_Text selectedDir;
     public TMP_Text selectedNote;
+    public Image waveform;
+    public CommandInvoker invoker;
+    public float trackerSizeScaler = 100f;
+    public RectTransform tracker;
     int i = 1;
 
     public void Init()
@@ -81,7 +81,7 @@ public class MapEditor : MonoBehaviour
         originalWaveformPos = zoomRect.localPosition;
         originalWaveformScale = zoomRect.sizeDelta;
         originalAnchorScale = anchor.localScale;
-        draw.Generate();
+        draw.Generate(songFolder);
     }
 
     public void TimeScrollbar()
@@ -108,7 +108,7 @@ public class MapEditor : MonoBehaviour
         audioSource.time = 0f;
         LoadNotes();
         draw.audioSource = audioSource;
-        draw.Generate();
+        draw.Generate(songFolder);
     }
 
     void LoadNotes()
@@ -124,16 +124,7 @@ public class MapEditor : MonoBehaviour
         metersPerSecond = difficultySettings.reactionBeats;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            DummyNote note = Instantiate(notePrefab).GetComponent<DummyNote>();
-            note.gameObject.transform.SetParent(noteParent.transform, true);
-            note.gameObject.transform.localPosition = new Vector2((noteLoad.beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
-            note.lane = noteLoad.lane;
-            note.note = noteLoad.note;
-            note.beat = noteLoad.beat;
-            note.strum = noteLoad.strum;
-            note.downStrum = noteLoad.downStrum;
-            note.gameObject.name = "Note " + i.ToString();
-            note.Init();
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat * secondsPerBeat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i));
             i++;
         }
     }
@@ -157,6 +148,7 @@ public class MapEditor : MonoBehaviour
         timeScrollbar.value = audioSource.time / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
         noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
+        tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
             float audioTime = audioSource.time;
@@ -169,9 +161,6 @@ public class MapEditor : MonoBehaviour
                 zoomRect.localPosition = originalWaveformPos;
                 anchor.localScale = originalAnchorScale;
                 zoomRect.sizeDelta = originalWaveformScale;
-                draw.width = drawWidth;
-                draw.height = drawHeight;
-                draw.Generate();
             }
             if(Input.GetKeyDown(KeyCode.D))
             {
@@ -299,8 +288,8 @@ public class MapEditor : MonoBehaviour
     {
         foreach (DummyNote note in selectedNotes)
         {
-            note.selected = false;
-            Undo.DestroyObjectImmediate(note.gameObject);
+            PlaceNote.RemoveNote(note.gameObject.transform.localPosition);
+            i--;
         }
         selectedNotes.Clear();
     }
@@ -321,31 +310,17 @@ public class MapEditor : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Alpha0)) selectedNoteNumber = 10;
     }
 
-    public void PlaceNote(int lane)
+    public void PlaceNoteAction(int lane)
     {
-        DummyNote note = Instantiate(notePrefab).GetComponent<DummyNote>();
-        note.gameObject.transform.SetParent(noteParent.transform, true);
-        note.gameObject.transform.localPosition = new Vector2((audioSource.time * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
-        note.lane = lane;
-        note.note = selectedNoteNumber;
-        if(!selectToStrum) note.strum = false;
-        else
-        {
-            if(selectedDownStrum) { note.strum = true; note.downStrum = true; }
-            else { note.strum = true; note.downStrum = false; }
-        }
-        note.gameObject.name = "Note " + i.ToString();
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, audioSource.time, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i));
         i++;
-        note.Init();
-        Undo.RegisterCreatedObjectUndo(note.gameObject, "Note " + i.ToString());
     }
 
     void TrackerGoToSong(float audioTime)
     {
         float songPercentage = audioTime / audioSource.clip.length;
-        float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
-        float widthOffset = tracker.sizeDelta.x / 2f;
-        tracker.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x) + beatOffset - widthOffset, tracker.anchoredPosition.y);
+        //float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
+        trackerAnchor.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x), trackerAnchor.anchoredPosition.y);
     }
 
     void Zoom()
@@ -354,6 +329,7 @@ public class MapEditor : MonoBehaviour
         float newX = anchor.localScale.x + increment;
         newX = Mathf.Clamp(newX, 1f, 30f);
         anchor.localScale = new Vector3(newX, anchor.localScale.y, 1f);
+        draw.Generate(songFolder);
     }
 
     void IncrementRight()
@@ -388,4 +364,20 @@ public class MapEditor : MonoBehaviour
         else audioSource.time += increment;
         lastPos = audioSource.time;
     }
+
+    public void Execute()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PerformUndo()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PerformRedo()
+    {
+        throw new NotImplementedException();
+    }
+
 }

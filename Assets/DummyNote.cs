@@ -31,6 +31,10 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public GameObject selectedHighlight;
     public bool selected = false;
     public float beat;
+    public string index;
+    public Transform parent;
+    public Vector2 position;
+    public bool history = false;
 
     public void Init()
     {
@@ -64,6 +68,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
 
     void Update()
     {
+        if(history) return;
         selected = false;
         if (mapEditor == null) mapEditor = FindFirstObjectByType<MapEditor>();
         foreach(DummyNote note in mapEditor.selectedNotes)

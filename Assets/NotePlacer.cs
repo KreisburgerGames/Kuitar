@@ -10,7 +10,7 @@ public class NotePlacer : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        mapEditor.PlaceNote(lane);
+        mapEditor.PlaceNoteAction(lane);
     }
 
 }
