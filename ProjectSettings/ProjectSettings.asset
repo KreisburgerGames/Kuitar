@@ -646,11 +646,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: Kuitar
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: Kreisburger Games
+  metroCertificateIssuer: Kreisburger Games
+  metroCertificateNotAfter: 005e9b5df458dc01
   metroApplicationDescription: Kuitar
   wsaImages: {}
   metroTileShortName: 

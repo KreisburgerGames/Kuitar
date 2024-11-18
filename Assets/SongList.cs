@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SongList : MonoBehaviour
 {
@@ -50,6 +51,11 @@ public class SongList : MonoBehaviour
             song.songCoverIMG = loadedIMG;
             offset -= songItemOffset;
         }
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void Easy()

@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Threading;
 
-public class MapEditor : MonoBehaviour, ICommand
+public class MapEditor : MonoBehaviour
 {
     Camera camera;
     public GameObject laneEnds;
@@ -57,6 +57,7 @@ public class MapEditor : MonoBehaviour, ICommand
     public float trackerSizeScaler = 100f;
     public RectTransform tracker;
     int i = 1;
+    public EditorPauseMenu pause;
 
     public void Init()
     {
@@ -82,6 +83,8 @@ public class MapEditor : MonoBehaviour, ICommand
         originalWaveformScale = zoomRect.sizeDelta;
         originalAnchorScale = anchor.localScale;
         draw.Generate(songFolder);
+        pause.songFileName = songFolder + "/" + song.songFile;
+        pause.songFolder = songFolder;
     }
 
     public void TimeScrollbar()
@@ -185,14 +188,6 @@ public class MapEditor : MonoBehaviour, ICommand
             {
                 zoomRect.anchoredPosition = new Vector2(zoomRect.anchoredPosition.x, -zoomRect.anchoredPosition.y);
                 editorSettings.anchoredPosition = new Vector2(editorSettings.anchoredPosition.x, -editorSettings.anchoredPosition.y);
-            }
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                Undo.PerformUndo();
-            }
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                Undo.PerformRedo();
             }
             return;
         }
@@ -319,8 +314,7 @@ public class MapEditor : MonoBehaviour, ICommand
     void TrackerGoToSong(float audioTime)
     {
         float songPercentage = audioTime / audioSource.clip.length;
-        //float beatOffset = zoomRect.sizeDelta.x * (secondsPerBeat/audioSource.clip.length);
-        trackerAnchor.anchoredPosition = new Vector2((songPercentage * zoomRect.sizeDelta.x), trackerAnchor.anchoredPosition.y);
+        trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
     }
 
     void Zoom()
@@ -364,20 +358,4 @@ public class MapEditor : MonoBehaviour, ICommand
         else audioSource.time += increment;
         lastPos = audioSource.time;
     }
-
-    public void Execute()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void PerformUndo()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void PerformRedo()
-    {
-        throw new NotImplementedException();
-    }
-
 }

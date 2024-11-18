@@ -45,8 +45,12 @@ public class SongListEditor : MonoBehaviour
     public string currentMapPath;
     public GameObject deleteDifficulty;
     public string difficultyToDelete;
-    
-    
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
