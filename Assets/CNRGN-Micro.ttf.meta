@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a6e08aa1ae5622146b42e960195c2e0f
+guid: 2aa3db9860a7df94586591098817a8e4
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Smack Laideth Down 2024
+  - CNRGN Micro
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

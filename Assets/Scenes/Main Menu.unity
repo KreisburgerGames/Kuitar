@@ -182,7 +182,7 @@ MonoBehaviour:
   m_text: Settings
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_text: Kuitar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -801,7 +801,7 @@ MonoBehaviour:
   m_text: Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -935,7 +935,7 @@ MonoBehaviour:
   m_text: Editor
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1428,7 +1428,7 @@ MonoBehaviour:
   m_text: Quit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1635,6 +1635,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708352743}
   m_CullTransparentMesh: 1
+--- !u!1 &1807688464
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1807688466}
+  - component: {fileID: 1807688465}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1807688465
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807688464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Modified Default Font Asset in TMP Settings
+    - Clear Selection
+    - Drag and Drop Multiple Objects
+    - Select NuGet (Asset)
+    - Select Multiple from Project
+    - Clear Selection
+    - Select NoteLoad (Asset)
+    - Select BGColorSettings (Asset)
+    - Select Smack Laideth Down 2024 (Asset)
+    - Select Smack Laideth Down 2024 SDF (Asset)
+    - Modified Default Font Asset in TMP Settings
+    - Select Canvas (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Select CNRGN-Micro (Asset)
+    - Select Smack Laideth Down 2024 SDF (Asset)
+    - Select CNRGN-Micro (Asset)
+    - Select CNRGN-Micro SDF 1 (Asset)
+    - Modified Default Font Asset in TMP Settings
+    - Clear Selection
+    - Modified Default Font Asset in TMP Settings
+    - Select Text (TMP) (GameObject)
+    - Clear Selection
+    - Select CNRGN-Micro (Asset)
+    - Select CNRGN-Micro SDF (Asset)
+    - Select Smack Laideth Down 2024 (Asset)
+    - Select Multiple from Project
+    - Clear Selection
+    - Modified Default Font Asset in TMP Settings
+    - Select Text (TMP) (GameObject)
+    - Modified 2 properties in Text (TMP)
+    - Select Editor (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Modified 2 properties in 4 Objects
+    - Clear Selection
+--- !u!4 &1807688466
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807688464}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1642,3 +1727,4 @@ SceneRoots:
   - {fileID: 1471990099}
   - {fileID: 405363847}
   - {fileID: 179419986}
+  - {fileID: 1807688466}
