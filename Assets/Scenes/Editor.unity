@@ -2531,6 +2531,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114342364}
   m_CullTransparentMesh: 1
+--- !u!1 &1163889934
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1163889936}
+  - component: {fileID: 1163889935}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1163889935
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163889934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Canvas (GameObject)
+    - Select Waveform (GameObject)
+    - Modified RectTransform Values
+    - Modified RectTransform Values
+    - Modified RectTransform Values
+    - Move Waveform(0.00, -3.99, 90.00)
+    - Move
+    - Select Anchor (GameObject)
+    - Select Tracker Anchor (GameObject)
+    - Select Waveform (GameObject)
+    - Move Waveform(0.00, -3.99, 90.00)
+    - Move
+    - Select Canvas (GameObject)
+    - Select Main Camera (GameObject)
+    - Select Lane Ends (GameObject)
+    - Select Canvas (GameObject)
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Driving RectTransform
+    - Modified Update Rect Transform For Standalone in Canvas
+    - Modified Update Rect Transform For Standalone in Canvas
+    - Modified Vertex Color Always Gamma Space in Canvas
+    - Modified Vertex Color Always Gamma Space in Canvas
+    - Modified Vertex Color Always Gamma Space in Canvas
+    - Modified Vertex Color Always Gamma Space in Canvas
+    - Modified 2 properties in PlayerSettings
+    - Change TierSettings
+    - Change TierSettings
+--- !u!4 &1163889936
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163889934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1226897863
 GameObject:
   m_ObjectHideFlags: 0
@@ -3228,79 +3305,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &1703514650
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1703514652}
-  - component: {fileID: 1703514651}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1703514651
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703514650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Image (GameObject)
-    - Select Waveform (GameObject)
-    - Create GameObject
-    - Create GameObject
-    - Reparenting
-    - Add RectTransform
-    - Create GameObject
-    - Select GameObject (GameObject)
-    - Select Waveform (GameObject)
-    - Select Image (GameObject)
-    - Select GameObject (GameObject)
-    - 'Save changes to Prefab: Waveform'
-    - Select Waveform (GameObject)
-    - Unpack Prefab instance
-    - Change GameObject Parent
-    - Select GameObject (GameObject)
-    - Change Image Parent
-    - Select Image (GameObject)
-    - Select Editor Manager (GameObject)
-    - Modified Tracker in Editor Manager
-    - Modified Tracker Anchor in Editor Manager
-    - Modified Tracker in Editor Manager
-    - Select Waveform (GameObject)
-    - Select GameObject (GameObject)
-    - Modified Name in GameObject
---- !u!4 &1703514652
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703514650}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1714736235
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,7 +3522,7 @@ MonoBehaviour:
   selectedNote: {fileID: 783314615}
   waveform: {fileID: 5493494796500396599}
   invoker: {fileID: 1546542016}
-  trackerSizecaler: 1
+  trackerSizeScaler: 100
   tracker: {fileID: 7616863111392089147}
 --- !u!4 &1889671769
 Transform:
@@ -3818,8 +3822,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0050015, y: -205}
-  m_SizeDelta: {x: 750, y: 400}
+  m_AnchoredPosition: {x: 0, y: -188.5}
+  m_SizeDelta: {x: 750, y: 377}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7543470439006545328
 CanvasRenderer:
@@ -3858,4 +3862,4 @@ SceneRoots:
   - {fileID: 638048958}
   - {fileID: 997741141}
   - {fileID: 1546542017}
-  - {fileID: 1703514652}
+  - {fileID: 1163889936}
