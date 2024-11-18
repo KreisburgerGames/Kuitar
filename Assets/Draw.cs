@@ -1,16 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Draw : MonoBehaviour
 {
-    public Texture2D PaintWaveformSpectrum(AudioSource aud, int width, int height, Color waveformColor){
+    public Texture2D PaintWaveformSpectrum(AudioSource aud, int width, int height, Color waveformColor, string folderPath){
+        
+        Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        
+        if(File.Exists(folderPath + "/spectrogram.png"))
+        {
+            byte[] pngBytes = File.ReadAllBytes(folderPath + "/spectrogram.png");
+            tex.LoadImage(pngBytes);
+            return tex;
+        }
         int halfheight = height / 2;
         float heightscale = (float)height * 0.75f;
 
         // get the sound data
-        Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        
         float[] waveform = new float[width];
 
         int samplesize = aud.clip.samples * aud.clip.channels;
@@ -55,10 +65,10 @@ public class Draw : MonoBehaviour
     [SerializeField] Image img;
     public AudioSource audioSource;
 
-    public void Generate()
+    public void Generate(string folderPath)
     {
         if (audioSource.clip == null) return;
-        Texture2D texture = PaintWaveformSpectrum(audioSource, width, height, waveformColor);
+        Texture2D texture = PaintWaveformSpectrum(audioSource, width, height, waveformColor, folderPath);
         texture.filterMode = FilterMode.Point;
         img.overrideSprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }

@@ -52,11 +52,9 @@ public class MapEditor : MonoBehaviour, ICommand
     public TMP_InputField arrowIncrementInput;
     public TMP_Text selectedDir;
     public TMP_Text selectedNote;
-    private SpectrogramIMGGenerator specGen;
     public Image waveform;
     public CommandInvoker invoker;
     int i = 1;
-    private bool hasSpectrogram = true;
 
     public void Init()
     {
@@ -81,21 +79,7 @@ public class MapEditor : MonoBehaviour, ICommand
         originalWaveformPos = zoomRect.localPosition;
         originalWaveformScale = zoomRect.sizeDelta;
         originalAnchorScale = anchor.localScale;
-        specGen = Instantiate(new GameObject().AddComponent<SpectrogramIMGGenerator>());
-        specGen.gameObject.name = "Spec Gen";
-        //if(!File.Exists(songFolder + "/spectrogram.png")) { GenerateSpectrogram(); return; }
-        hasSpectrogram = false;
-    }
-
-    private void GenerateSpectrogram()
-    {
-        specGen.GetSpectrum(song.folderPath, song.songFile);
-        while(!File.Exists(song.folderPath + "/spectrogram.png")) Thread.Sleep(0);
-        string filename = "Assets/Resources/Heightmaps/filename.png";
-        var rawData = File.ReadAllBytes(filename);
-        Texture2D tex = new Texture2D(2, 2);
-        tex.LoadImage(rawData);
-        waveform.overrideSprite = Sprite.Create(tex, new Rect(0f, 0f, tex.width, tex.height), new Vector2(0.5f, 0.5f));;
+        draw.Generate(songFolder);
     }
 
     public void TimeScrollbar()
@@ -121,8 +105,7 @@ public class MapEditor : MonoBehaviour, ICommand
         audioSource.Pause();
         audioSource.time = 0f;
         LoadNotes();
-        //draw.audioSource = audioSource;
-        //GenerateSpectrogram();
+        draw.audioSource = audioSource;
     }
 
     void LoadNotes()
@@ -174,7 +157,6 @@ public class MapEditor : MonoBehaviour, ICommand
                 zoomRect.localPosition = originalWaveformPos;
                 anchor.localScale = originalAnchorScale;
                 zoomRect.sizeDelta = originalWaveformScale;
-                //GenerateSpectrogram();
             }
             if(Input.GetKeyDown(KeyCode.D))
             {
@@ -344,6 +326,7 @@ public class MapEditor : MonoBehaviour, ICommand
         float newX = anchor.localScale.x + increment;
         newX = Mathf.Clamp(newX, 1f, 30f);
         anchor.localScale = new Vector3(newX, anchor.localScale.y, 1f);
+        draw.Generate(songFolder);
     }
 
     void IncrementRight()
