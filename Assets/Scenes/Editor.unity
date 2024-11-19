@@ -744,7 +744,7 @@ MonoBehaviour:
   m_text: Note Spacing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_text: "5\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_text: 0:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_text: Arrow Increment
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1823,7 +1823,7 @@ MonoBehaviour:
   m_text: "32\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2099,7 +2099,7 @@ MonoBehaviour:
   m_text: "0.5\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2209,57 +2209,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &758635197
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 758635199}
-  - component: {fileID: 758635198}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &758635198
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758635197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords:
-    - Modified Local Scale.x in Image
-    undoRecords:
-    - Select Image (GameObject)
-    - Modified RectTransform Values
---- !u!4 &758635199
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758635197}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &783314613
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,7 +2269,7 @@ MonoBehaviour:
   m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3171,7 +3120,7 @@ MonoBehaviour:
   m_text: Pluck
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3627,7 +3576,7 @@ MonoBehaviour:
   m_text: Scroll Speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3816,7 +3765,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 180}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -4155,6 +4104,67 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!1 &1772964039
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1772964041}
+  - component: {fileID: 1772964040}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1772964040
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772964039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Canvas (1) (GameObject)
+    - Modified Match Width Or Height in Canvas (1)
+    - Modified Reference Resolution.y in Canvas (1)
+    - Modified Match Width Or Height in Canvas (1)
+    - Modified Match Width Or Height in Canvas (1)
+    - Modified Match Width Or Height in Canvas (1)
+    - Modified Match Width Or Height in Canvas (1)
+    - Modified Match Width Or Height in Canvas (1)
+    - Select Waveform (GameObject)
+    - Modified RectTransform Values
+    - Modified RectTransform Values
+    - Select Image (GameObject)
+    - Select Anchor (GameObject)
+--- !u!4 &1772964041
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772964039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857981494
 GameObject:
   m_ObjectHideFlags: 0
@@ -4698,7 +4708,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0050015, y: -175}
-  m_SizeDelta: {x: 715, y: 300}
+  m_SizeDelta: {x: 675, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7543470439006545328
 CanvasRenderer:
@@ -4738,4 +4748,4 @@ SceneRoots:
   - {fileID: 997741141}
   - {fileID: 1546542017}
   - {fileID: 906856910}
-  - {fileID: 758635199}
+  - {fileID: 1772964041}
