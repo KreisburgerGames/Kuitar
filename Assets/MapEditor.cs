@@ -236,6 +236,7 @@ public class MapEditor : MonoBehaviour
         metersPerSecond = float.Parse(noteSpacingInput.text);
         foreach(DummyNote note in FindObjectsOfType<DummyNote>())
         {
+            print(note.beat.ToString());
             note.gameObject.transform.localPosition = new Vector2((note.beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
         }
         EventSystem.current.SetSelectedGameObject(null);

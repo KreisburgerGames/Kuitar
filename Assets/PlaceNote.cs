@@ -13,6 +13,7 @@ public static class PlaceNote
         note.position = note.gameObject.transform.localPosition;
         note.lane = lane;
         note.note = selectedNoteNumber;
+        note.beat = beat;
         if(!selectToStrum) note.strum = false;
         else
         {
