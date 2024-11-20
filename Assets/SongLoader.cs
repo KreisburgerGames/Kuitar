@@ -13,4 +13,5 @@ public class SongLoader
     public float bpm;
     public float firstBeatOffset;
     public string id;
+    public string playlist;
 }

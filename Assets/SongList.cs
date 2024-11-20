@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 
 public class SongList : MonoBehaviour
 {
-    public Transform songsList;
     public GameObject songItem;
     public float songItemOffset = 170f;
     public Song selectedSong;
@@ -41,12 +40,17 @@ public class SongList : MonoBehaviour
             song.bpm = songLoad.bpm;
             song.firstBeatOffset = songLoad.firstBeatOffset;
             song.mapLoaderOBJ = mapLoader;
-            song.gameObject.transform.SetParent(songsList, false);
-            song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             song.folderPath = name;
             song.gameObject.name = songLoad.id;
             Texture2D loadedIMG = new Texture2D(1, 1);
             byte[] pngBytes = File.ReadAllBytes(song.folderPath + "/" + song.songCover);
+            if(songLoad.playlist == null || songLoad.playlist == "")
+            {
+                song.playlist = "Custom";
+            }
+            else song.playlist = songLoad.playlist;
+            song.gameObject.transform.SetParent(GameObject.Find("Camera/Canvas/" + song.playlist + "/Viewport/Content").transform, false);
+            song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             loadedIMG.LoadImage(pngBytes);
             song.songCoverIMG = loadedIMG;
             offset -= songItemOffset;
