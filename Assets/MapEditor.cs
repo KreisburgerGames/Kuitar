@@ -120,11 +120,6 @@ public class MapEditor : MonoBehaviour
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         reader.Close();
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
-        reader = new StreamReader(mapPath + "/difficulty.json");
-        jsonFile = new TextAsset(reader.ReadToEnd());
-        reader.Close();
-        DifficultySettings difficultySettings = JsonUtility.FromJson<DifficultySettings>(jsonFile.text);
-        metersPerSecond = difficultySettings.reactionBeats;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
             invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat * secondsPerBeat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i));
@@ -236,9 +231,9 @@ public class MapEditor : MonoBehaviour
         metersPerSecond = float.Parse(noteSpacingInput.text);
         foreach(DummyNote note in FindObjectsOfType<DummyNote>())
         {
-            print(note.beat.ToString());
-            note.gameObject.transform.localPosition = new Vector2((note.beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
+            Destroy(note.gameObject);
         }
+        LoadNotes();
         EventSystem.current.SetSelectedGameObject(null);
     }
 
