@@ -1106,7 +1106,7 @@ Transform:
   m_GameObject: {fileID: 790708025}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -0.036665812}
+  m_LocalPosition: {x: 0, y: -3, z: -0.036665812}
   m_LocalScale: {x: 0.85, y: 1.7087629, z: 0.8762886}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1847,170 +1847,6 @@ Transform:
   - {fileID: 212665901}
   m_Father: {fileID: 519420032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1355060815
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1355060817}
-  - component: {fileID: 1355060816}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1355060816
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355060815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Canvas (GameObject)
-    - Select Pause Menu (GameObject)
-    - Select No Post Process (GameObject)
-    - Select Canvas (GameObject)
-    - Change Canvas Parent
-    - Select Pause Menu (GameObject)
-    - Select Canvas (GameObject)
-    - Modified RectTransform Values
-    - Modified Render Mode in Canvas
-    - Select Pause Menu (GameObject)
-    - Modified Is Active in Pause Menu
-    - Select Canvas (GameObject)
-    - Change Canvas Parent
-    - Change Canvas Parent
-    - Modified Sorting Order in Canvas
-    - Modified Sorting Order in Canvas
-    - Change Layer of Canvas
-    - Modified RectTransform Values
-    - Modified Render Mode in Canvas
-    - Modified RectTransform Values
-    - Modified Render Mode in Canvas
-    - Change Canvas Parent
-    - Modified Camera in Canvas
-    - Change Layer of Canvas
-    - Clear Selection
-    - Select Canvas (GameObject)
-    - Clear Selection
-    - Select Pause Menu (GameObject)
-    - Modified Is Active in Pause Menu
-    - Select Lane Ends (GameObject)
-    - Select Lane BG 1 (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Set Scale to (0.97, 1.95, 1.00) in Selected Objects
-    - Modified Constrain Proportions Scale in 12 Objects
-    - Scale changed
-    - Scale changed
-    - Select Lane 1 (GameObject)
-    - Set Position to (0.00, 3.00, 0.00) in Lane 1
-    - Modified Local Position.y in Lane 1
-    - Select Lane 2 (GameObject)
-    - Set Position to (0.00, 1.00, 0.00) in Lane 2
-    - Modified Local Position.y in Lane 2
-    - Select Lane 3 (GameObject)
-    - Set Position to (0.00, -1.00, 0.00) in Lane 3
-    - Modified Local Position.y in Lane 3
-    - Select Lane 4 (GameObject)
-    - Set Position to (0.00, -3.00, 0.00) in Lane 4
-    - Modified Local Position.y in Lane 4
-    - Select Lane BG 1 (GameObject)
-    - Set Position to (0.00, 3.00, -0.04) in Lane BG 1
-    - Modified Local Position.y in Lane BG 1
-    - Select Lane BG 2 (GameObject)
-    - Set Position to (0.00, 1.00, -0.04) in Lane BG 2
-    - Modified Local Position.y in Lane BG 2
-    - Select Lane BG 3 (GameObject)
-    - Set Position to (0.00, -1.00, -0.04) in Lane BG 3
-    - Modified Local Position.y in Lane BG 3
-    - Select Lane BG 4 (GameObject)
-    - Set Position to (0.00, 3.00, -0.04) in Lane BG 4
-    - Modified Local Position.y in Lane BG 4
-    - Select Lane 1 End (GameObject)
-    - Set Position to (0.00, 3.00, -0.04) in Lane 1 End
-    - Modified Local Position.y in Lane 1 End
-    - Select Lane 2 End (GameObject)
-    - Set Position to (0.00, 1.00, -0.04) in Lane 2 End
-    - Modified Local Position.y in Lane 2 End
-    - Select Lane 3 End (GameObject)
-    - Set Position to (0.00, -1.00, -0.04) in Lane 3 End
-    - Modified Local Position.y in Lane 3 End
-    - Select Lane 4 End (GameObject)
-    - Set Position to (0.00, -3.00, -0.04) in Lane 4 End
-    - Modified Local Position.y in Lane 4 End
-    - Clear Selection
-    - Place Note
-    - Place Note
-    - Select Note (GameObject)
-    - Modified Sorting Order in Note
-    - Modified Sorting Order in Note
-    - Select GameObject (GameObject)
-    - Modified Sorting Order in GameObject
-    - Select Note (GameObject)
-    - Move Note(-7.97, -3.01, 0.00)
-    - Move
-    - Resize Note
-    - Resize Note
-    - Resize Note
-    - Resize Note
-    - Set Scale to (0.17, 0.34, 1.00) in Note
-    - Modified Local Scale.x in Note
-    - Set Scale to (0.17, 0.34, 1.00) in Note
-    - Modified Local Scale.y in Note
-    - Clear Selection
-    - Select Note (GameObject)
-    - Resize Note
-    - Resize Note
-    - Resize Note
-    - Resize Note
-    - Set Scale to (0.17, 0.34, 1.00) in Note
-    - Modified Local Scale.y in Note
-    - Resize Note
-    - Resize Note
-    - Set Scale to (0.17, 0.34, 1.00) in Note
-    - Modified Local Scale.y in Note
-    - Set Scale to (0.17, 0.34, 1.00) in Note
-    - Modified Local Scale.x in Note
-    - Clear Selection
-    - Create/Replace Prefab
-    - Create/Replace prefab
-    - Select Note (Asset)
-    - Select Note (GameObject)
-    - Select Note (GameObject)
-    - Delete Game Objects
---- !u!4 &1355060817
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355060815}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1378977764
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,6 +2196,66 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1713254020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1459940781
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1459940783}
+  - component: {fileID: 1459940782}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1459940782
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459940781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Lane 1 End (GameObject)
+    - Select Lane BG 1 (GameObject)
+    - Select Lane BG 2 (GameObject)
+    - Select Lane BG 3 (GameObject)
+    - Select Lane BG 1 (GameObject)
+    - Select Lane BG 2 (GameObject)
+    - Select Lane BG 4 (GameObject)
+    - Select Lane BG 3 (GameObject)
+    - Select Lane BG 4 (GameObject)
+    - Set Position to (0.00, -3.00, -0.04) in Lane BG 4
+    - Modified Local Position.y in Lane BG 4
+    - Clear Selection
+--- !u!4 &1459940783
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459940781}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1461805677
 GameObject:
@@ -3093,4 +2989,4 @@ SceneRoots:
   - {fileID: 597952975}
   - {fileID: 1903284188}
   - {fileID: 730186265}
-  - {fileID: 1355060817}
+  - {fileID: 1459940783}
