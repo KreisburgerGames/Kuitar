@@ -102,9 +102,8 @@ public class Conductor : MonoBehaviour
     private bool canEnd = false;
     public int combo = 0;
     public int multiplier = 1;
-    public List<int> levelUps = new List<int>();
+    public List<Combo> combos = new List<Combo>();
     // Is this enough varibles for u pookie?
-
 
     void Start()
     {
@@ -179,7 +178,7 @@ public class Conductor : MonoBehaviour
             isStrumming = true;
             foreach(Note note2 in readyNotes)
             {
-                float checkhitScore = CalculateScore(GetEndLaneX(note2) - note2.gameObject.transform.position.x, note2.lane);
+                float checkhitScore = CalculateScore(GetEndLaneX(note2) - note2.gameObject.transform.position.x, note2.lane, false);
                 if (checkhitScore == 0) break;
                 if (previousNote != null)
                 {
@@ -203,7 +202,7 @@ public class Conductor : MonoBehaviour
             isStrumming = false;
             foreach(Note note2 in readyNotes)
             {
-                float checkhitScore = CalculateScore(GetEndLaneX(note2) - note2.gameObject.transform.position.x, note2.lane);
+                float checkhitScore = CalculateScore(GetEndLaneX(note2) - note2.gameObject.transform.position.x, note2.lane, false);
                 if (checkhitScore == 0) break;
                 if (previousNote != null)
                 {
@@ -253,13 +252,13 @@ public class Conductor : MonoBehaviour
                     foreach(Note note in hittingNotes)
                     {
                         int hitScore;
-                        float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
                         if(checkHitScore == 0) return;
                         if (note.lane == 1)
                         {
                             if(currentH == note.note)
                             {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
@@ -277,7 +276,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentHM == note.note)
                             {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
@@ -295,7 +294,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentLM == note.note)
                             {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
@@ -313,7 +312,7 @@ public class Conductor : MonoBehaviour
                         {
                             if(currentL == note.note)
                             {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
@@ -347,13 +346,13 @@ public class Conductor : MonoBehaviour
             foreach(Note note in hittingNotes)
             {
                 int hitScore;
-                float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
                 if (checkHitScore == 0) return;
                 if (note.lane == 1 && Input.GetKeyDown(H0))
                 {
                     if(currentH == note.note)
                     {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
@@ -371,7 +370,7 @@ public class Conductor : MonoBehaviour
                 {
                     if(currentHM == note.note)
                     {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
@@ -389,7 +388,7 @@ public class Conductor : MonoBehaviour
                 {
                     if(currentLM == note.note)
                     {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
@@ -407,7 +406,7 @@ public class Conductor : MonoBehaviour
                 {
                     if(currentL == note.note)
                     {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane);
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
@@ -427,6 +426,7 @@ public class Conductor : MonoBehaviour
                 else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
             }
         }
+        ComboMultiplierHander();
     }
 
     float GetEndLaneX(Note note)
@@ -446,10 +446,33 @@ public class Conductor : MonoBehaviour
 
     public void ResetMultiplier()
     {
-
+        multiplier = 1;
+        combo = 0;
     }
 
-    int CalculateScore(float distanceFromNote, int lane)
+    public void ComboMultiplierHander()
+    {
+        Combo currentCombo;
+        int i = 0;
+        foreach(Combo x in combos)
+        {
+            if(combo >= x.notesUntilUpgrade)
+            {
+                try
+                {
+                    if(combo >= combos[i + 1].notesUntilUpgrade) continue;
+                    else multiplier = x.multiplier;
+                }
+                catch(IndexOutOfRangeException indexErr)
+                {
+                    multiplier = x.multiplier;
+                }
+            }
+            i++;
+        }
+    }
+
+    int CalculateScore(float distanceFromNote, int lane, bool hit)
     {
         decimal dist = (decimal)distanceFromNote;
         decimal distRounded = Math.Round(dist, accuracyRoundingDigits);
@@ -458,7 +481,11 @@ public class Conductor : MonoBehaviour
         // I feel so smart writing this
         int hitScore = (int)Math.Round((missDistance - absDist)/missDistance * 100);
         if(hitScore > roundToOneHundredRange) hitScore = 100;
-        score += hitScore;
+        if(hit)
+        {
+            combo += 1;
+            score += hitScore * multiplier;
+        }
         return hitScore;
     }
 
@@ -474,16 +501,19 @@ public class Conductor : MonoBehaviour
     void WrongNote(Note note)
     {
         GetColorManager(note).Error();
+        ResetMultiplier();
     }
 
     void WrongDirection(Note note)
     {
         GetColorManager(note).Error();
+        ResetMultiplier();
     }
 
     public void MissedNote(Note note)
     {
         GetColorManager(note).Error();
+        ResetMultiplier();
     }
 
     public void EmptyStrum()
@@ -492,6 +522,7 @@ public class Conductor : MonoBehaviour
         {
             colorManager.Error();
         }
+        ResetMultiplier();
     }
 
     void DetermineKeyStrokes()
