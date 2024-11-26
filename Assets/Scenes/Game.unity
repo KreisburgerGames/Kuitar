@@ -1956,6 +1956,46 @@ MonoBehaviour:
     - Select Lane 4 End (GameObject)
     - Set Position to (0.00, -3.00, -0.04) in Lane 4 End
     - Modified Local Position.y in Lane 4 End
+    - Clear Selection
+    - Place Note
+    - Place Note
+    - Select Note (GameObject)
+    - Modified Sorting Order in Note
+    - Modified Sorting Order in Note
+    - Select GameObject (GameObject)
+    - Modified Sorting Order in GameObject
+    - Select Note (GameObject)
+    - Move Note(-7.97, -3.01, 0.00)
+    - Move
+    - Resize Note
+    - Resize Note
+    - Resize Note
+    - Resize Note
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.x in Note
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Clear Selection
+    - Select Note (GameObject)
+    - Resize Note
+    - Resize Note
+    - Resize Note
+    - Resize Note
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Resize Note
+    - Resize Note
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.x in Note
+    - Clear Selection
+    - Create/Replace Prefab
+    - Create/Replace prefab
+    - Select Note (Asset)
+    - Select Note (GameObject)
+    - Select Note (GameObject)
+    - Delete Game Objects
 --- !u!4 &1355060817
 Transform:
   m_ObjectHideFlags: 3
