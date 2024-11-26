@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -99,6 +100,9 @@ public class Conductor : MonoBehaviour
     public float laneEdgeMargin;
     private bool cameraFound = false;
     private bool canEnd = false;
+    public int combo = 0;
+    public int multiplier = 1;
+    public List<int> levelUps = new List<int>();
     // Is this enough varibles for u pookie?
 
 
@@ -438,6 +442,11 @@ public class Conductor : MonoBehaviour
     NoteEndColorManager GetColorManagerFromString(string lane)
     {
         return GameObject.Find("Lane " + lane + " End").gameObject.GetComponent<NoteEndColorManager>();
+    }
+
+    public void ResetMultiplier()
+    {
+
     }
 
     int CalculateScore(float distanceFromNote, int lane)
