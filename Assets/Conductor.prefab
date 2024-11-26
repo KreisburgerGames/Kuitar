@@ -124,11 +124,11 @@ MonoBehaviour:
   combo: 0
   multiplier: 1
   combos:
-  - notesUntilUpgrade: 8
+  - notesUntilUpgrade: 10
     multiplier: 2
-  - notesUntilUpgrade: 16
+  - notesUntilUpgrade: 25
     multiplier: 4
-  - notesUntilUpgrade: 35
+  - notesUntilUpgrade: 50
     multiplier: 8
   - notesUntilUpgrade: 250
     multiplier: 16

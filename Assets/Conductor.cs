@@ -426,7 +426,6 @@ public class Conductor : MonoBehaviour
                 else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
             }
         }
-        ComboMultiplierHander();
     }
 
     float GetEndLaneX(Note note)
@@ -448,27 +447,25 @@ public class Conductor : MonoBehaviour
     {
         multiplier = 1;
         combo = 0;
+        ComboMultiplierHander();
     }
 
     public void ComboMultiplierHander()
     {
-        Combo currentCombo;
-        int i = 0;
-        foreach(Combo x in combos)
+        for (int i = 0; i < combos.Count; i++)
         {
-            if(combo >= x.notesUntilUpgrade)
+            if(combo >= combos[i].notesUntilUpgrade)
             {
                 try
                 {
                     if(combo >= combos[i + 1].notesUntilUpgrade) continue;
-                    else multiplier = x.multiplier;
+                    else multiplier = combos[i].multiplier;
                 }
-                catch(IndexOutOfRangeException indexErr)
+                catch(IndexOutOfRangeException)
                 {
-                    multiplier = x.multiplier;
+                    multiplier = combos[i].multiplier;
                 }
             }
-            i++;
         }
     }
 
@@ -485,6 +482,7 @@ public class Conductor : MonoBehaviour
         {
             combo += 1;
             score += hitScore * multiplier;
+            ComboMultiplierHander();
         }
         return hitScore;
     }
