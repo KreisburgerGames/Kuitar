@@ -73,6 +73,7 @@ public class MapLoader : MonoBehaviour
         conductor.multiplierText = GameObject.FindGameObjectWithTag("Multiplier Text").GetComponent<TMP_Text>();
         conductor.scoreText = GameObject.FindGameObjectWithTag("Score Text").GetComponent<TMP_Text>();
         conductor.accuracyText = GameObject.FindGameObjectWithTag("Accuracy Text").GetComponent<TMP_Text>();
+        conductor.rankText = GameObject.FindGameObjectWithTag("Rank Text").GetComponent<TMP_Text>();
         SetPauseManager(FindFirstObjectByType<PauseMenuManager>());
         foreach(var note in notes)
         {

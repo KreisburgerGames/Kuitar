@@ -110,10 +110,11 @@ public class Conductor : MonoBehaviour
     public TMP_Text multiplierText;
     public TMP_Text scoreText;
     public TMP_Text accuracyText;
-    public float accuracy;
+    public TMP_Text rankText;
     public int passedNotes = 0;
     public int bestPossibleScore;
     private int unmultipliedScore = 0;
+    public List<AccuracyRank> ranks = new List<AccuracyRank>();
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -142,7 +143,7 @@ public class Conductor : MonoBehaviour
             notes.Add(note);
         }
         noteLate = GameObject.Find("Note Late");
-        
+        UpdateHUD();
     }
 
     void Update()
@@ -472,6 +473,8 @@ public class Conductor : MonoBehaviour
         }
         float accuracy = MathF.Round((float)unmultipliedScore / (float)bestPossibleScore * 100, 2);
         accuracyText.text = "Accuracy: " + accuracy.ToString() + "%";
+
+        rankText.text = GetRank(accuracy);
     }
 
     float GetEndLaneX(Note note)
@@ -513,6 +516,28 @@ public class Conductor : MonoBehaviour
                 }
             }
         }
+    }
+
+    public string GetRank(float accuracy)
+    {
+        for (int i = 0; i < ranks.Count; i++)
+        {
+            if(accuracy >= ranks[i].accuracyNeeded)
+            {
+                try
+                {
+                    if(accuracy >= ranks[i + 1].accuracyNeeded) continue;
+                    rankText.color = ranks[i].color;
+                    return ranks[i].rank;
+                }
+                catch(IndexOutOfRangeException)
+                {
+                    rankText.color = ranks[i].color;
+                    return ranks[i].rank;
+                }
+            }
+        }
+        return "Err";
     }
 
     int CalculateScore(float distanceFromNote, int lane, bool hit)

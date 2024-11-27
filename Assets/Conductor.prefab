@@ -136,6 +136,33 @@ MonoBehaviour:
   comboText: {fileID: 0}
   multiplierText: {fileID: 0}
   scoreText: {fileID: 0}
+  accuracyText: {fileID: 0}
+  rankText: {fileID: 0}
+  accuracy: 0
+  passedNotes: 0
+  bestPossibleScore: 0
+  ranks:
+  - accuracyNeeded: 0
+    rank: F
+    color: {r: 1, g: 0, b: 0, a: 1}
+  - accuracyNeeded: 50
+    rank: D
+    color: {r: 1, g: 0.45755446, b: 0, a: 1}
+  - accuracyNeeded: 60
+    rank: C
+    color: {r: 1, g: 1, b: 0, a: 1}
+  - accuracyNeeded: 70
+    rank: B
+    color: {r: 0.6775969, g: 1, b: 0, a: 1}
+  - accuracyNeeded: 75
+    rank: A
+    color: {r: 0.120351076, g: 1, b: 0, a: 1}
+  - accuracyNeeded: 80
+    rank: S
+    color: {r: 0.15408784, g: 0.26627278, b: 1, a: 1}
+  - accuracyNeeded: 90
+    rank: SS
+    color: {r: 0, g: 0.99668694, b: 1, a: 1}
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0
