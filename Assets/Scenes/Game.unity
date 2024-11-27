@@ -2272,86 +2272,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1713254020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1311121866
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1311121868}
-  - component: {fileID: 1311121867}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1311121867
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311121866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Score (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Score (GameObject)
-    - Modified RectTransform Values
-    - Select Accuracy (GameObject)
-    - Modified RectTransform Values
-    - Select Accuracy (GameObject)
-    - Paste Accuracy
-    - Paste Accuracy
-    - Modified Name in Accuracy (1)
-    - Modified Text in Rank
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified Horizontal Alignment in Rank
-    - Modified 2 properties in Rank
-    - Modified Text in Rank
-    - Modified 2 properties in Rank
-    - Modified Font Color in Rank
-    - Modified Text in Rank
-    - Select Assets (Asset)
-    - Select Backseat (Asset)
-    - Clear Selection
-    - Select MapEditor (Asset)
-    - Select NewBehaviourScript (Asset)
-    - Select Note_9 (Asset)
-    - Select NewBehaviourScript (Asset)
-    - Rename NewBehaviourScript
-    - Select Rank (GameObject)
-    - Select TagManager (Asset)
-    - Select Accuracy (GameObject)
-    - Select Rank (GameObject)
-    - Modified Tag String in Rank
---- !u!4 &1311121868
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311121866}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1330601149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2636,8 +2556,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294966784
+  m_fontColor: {r: 0, g: 0.99607843, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3361,6 +3281,58 @@ MonoBehaviour:
   blendDistance: 166.21
   weight: 1
   priority: 0
+--- !u!1 &1638888377
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1638888379}
+  - component: {fileID: 1638888378}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1638888378
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638888377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Rank (GameObject)
+    - Select Conductor (Asset)
+    - Select Rank (GameObject)
+    - Modified Font Color in Rank
+--- !u!4 &1638888379
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638888377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1661252424
 GameObject:
   m_ObjectHideFlags: 0
@@ -3786,4 +3758,4 @@ SceneRoots:
   - {fileID: 597952975}
   - {fileID: 1903284188}
   - {fileID: 730186265}
-  - {fileID: 1311121868}
+  - {fileID: 1638888379}
