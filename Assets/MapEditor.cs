@@ -125,7 +125,7 @@ public class MapEditor : MonoBehaviour
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat * secondsPerBeat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i));
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat * secondsPerBeat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat));
             i++;
         }
     }
@@ -288,7 +288,7 @@ public class MapEditor : MonoBehaviour
     {
         foreach (DummyNote note in selectedNotes)
         {
-            invoker.AddCommand(new RemoveNoteCommand(notePrefab, noteParent, note.beat * secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i));
+            invoker.AddCommand(new RemoveNoteCommand(notePrefab, noteParent, note.beat * secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, note.gameObject.transform.localPosition.y, secondsPerBeat));
             i--;
         }
         selectedNotes.Clear();
@@ -312,7 +312,7 @@ public class MapEditor : MonoBehaviour
 
     public void PlaceNoteAction(int lane)
     {
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, audioSource.time, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i));
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, audioSource.time, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
         i++;
     }
 

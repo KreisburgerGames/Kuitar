@@ -15,8 +15,9 @@ public class PlaceNoteCommand : ICommand
     int i;
     Vector2 position;
     float beat;
+    float secondsPerBeat;
 
-    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i)
+    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -29,11 +30,12 @@ public class PlaceNoteCommand : ICommand
         this.selectedDownStrum = selectedDownStrum;
         this.i = i;
         this.beat = beat;
+        this.secondsPerBeat = secondsPerBeat;
     }
 
     public void Execute()
     {
-        position = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i);
+        position = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat);
     }
 
     public void PerformUndo()
