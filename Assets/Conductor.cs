@@ -143,7 +143,6 @@ public class Conductor : MonoBehaviour
             notes.Add(note);
         }
         noteLate = GameObject.Find("Note Late");
-        UpdateHUD();
     }
 
     void Update()
