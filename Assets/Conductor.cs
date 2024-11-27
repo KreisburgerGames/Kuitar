@@ -458,7 +458,7 @@ public class Conductor : MonoBehaviour
     private void UpdateHUD()
     {
         comboText.text = "Combo: " + combo.ToString();
-        multiplierText.text = "Multiplier: " + multiplier.ToString();
+        multiplierText.text = "Multiplier: x" + multiplier.ToString();
 
         scoreLerped = Mathf.Lerp(scoreLerped, score, scoreLerpSpeed * Time.deltaTime);
         int scoreRounded = (int)MathF.Round(scoreLerped);

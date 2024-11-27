@@ -1320,6 +1320,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &754815186
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 754815188}
+  - component: {fileID: 754815187}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &754815187
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754815186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Combo (GameObject)
+    - Select Score (GameObject)
+    - Select Multiplier (GameObject)
+    - Modified Text in Multiplier
+    - Modified Font Style in Multiplier
+    - Modified Text in Multiplier
+    - Modified Font Style in Multiplier
+    - Modified Font Style in Multiplier
+    - Modified Font Style in Multiplier
+    - Modified Text in Multiplier
+    - Modified Text in Multiplier
+    - Modified Text in Multiplier
+--- !u!4 &754815188
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754815186}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &790708025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,7 +1739,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Multiplier: 1'
+  m_text: 'Multiplier: x1'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
@@ -1756,89 +1816,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064517702}
   m_CullTransparentMesh: 1
---- !u!1 &1090135558
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1090135560}
-  - component: {fileID: 1090135559}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1090135559
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090135558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Combo (GameObject)
-    - Select Score (GameObject)
-    - Clear Selection
-    - Select Score (GameObject)
-    - Select Multiplier (GameObject)
-    - Select Score (GameObject)
-    - Select Score (GameObject)
-    - Paste Score
-    - Paste Score
-    - Select Score (GameObject)
-    - Select Multiplier (GameObject)
-    - Select Score (GameObject)
-    - Modified RectTransform Values
-    - Select Score (1) (GameObject)
-    - Modified RectTransform Values
-    - Modified Horizontal Alignment in Score (1)
-    - Select Score (GameObject)
-    - Select Score (1) (GameObject)
-    - Modified RectTransform Values
-    - Select Score (GameObject)
-    - Modified Horizontal Alignment in Score
-    - Select Score (1) (GameObject)
-    - Select Combo (GameObject)
-    - Select Main HUD (GameObject)
-    - Select Canvas (GameObject)
-    - Select Combo (GameObject)
-    - Modified Horizontal Alignment in Combo
-    - Select Multiplier (GameObject)
-    - Modified Horizontal Alignment in Multiplier
-    - Select Score (1) (GameObject)
-    - Modified Name in Score (1)
-    - Modified Text in Accuracy
-    - Select TagManager (Asset)
-    - Select Accuracy (GameObject)
-    - Modified Tag String in Accuracy
---- !u!4 &1090135560
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090135558}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1178989941
 GameObject:
   m_ObjectHideFlags: 0
@@ -3654,4 +3631,4 @@ SceneRoots:
   - {fileID: 597952975}
   - {fileID: 1903284188}
   - {fileID: 730186265}
-  - {fileID: 1090135560}
+  - {fileID: 754815188}

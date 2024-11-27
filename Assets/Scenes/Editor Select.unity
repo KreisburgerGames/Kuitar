@@ -4557,6 +4557,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords:
+    - Select Scene
+    undoRecords:
+    - Select NewSong (Asset)
+    - Clear Selection
+    - Select RemovedNoteCommand (Asset)
+    - Driving RectTransform
+    - Driving RectTransform
+    - Rename RemovedNoteCommand
+    - Clear Selection
 --- !u!4 &746164567
 Transform:
   m_ObjectHideFlags: 3
@@ -8903,7 +8915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0003279108}
+  m_AnchoredPosition: {x: 0, y: 0.00006969396}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1465855089
@@ -9494,7 +9506,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 197169304}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9996072
+  m_Size: 0.9849271
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10603,7 +10615,7 @@ MonoBehaviour:
   m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
-  m_sharedMaterial: {fileID: 3131711665249179485, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
+  m_sharedMaterial: {fileID: -2919833914659887989, guid: a0e1125d93e1b0249b53628f1de8a36d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
