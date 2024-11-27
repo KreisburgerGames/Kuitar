@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceNoteCommand : ICommand
+public class RemoveNoteCommand : ICommand
 {
     GameObject notePrefab;
     GameObject noteParent;
@@ -16,7 +16,7 @@ public class PlaceNoteCommand : ICommand
     Vector2 position;
     float beat;
 
-    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i)
+    public RemoveNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -33,11 +33,11 @@ public class PlaceNoteCommand : ICommand
 
     public void Execute()
     {
-        position = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i);
+        PlaceNote.RemoveNote(position);
     }
 
     public void PerformUndo()
     {
-        PlaceNote.RemoveNote(position);
+        position = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i);
     }
 }

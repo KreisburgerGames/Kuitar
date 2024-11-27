@@ -30,6 +30,12 @@ public static class PlaceNote
         return note.gameObject.transform.localPosition;
     }
 
+    public static void Clear()
+    {
+        if(notes == null) return;
+        notes.Clear();
+    }
+
     public static void RemoveNote(Vector2 notePos)
     {
         for(int x = 0; x < notes.Count; x++)

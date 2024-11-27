@@ -6,12 +6,13 @@ public class CommandInvoker : MonoBehaviour
 {
     static Queue<ICommand> commandBuffer;
     static List<ICommand> commandHistory;
-    static int counter;
+    public static int counter;
 
     void Awake()
     {
         commandBuffer = new Queue<ICommand>();
         commandHistory = new List<ICommand>();
+        counter = 0;
     }
 
     public void AddCommand(ICommand command)
@@ -34,6 +35,7 @@ public class CommandInvoker : MonoBehaviour
 
             commandHistory.Add(c);
             counter++;
+            print(counter);
         }
         else if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Z))
         {

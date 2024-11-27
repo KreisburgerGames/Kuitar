@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Threading;
+using System.Linq;
 
 public class MapEditor : MonoBehaviour
 {
@@ -116,6 +117,8 @@ public class MapEditor : MonoBehaviour
 
     void LoadNotes()
     {
+        PlaceNote.Clear();
+        CommandInvoker.counter = 0;
         StreamReader reader = new StreamReader(mapPath + "/notes.json");
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         reader.Close();
@@ -253,7 +256,13 @@ public class MapEditor : MonoBehaviour
     {
         File.Delete(mapPath + "/notes.json");
         string json = "{\"notes\": [ ";
+        List<DummyNote> notes = new List<DummyNote>();
         foreach(DummyNote note in noteParent.GetComponentsInChildren<DummyNote>())
+        {
+            notes.Add(note);
+        }
+        notes = notes.OrderBy(x => x.beat).ToList();
+        foreach(DummyNote note in notes)
         {
             json += " {";
             float beat = (Mathf.Abs(note.transform.localPosition.x) + offset) / metersPerSecond / secondsPerBeat;
@@ -279,7 +288,7 @@ public class MapEditor : MonoBehaviour
     {
         foreach (DummyNote note in selectedNotes)
         {
-            PlaceNote.RemoveNote(note.gameObject.transform.localPosition);
+            invoker.AddCommand(new RemoveNoteCommand(notePrefab, noteParent, note.beat * secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i));
             i--;
         }
         selectedNotes.Clear();
