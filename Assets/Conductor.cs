@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -103,6 +104,16 @@ public class Conductor : MonoBehaviour
     public int combo = 0;
     public int multiplier = 1;
     public List<Combo> combos = new List<Combo>();
+    private float scoreLerped;
+    public float scoreLerpSpeed;
+    public TMP_Text comboText;
+    public TMP_Text multiplierText;
+    public TMP_Text scoreText;
+    public TMP_Text accuracyText;
+    public float accuracy;
+    public int passedNotes = 0;
+    public int bestPossibleScore;
+    private int unmultipliedScore = 0;
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -141,7 +152,6 @@ public class Conductor : MonoBehaviour
         if(!cameraFound && FindFirstObjectByType<Camera>() != null)
         {
             camera = FindFirstObjectByType<Camera>();
-            print(camera.pixelWidth);
             noteLate.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x + noteMissDist, noteLate.transform.position.y);
             GameObject lanes = GameObject.FindGameObjectWithTag("Lanes");
             GameObject laneEnds = GameObject.FindGameObjectWithTag("Lane Ends");
@@ -157,6 +167,7 @@ public class Conductor : MonoBehaviour
         List<Note> readyNotes = new List<Note>();
 
         DetermineKeyStrokes();
+        UpdateHUD();
 
         foreach (Note note in notes.ToArray())
         {
@@ -262,6 +273,7 @@ public class Conductor : MonoBehaviour
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                             else
                             {
@@ -269,6 +281,7 @@ public class Conductor : MonoBehaviour
                                 WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                         }
                         else if(note.lane == 2)
@@ -280,6 +293,7 @@ public class Conductor : MonoBehaviour
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                             else
                             {
@@ -287,6 +301,7 @@ public class Conductor : MonoBehaviour
                                 WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                         }
                         else if(note.lane == 3)
@@ -298,6 +313,7 @@ public class Conductor : MonoBehaviour
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                             else
                             {
@@ -305,6 +321,7 @@ public class Conductor : MonoBehaviour
                                 WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                         }
                         else if(note.lane == 4)
@@ -316,6 +333,7 @@ public class Conductor : MonoBehaviour
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                             else
                             {
@@ -323,6 +341,7 @@ public class Conductor : MonoBehaviour
                                 WrongNote(note);
                                 notes.Remove(note);
                                 Destroy(note.gameObject);
+                                passedNotes += 1;
                             }
                         }
                         
@@ -336,6 +355,7 @@ public class Conductor : MonoBehaviour
                         WrongDirection(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                 }
             }
@@ -356,6 +376,7 @@ public class Conductor : MonoBehaviour
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                     else
                     {
@@ -363,6 +384,7 @@ public class Conductor : MonoBehaviour
                         WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                 }
                 else if(note.lane == 2 && Input.GetKeyDown(HM0))
@@ -374,6 +396,7 @@ public class Conductor : MonoBehaviour
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                     else
                     {
@@ -381,6 +404,7 @@ public class Conductor : MonoBehaviour
                         WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                 }
                 else if(note.lane == 3 && Input.GetKeyDown(LM0))
@@ -392,6 +416,7 @@ public class Conductor : MonoBehaviour
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                     else
                     {
@@ -399,6 +424,7 @@ public class Conductor : MonoBehaviour
                         WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                 }
                 else if(note.lane == 4 && Input.GetKeyDown(L0))
@@ -410,6 +436,7 @@ public class Conductor : MonoBehaviour
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                     else
                     {
@@ -417,6 +444,7 @@ public class Conductor : MonoBehaviour
                         WrongNote(note);
                         notes.Remove(note);
                         Destroy(note.gameObject);
+                        passedNotes += 1;
                     }
                 }
                 else if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
@@ -425,6 +453,25 @@ public class Conductor : MonoBehaviour
                 else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
             }
         }
+    }
+
+    private void UpdateHUD()
+    {
+        comboText.text = "Combo: " + combo.ToString();
+        multiplierText.text = "Multiplier: " + multiplier.ToString();
+
+        scoreLerped = Mathf.Lerp(scoreLerped, score, scoreLerpSpeed * Time.deltaTime);
+        int scoreRounded = (int)MathF.Round(scoreLerped);
+        scoreText.text = "Score: " + scoreRounded.ToString();
+
+        bestPossibleScore = passedNotes * 100;
+        if(bestPossibleScore == 0)
+        {
+            accuracyText.text = "Accuracy: 100%";
+            return;
+        }
+        float accuracy = MathF.Round((float)unmultipliedScore / (float)bestPossibleScore * 100, 2);
+        accuracyText.text = "Accuracy: " + accuracy.ToString() + "%";
     }
 
     float GetEndLaneX(Note note)
@@ -481,6 +528,7 @@ public class Conductor : MonoBehaviour
         {
             combo += 1;
             score += hitScore * multiplier;
+            unmultipliedScore += hitScore;
             ComboMultiplierHander();
         }
         return hitScore;

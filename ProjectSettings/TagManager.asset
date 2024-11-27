@@ -9,6 +9,10 @@ TagManager:
   - Lane Ends
   - Lanes
   - Input
+  - Combo Text
+  - Multiplier Text
+  - Score Text
+  - Accuracy Text
   layers:
   - Default
   - TransparentFX

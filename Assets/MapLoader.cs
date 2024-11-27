@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
@@ -68,6 +69,10 @@ public class MapLoader : MonoBehaviour
         conductor.firstBeatOffset = firstBeatOffset;
         conductor.rewindDistance = noteRewindTime;
         conductor.laneEdgeMargin = laneEdgeMargin;
+        conductor.comboText = GameObject.FindGameObjectWithTag("Combo Text").GetComponent<TMP_Text>();
+        conductor.multiplierText = GameObject.FindGameObjectWithTag("Multiplier Text").GetComponent<TMP_Text>();
+        conductor.scoreText = GameObject.FindGameObjectWithTag("Score Text").GetComponent<TMP_Text>();
+        conductor.accuracyText = GameObject.FindGameObjectWithTag("Accuracy Text").GetComponent<TMP_Text>();
         SetPauseManager(FindFirstObjectByType<PauseMenuManager>());
         foreach(var note in notes)
         {

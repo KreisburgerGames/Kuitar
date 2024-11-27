@@ -265,7 +265,7 @@ public class MapEditor : MonoBehaviour
                 if(note.downStrum) {json += "\"strum\" : true, "; json += "\"downStrum\" : true, ";}
                 else {json += "\"strum\" : true, "; json += "\"downStrum\" : false, ";}
             }
-            else json += "\"strum\" : false, "; json += "\"downStrum\" : false, ";
+            else {json += "\"strum\" : false, "; json += "\"downStrum\" : false, ";}
             int noteNum = note.note;
             json += "\"note\" : "  + noteNum.ToString() + "}, ";
         }

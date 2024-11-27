@@ -111,6 +111,7 @@ public class Note : MonoBehaviour
             Conductor conductor = FindFirstObjectByType<Conductor>();
             conductor.notes.Remove(this);
             conductor.MissedNote(this);
+            conductor.passedNotes += 1;
             Destroy(gameObject);
         }
     }

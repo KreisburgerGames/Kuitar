@@ -132,6 +132,10 @@ MonoBehaviour:
     multiplier: 8
   - notesUntilUpgrade: 250
     multiplier: 16
+  scoreLerpSpeed: 5
+  comboText: {fileID: 0}
+  multiplierText: {fileID: 0}
+  scoreText: {fileID: 0}
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0
