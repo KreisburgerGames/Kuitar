@@ -111,7 +111,6 @@ public class Conductor : MonoBehaviour
         song = GetComponent<AudioSource>();
 
         secondsPerBeat = 60f / songBPM;
-
         
         if(firstBeatOffset > 0){
             float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance - 1f);
