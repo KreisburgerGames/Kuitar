@@ -121,6 +121,17 @@ MonoBehaviour:
   rewindDistance: 2
   noteMissDist: 1
   laneEdgeMargin: 0
+  combo: 0
+  multiplier: 1
+  combos:
+  - notesUntilUpgrade: 10
+    multiplier: 2
+  - notesUntilUpgrade: 25
+    multiplier: 4
+  - notesUntilUpgrade: 50
+    multiplier: 8
+  - notesUntilUpgrade: 250
+    multiplier: 16
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0
