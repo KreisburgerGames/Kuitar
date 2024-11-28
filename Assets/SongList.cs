@@ -24,7 +24,6 @@ public class SongList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float offset = 0f;
         foreach(string name in Directory.GetDirectories(Application.streamingAssetsPath + "/" + "Songs"))
         {
             StreamReader reader = new StreamReader(name + "/info.json");
@@ -49,11 +48,13 @@ public class SongList : MonoBehaviour
                 song.playlist = "Custom";
             }
             else song.playlist = songLoad.playlist;
+            Offset offset = GameObject.Find("Camera/Canvas/" + song.playlist + "/Viewport/Content").GetComponent<Offset>();
             song.gameObject.transform.SetParent(GameObject.Find("Camera/Canvas/" + song.playlist + "/Viewport/Content").transform, false);
-            song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
+            song.gameObject.transform.localPosition = new Vector2(0, offset.offset - 150);
+            song.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, song.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
             loadedIMG.LoadImage(pngBytes);
             song.songCoverIMG = loadedIMG;
-            offset -= songItemOffset;
+            offset.offset -= songItemOffset;
         }
     }
 
