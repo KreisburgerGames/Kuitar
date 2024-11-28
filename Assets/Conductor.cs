@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
@@ -167,7 +168,7 @@ public class Conductor : MonoBehaviour
         List<Note> readyNotes = new List<Note>();
 
         DetermineKeyStrokes();
-        UpdateHUD();
+        StartCoroutine(UpdateHUD());
 
         foreach (Note note in notes.ToArray())
         {
@@ -263,7 +264,7 @@ public class Conductor : MonoBehaviour
                     {
                         int hitScore;
                         float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
-                        if(checkHitScore == 0) return;
+                        if(checkHitScore == 0) continue;
                         if (note.lane == 1)
                         {
                             if(currentH == note.note)
@@ -366,7 +367,7 @@ public class Conductor : MonoBehaviour
             {
                 int hitScore;
                 float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
-                if (checkHitScore == 0) return;
+                if (checkHitScore == 0) continue;
                 if (note.lane == 1 && Input.GetKeyDown(H0))
                 {
                     if(currentH == note.note)
@@ -455,8 +456,9 @@ public class Conductor : MonoBehaviour
         }
     }
 
-    private void UpdateHUD()
+    private IEnumerator UpdateHUD()
     {
+        bool noneHit = false;
         comboText.text = "Combo: " + combo.ToString();
         multiplierText.text = "Multiplier: x" + multiplier.ToString();
 
@@ -468,12 +470,16 @@ public class Conductor : MonoBehaviour
         if(bestPossibleScore == 0)
         {
             accuracyText.text = "Accuracy: 100%";
-            return;
+            noneHit = true;
         }
-        float accuracy = MathF.Round((float)unmultipliedScore / (float)bestPossibleScore * 100, 2);
-        accuracyText.text = "Accuracy: " + accuracy.ToString() + "%";
-
-        rankText.text = GetRank(accuracy);
+        if(!noneHit)
+        {
+            float accuracy = MathF.Round((float)unmultipliedScore / (float)bestPossibleScore * 100, 2);
+            accuracyText.text = "Accuracy: " + accuracy.ToString() + "%";
+            rankText.text = GetRank(accuracy);
+        }
+        
+        yield return null;
     }
 
     float GetEndLaneX(Note note)
@@ -529,14 +535,14 @@ public class Conductor : MonoBehaviour
                     rankText.color = ranks[i].color;
                     return ranks[i].rank;
                 }
-                catch(IndexOutOfRangeException)
+                catch(ArgumentOutOfRangeException)
                 {
                     rankText.color = ranks[i].color;
                     return ranks[i].rank;
                 }
             }
         }
-        return "Err";
+        return "SS";
     }
 
     int CalculateScore(float distanceFromNote, int lane, bool hit)
