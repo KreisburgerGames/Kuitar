@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Threading;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class MapEditor : MonoBehaviour
 {
@@ -254,7 +255,7 @@ public class MapEditor : MonoBehaviour
 
     void Save()
     {
-        File.Delete(mapPath + "/notes.json");
+        if(File.Exists(mapPath + "/notes.json")) File.Delete(mapPath + "/notes.json");
         string json = "{\"notes\": [ ";
         List<DummyNote> notes = new List<DummyNote>();
         foreach(DummyNote note in noteParent.GetComponentsInChildren<DummyNote>())
