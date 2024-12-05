@@ -6,14 +6,17 @@ using UnityEngine;
 public static class PlaceNote
 {
     static List<DummyNote> notes;
-    public static Vector2 Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat)
+    public static Vector2 Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false)
     {
         DummyNote note = GameObject.Instantiate(notePrefab).GetComponent<DummyNote>();
         note.gameObject.transform.SetParent(noteParent.transform, true);
-        note.gameObject.transform.localPosition = new Vector2((beat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
+        float loadCompensate = 0f;
+        if(load) loadCompensate = .438f;
+        note.gameObject.transform.localPosition = new Vector2((beat * -metersPerSecond) + offset - loadCompensate, note.gameObject.transform.localPosition.y);
         note.lane = lane;
         note.note = selectedNoteNumber;
         note.beat = beat / secondsPerBeat;
+        if(load) note.load = true;
         if(!selectToStrum) note.strum = false;
         else
         {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlaceNoteCommand : ICommand
@@ -16,8 +17,9 @@ public class PlaceNoteCommand : ICommand
     Vector2 position;
     float beat;
     float secondsPerBeat;
+    bool load;
 
-    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat)
+    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -31,11 +33,12 @@ public class PlaceNoteCommand : ICommand
         this.i = i;
         this.beat = beat;
         this.secondsPerBeat = secondsPerBeat;
+        this.load = load;
     }
 
     public void Execute()
     {
-        position = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat);
+        position = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, load:load);
     }
 
     public void PerformUndo()

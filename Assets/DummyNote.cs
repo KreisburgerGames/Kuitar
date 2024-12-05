@@ -35,6 +35,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public Transform parent;
     public Vector2 position;
     public bool history = false;
+    public bool load = false;
 
     public void Init()
     {

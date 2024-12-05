@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class RemoveNoteCommand : ICommand
@@ -17,8 +18,9 @@ public class RemoveNoteCommand : ICommand
     float beat;
     float yValue;
     float secondsPerBeat;
+    bool load;
 
-    public RemoveNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float yValue, float secondsPerBeat)
+    public RemoveNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float yValue, float secondsPerBeat, bool isLoad)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -32,11 +34,14 @@ public class RemoveNoteCommand : ICommand
         this.i = i;
         this.yValue = yValue;
         this.secondsPerBeat = secondsPerBeat;
+        this.load = isLoad;
     }
 
     public void Execute()
     {
-        position = new Vector2((beat * -metersPerSecond) + offset, yValue);
+        float loadCompensate = 0f;
+        if(load) loadCompensate = .438f;
+        position = new Vector2((beat * -metersPerSecond) + offset - loadCompensate, yValue);
         Debug.Log(position);
         PlaceNote.RemoveNote(position);
     }
