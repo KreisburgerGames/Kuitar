@@ -147,14 +147,17 @@ public class MapEditor : MonoBehaviour
     {
         UpdateText();
         SetDirAndNoteText();
-        timeScrollbar.value = audioSource.time / audioSource.clip.length;
+        
+        int currentSample = audioSource.timeSamples;
+        int sampleRate = audioSource.clip.frequency;
+        float time = (float)currentSample / sampleRate;
+        timeScrollbar.value = time / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
-        noteParent.transform.position = new Vector3(metersPerSecond * audioSource.time, 0, 0);
+        noteParent.transform.position = new Vector3(metersPerSecond * time, 0, 0);
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
-            float audioTime = audioSource.time;
-            TrackerGoToSong(audioTime);
+            TrackerGoToSong(time);
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -315,7 +318,10 @@ public class MapEditor : MonoBehaviour
 
     public void PlaceNoteAction(int lane)
     {
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, audioSource.time/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
+        int currentSample = audioSource.timeSamples;
+        int sampleRate = audioSource.clip.frequency;
+        float time = (float)currentSample / sampleRate;
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, time/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
         i++;
     }
 

@@ -151,7 +151,6 @@ public class Conductor : MonoBehaviour
     void Update()
     {
         int currentSample = song.timeSamples;
-        int clipSampleCount = song.clip.samples * song.clip.channels;
         int sampleRate = song.clip.frequency;
 
         time = (float)currentSample / sampleRate;
