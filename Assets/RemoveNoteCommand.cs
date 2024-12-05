@@ -18,9 +18,10 @@ public class RemoveNoteCommand : ICommand
     float beat;
     float yValue;
     float secondsPerBeat;
-    bool load;
+    bool loaded;
+    DummyNote noteRef;
 
-    public RemoveNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float yValue, float secondsPerBeat, bool isLoad)
+    public RemoveNoteCommand(DummyNote noteRef, GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float yValue, float secondsPerBeat, bool loaded)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -32,22 +33,20 @@ public class RemoveNoteCommand : ICommand
         this.selectToStrum = selectToStrum;
         this.selectedDownStrum = selectedDownStrum;
         this.i = i;
+        this.beat = beat;
         this.yValue = yValue;
         this.secondsPerBeat = secondsPerBeat;
-        this.load = isLoad;
+        this.noteRef = noteRef;
+        this.loaded = loaded;
     }
 
     public void Execute()
     {
-        float loadCompensate = 0f;
-        if(load) loadCompensate = .438f;
-        position = new Vector2((beat * -metersPerSecond) + offset - loadCompensate, yValue);
-        Debug.Log(position);
-        PlaceNote.RemoveNote(position);
+        PlaceNote.RemoveNote(noteRef);
     }
 
     public void PerformUndo()
     {
-        PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat);
+        PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, load:loaded);
     }
 }

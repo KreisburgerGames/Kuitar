@@ -18,6 +18,7 @@ public class PlaceNoteCommand : ICommand
     float beat;
     float secondsPerBeat;
     bool load;
+    DummyNote note;
 
     public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false)
     {
@@ -38,11 +39,11 @@ public class PlaceNoteCommand : ICommand
 
     public void Execute()
     {
-        position = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, load:load);
+        note = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, load:load);
     }
 
     public void PerformUndo()
     {
-        PlaceNote.RemoveNote(position);
+        PlaceNote.RemoveNote(note);
     }
 }

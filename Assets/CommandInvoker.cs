@@ -35,7 +35,6 @@ public class CommandInvoker : MonoBehaviour
 
             commandHistory.Add(c);
             counter++;
-            print(counter);
         }
         else if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Z))
         {

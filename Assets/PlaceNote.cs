@@ -6,13 +6,14 @@ using UnityEngine;
 public static class PlaceNote
 {
     static List<DummyNote> notes;
-    public static Vector2 Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false)
+    public static DummyNote Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false)
     {
         DummyNote note = GameObject.Instantiate(notePrefab).GetComponent<DummyNote>();
         note.gameObject.transform.SetParent(noteParent.transform, true);
         float loadCompensate = 0f;
-        if(load) loadCompensate = .438f;
-        note.gameObject.transform.localPosition = new Vector2((beat * -metersPerSecond) + offset - loadCompensate, note.gameObject.transform.localPosition.y);
+        if(load) loadCompensate = 0f;
+        note.gameObject.transform.localPosition = new Vector2((beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
+        note.gameObject.transform.localPosition -= Vector3.right * loadCompensate;
         note.lane = lane;
         note.note = selectedNoteNumber;
         note.beat = beat / secondsPerBeat;
@@ -30,7 +31,7 @@ public static class PlaceNote
             notes = new List<DummyNote>();
         }
         notes.Add(note);
-        return note.gameObject.transform.localPosition;
+        return note;
     }
 
     public static void Clear()
@@ -39,19 +40,19 @@ public static class PlaceNote
         notes.Clear();
     }
 
-    public static Vector2 RemoveNote(Vector2 notePos)
+    public static DummyNote RemoveNote(DummyNote note)
     {
         for(int x = 0; x < notes.Count; x++)
         {
-            if((Vector2)notes[x].gameObject.transform.localPosition == notePos)
+            if(notes[x] == note)
             {
                 notes[x].selected = false;
                 GameObject.Destroy(notes[x].gameObject);
                 Vector2 pos = notes[x].gameObject.transform.localPosition;
                 notes.Remove(notes[x]);
-                return pos;
+                return note;
             }
         }
-        return Vector2.zero;
+        return null;
     }
 }

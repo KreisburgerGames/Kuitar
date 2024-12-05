@@ -125,7 +125,7 @@ public class Note : MonoBehaviour
     {
         if(!moving) return;
         float distFromTarget = targetPos.x - transform.position.x;
-        if(distFromTarget <= rb.velocity.x) return;
+        if(distFromTarget <= 1) return;
         float secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
         vel = new Vector2(distFromTarget / secondsAvailable, 0);
         rb.velocity = vel;

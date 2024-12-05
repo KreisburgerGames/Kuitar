@@ -116,6 +116,8 @@ public class Conductor : MonoBehaviour
     public int bestPossibleScore;
     private int unmultipliedScore = 0;
     public List<AccuracyRank> ranks = new List<AccuracyRank>();
+    public PauseMenuManager pauseMenu;
+    public float time = 0f;
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -148,6 +150,12 @@ public class Conductor : MonoBehaviour
 
     void Update()
     {
+        int currentSample = song.timeSamples;
+        int clipSampleCount = song.clip.samples * song.clip.channels;
+        int sampleRate = song.clip.frequency;
+
+        time = (float)currentSample / sampleRate;
+
         if(song.time > 0) canEnd = true;
         if(canEnd && song.time == 0f) SceneManager.LoadScene("Select", LoadSceneMode.Single);
         if(!cameraFound && FindFirstObjectByType<Camera>() != null)
@@ -161,7 +169,7 @@ public class Conductor : MonoBehaviour
             cameraFound = true;
         }
 
-        songPos = song.time - firstBeatOffset;
+        songPos = time;
 
         songBeatsPos = songPos / secondsPerBeat;
 
