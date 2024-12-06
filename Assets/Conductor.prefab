@@ -138,7 +138,6 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   accuracyText: {fileID: 0}
   rankText: {fileID: 0}
-  accuracy: 0
   passedNotes: 0
   bestPossibleScore: 0
   ranks:
@@ -163,6 +162,9 @@ MonoBehaviour:
   - accuracyNeeded: 90
     rank: SS
     color: {r: 0, g: 0.99668694, b: 1, a: 1}
+  pauseMenu: {fileID: 0}
+  time: 0
+  noteTimingOffset: 0.2
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0

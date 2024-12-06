@@ -118,6 +118,7 @@ public class Conductor : MonoBehaviour
     public List<AccuracyRank> ranks = new List<AccuracyRank>();
     public PauseMenuManager pauseMenu;
     public float time = 0f;
+    public float noteTimingOffset = 0.5f;
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -144,6 +145,7 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
+            note.beat += noteTimingOffset/secondsPerBeat;
         }
         noteLate = GameObject.Find("Note Late");
     }
@@ -152,7 +154,7 @@ public class Conductor : MonoBehaviour
     {
         int currentSample = song.timeSamples;
         int sampleRate = song.clip.frequency;
-
+        
         time = (float)currentSample / sampleRate;
 
         if(song.time > 0) canEnd = true;
@@ -179,7 +181,7 @@ public class Conductor : MonoBehaviour
 
         foreach (Note note in notes.ToArray())
         {
-            if (note.beat <= songBeatsPos + reactionBeats)
+            if (note.beat <= songBeatsPos + reactionBeats + (noteTimingOffset/secondsPerBeat))
             {
                 readyNotes.Add(note);
                 note.gameObject.SetActive(true);
