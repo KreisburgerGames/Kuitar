@@ -148,6 +148,7 @@ public class Conductor : MonoBehaviour
             note.beat += noteTimingOffset/secondsPerBeat;
         }
         noteLate = GameObject.Find("Note Late");
+        noteTimingOffset = secondsPerBeat/2f;
     }
 
     void Update()
