@@ -139,15 +139,24 @@ public class Conductor : MonoBehaviour
         {
             song.time = 0f;
         }
-
-        song.Play();
+        
+        StartCoroutine(PlaySong());
 
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
+            float latency = 0.2f;
+            note.beat += latency / secondsPerBeat;
         }
         noteLate = GameObject.Find("Note Late");
         noteTimingOffset = secondsPerBeat/2f;
+    }
+
+    IEnumerator PlaySong()
+    {
+        print("loading");
+        yield return new WaitUntil(() => song.clip.loadState == AudioDataLoadState.Loaded);
+        song.Play();
     }
 
     public float GetBeats()

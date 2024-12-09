@@ -287,6 +287,7 @@ public class SongListEditor : MonoBehaviour
                 TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
                 reader.Close();
                 string json = jsonFile.text;
+                File.Delete(song.folderPath + "/info.json");
                 json.Replace("\"selected\" : true", "\"selected\" : false");
                 File.WriteAllText(song.folderPath + "/info.json", json);
             }
