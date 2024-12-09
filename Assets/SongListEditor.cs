@@ -308,7 +308,7 @@ public class SongListEditor : MonoBehaviour
         print(selectedSong.folderPath + "/" + selectedDifficulty + "/difficulty.json");
         foreach(EditorSong song in FindObjectsOfType<EditorSong>()) Destroy(song.gameObject);
         StartCoroutine(WaitLoad());
-        loadSong(selectedSong.folderPath).Selected();
+        selectedSong.Selected();
         Destroy(tempSong);
     }
     
