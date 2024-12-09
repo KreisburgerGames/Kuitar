@@ -26,6 +26,7 @@ public class EditorSong : MonoBehaviour
     public AudioClip songClip;
     public bool editor = false;
     public bool waitingForClip = false;
+    public bool selected = false;
     // Start is called before the first frame update
     void Start()
     {

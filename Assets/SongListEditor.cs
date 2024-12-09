@@ -243,6 +243,7 @@ public class SongListEditor : MonoBehaviour
         {
             Destroy(newSongRef.gameObject);
         }
+        List<EditorSong> loadedSongs = new List<EditorSong>();
         foreach(string name in Directory.GetDirectories(Application.streamingAssetsPath + "/" + "Songs"))
         {
             StreamReader reader = new StreamReader(name + "/info.json");
@@ -261,6 +262,7 @@ public class SongListEditor : MonoBehaviour
             song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             song.folderPath = name;
             song.gameObject.name = songLoad.id;
+            song.selected = songLoad.selected;
             if(File.Exists(name + "/" + songLoad.songCover))
             {
                 Texture2D loadedIMG = new Texture2D(1, 1);
@@ -270,11 +272,25 @@ public class SongListEditor : MonoBehaviour
             }
             offset -= songItemOffset;
             song.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, song.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
+            loadedSongs.Add(song);
         }
         GameObject newSong = Instantiate(newSongPrefab);
         newSong.transform.SetParent(songsList, false);
         newSong.transform.localPosition = new Vector2(0, offset - 150);
         newSong.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, newSong.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
+        foreach(EditorSong song in loadedSongs)
+        {
+            if(song.selected)
+            {
+                song.Selected();
+                StreamReader reader = new StreamReader(name + "/info.json");
+                TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
+                reader.Close();
+                string json = jsonFile.text;
+                json.Replace("\"selected\" : true", "\"selected\" : false");
+                File.WriteAllText(song.folderPath + "/info.json", json);
+            }
+        }
     }
 
     public void Save()
@@ -297,7 +313,8 @@ public class SongListEditor : MonoBehaviour
         json += "0";
         json += ", \"id\" : \"";
         json += display.IDInput.text;
-        json += "\"}";
+        json += "\", \"selected\" : true";
+        json += "}";
         File.WriteAllText(selectedSong.folderPath + "/info.json", json);
         print("Saved at " + selectedSong.folderPath + "/info.json");
         File.Delete(selectedSong.folderPath + "/" + selectedDifficulty + "/difficulty.json");

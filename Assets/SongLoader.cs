@@ -14,4 +14,5 @@ public class SongLoader
     public float firstBeatOffset;
     public string id;
     public string playlist;
+    public bool selected = false;
 }
