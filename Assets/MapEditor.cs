@@ -327,7 +327,7 @@ public class MapEditor : MonoBehaviour
 
     void TrackerGoToSong(float audioTime)
     {
-        float songPercentage = audioTime / audioSource.clip.length;
+        float songPercentage = (audioTime + (secondsPerBeat / 2f)) / audioSource.clip.length;
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
     }
 

@@ -13,6 +13,7 @@ public static class PlaceNote
         float loadCompensate = 0f;
         if(load) loadCompensate = 0f;
         note.gameObject.transform.localPosition = new Vector2((beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
+        Debug.Log(beat);
         note.gameObject.transform.localPosition -= Vector3.right * loadCompensate;
         note.lane = lane;
         note.note = selectedNoteNumber;
