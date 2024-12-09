@@ -145,6 +145,7 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
+            print(note.beat);
             note.beat += noteTimingOffset/secondsPerBeat;
         }
         noteLate = GameObject.Find("Note Late");
