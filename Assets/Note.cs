@@ -128,8 +128,7 @@ public class Note : MonoBehaviour
     void FixedUpdate()
     {
         if(!moving) return;
-        float distFromTarget = targetPos.x - transform.position.x;
-        float currentBeat = conductor.GetBeats();
+        float distFromTarget = targetPos.x - transform.position.x - .0219f;
         if(distFromTarget <= 1) return;
         float secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos - Time.deltaTime;
         secondsAvailable = Mathf.Clamp(secondsAvailable, 0, Mathf.Infinity);

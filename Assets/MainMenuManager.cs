@@ -17,7 +17,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadSettings()
     {
-
+        SceneManager.LoadScene("Settings");
     }
 
     public void Quit()

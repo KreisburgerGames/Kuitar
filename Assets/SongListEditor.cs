@@ -283,7 +283,7 @@ public class SongListEditor : MonoBehaviour
             if(song.selected)
             {
                 song.Selected();
-                StreamReader reader = new StreamReader(name + "/info.json");
+                StreamReader reader = new StreamReader(song.folderPath + "/info.json");
                 TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
                 reader.Close();
                 string json = jsonFile.text;

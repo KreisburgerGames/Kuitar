@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Editor.unity
     guid: a4fa2b151800eb543b2d82b08a057938
   - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: b5b5e664e69fb9e4e8ae0ba76aca8444
+  - enabled: 1
     path: Assets/Scenes/Easter egg.unity
     guid: 7a818e71e6033864b8d3cd2cd498ffda
   m_configObjects: {}
