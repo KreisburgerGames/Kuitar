@@ -60,6 +60,8 @@ public class MapEditor : MonoBehaviour
     public RectTransform tracker;
     int i = 1;
     public EditorPauseMenu pause;
+    public float trackerOffset;
+    public bool spec = false;
 
     public void Init()
     {
@@ -271,7 +273,6 @@ public class MapEditor : MonoBehaviour
             float loadCompensation = 0;
             json += " {";
             float beat = (-note.transform.localPosition.x + offset + loadCompensation) / metersPerSecond / secondsPerBeat;
-            print(beat);
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
@@ -327,8 +328,14 @@ public class MapEditor : MonoBehaviour
 
     void TrackerGoToSong(float audioTime)
     {
-        float songPercentage = (audioTime + (secondsPerBeat / 2f)) / audioSource.clip.length;
+        //float songPercentage = (audioTime + (secondsPerBeat / 2f)) / audioSource.clip.length;
+        print(audioTime / secondsPerBeat);
+        float songPercentage = audioTime / audioSource.clip.length;
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
+        if(spec)
+        {
+            trackerAnchor.anchoredPosition += Vector2.right * trackerOffset;
+        }
     }
 
     void Zoom()

@@ -104,11 +104,15 @@ public class Note : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        conductor = FindFirstObjectByType<Conductor>();
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Late")
         {
-            Conductor conductor = FindFirstObjectByType<Conductor>();
             conductor.notes.Remove(this);
             conductor.MissedNote(this);
             conductor.passedNotes += 1;
@@ -121,12 +125,14 @@ public class Note : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(!moving) return;
         float distFromTarget = targetPos.x - transform.position.x;
+        float currentBeat = conductor.GetBeats();
         if(distFromTarget <= 1) return;
-        float secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
+        float secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos - (Time.deltaTime/5f);
+        secondsAvailable = Mathf.Clamp(secondsAvailable, 0, Mathf.Infinity);
         vel = new Vector2(distFromTarget / secondsAvailable, 0);
         rb.velocity = vel;
     }

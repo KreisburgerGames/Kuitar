@@ -14,6 +14,7 @@ public class Draw : MonoBehaviour
         {
             byte[] pngBytes = File.ReadAllBytes(folderPath + "/spectrogram.png");
             tex.LoadImage(pngBytes);
+            FindFirstObjectByType<MapEditor>().spec = true;
             return tex;
         }
         int halfheight = height / 2;
