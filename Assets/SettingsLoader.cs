@@ -9,6 +9,7 @@ public class SettingsLoader : MonoBehaviour
     public int screenHeight;
     public bool fullscreen;
     public float refreshRate;
+    public float latency;
     public static SettingsLoader instance;
 
     private void Awake()
@@ -47,6 +48,15 @@ public class SettingsLoader : MonoBehaviour
         {
             PlayerPrefs.SetFloat("RefreshRate", (float)Screen.currentResolution.refreshRateRatio.value);
             refreshRate = PlayerPrefs.GetFloat("RefreshRate");
+        }
+        if (PlayerPrefs.HasKey("Latency"))
+        {
+            refreshRate = PlayerPrefs.GetFloat("Latency");
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("Latency", 200f);
+            latency = PlayerPrefs.GetFloat("Latency");
         }
 
         FullScreenMode fullScreenMode;

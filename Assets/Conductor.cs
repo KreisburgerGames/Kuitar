@@ -145,7 +145,7 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
-            float latency = 0.2f;
+            float latency = PlayerPrefs.GetFloat("Latency") / 100f;
             note.beat += latency / secondsPerBeat;
         }
         noteLate = GameObject.Find("Note Late");
