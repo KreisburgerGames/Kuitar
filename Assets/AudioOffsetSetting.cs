@@ -22,7 +22,7 @@ public class AudioOffsetSetting : MonoBehaviour
 
     public void LatencyChanged(float value)
     {
-        float selectedLatency = Mathf.Floor(Mathf.Lerp(minLatency, maxLatency, value));
+        float selectedLatency = Mathf.Round(Mathf.Lerp(minLatency, maxLatency, value));
         latencyText.text = selectedLatency.ToString() + " ms";
         PlayerPrefs.SetFloat("Latency", selectedLatency);
     }

@@ -145,7 +145,7 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
-            float latency = PlayerPrefs.GetFloat("Latency") / 100f;
+            float latency = PlayerPrefs.GetFloat("Latency") / 1000f;
             note.beat += latency / secondsPerBeat;
         }
         noteLate = GameObject.Find("Note Late");
@@ -154,7 +154,6 @@ public class Conductor : MonoBehaviour
 
     IEnumerator PlaySong()
     {
-        print("loading");
         yield return new WaitUntil(() => song.clip.loadState == AudioDataLoadState.Loaded);
         song.Play();
     }
