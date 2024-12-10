@@ -258,7 +258,7 @@ public class MapEditor : MonoBehaviour
 
     private void SelectAll()
     {
-        if(allSelected)
+        if(!allSelected)
         {
             foreach(DummyNote note in FindObjectsOfType<DummyNote>())
             {
