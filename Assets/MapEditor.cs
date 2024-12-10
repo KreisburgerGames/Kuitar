@@ -63,6 +63,8 @@ public class MapEditor : MonoBehaviour
     public float trackerOffset;
     public bool spec = false;
     private List<DummyNote> clipboard = new List<DummyNote>();
+    private float songTime;
+    private bool allSelected;
 
     public void Init()
     {
@@ -153,14 +155,14 @@ public class MapEditor : MonoBehaviour
         
         int currentSample = audioSource.timeSamples;
         int sampleRate = audioSource.clip.frequency;
-        float time = (float)currentSample / sampleRate;
-        timeScrollbar.value = time / audioSource.clip.length;
+        songTime = (float)currentSample / sampleRate;
+        timeScrollbar.value = songTime / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
-        noteParent.transform.position = new Vector3(metersPerSecond * time, 0, 0);
+        noteParent.transform.position = new Vector3(metersPerSecond * songTime, 0, 0);
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
-            TrackerGoToSong(time);
+            TrackerGoToSong(songTime);
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -173,6 +175,7 @@ public class MapEditor : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.D))
             {
                 selectedNotes.Clear();
+                allSelected = false;
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
@@ -185,6 +188,10 @@ public class MapEditor : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.V))
             {
                 Paste();
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                SelectAll();
             }
             if (Mathf.Abs(Input.mouseScrollDelta.y) > 0) Zoom();
             if(Input.GetKeyDown(KeyCode.S)) Save();
@@ -229,6 +236,7 @@ public class MapEditor : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
         {
             DeleteSelectedNotes();
+            allSelected = false;
         }
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -248,11 +256,28 @@ public class MapEditor : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
     }
 
+    private void SelectAll()
+    {
+        if(allSelected)
+        {
+            foreach(DummyNote note in FindObjectsOfType<DummyNote>())
+            {
+                selectedNotes.Add(note);
+            }
+            allSelected = true;
+        }
+        else
+        {
+            selectedNotes.Clear();
+            allSelected = false;
+        }
+    }
+
     private void Copy()
     {
-        foreach(DummyNote note in clipboard)
+        foreach(DummyNote note in GetComponents<DummyNote>())
         {
-            Destroy(note);
+            Destroy(GetComponent<DummyNote>());
         }
         clipboard.Clear();
         foreach (DummyNote note in selectedNotes)
@@ -266,13 +291,14 @@ public class MapEditor : MonoBehaviour
             newNote.history = true;
             clipboard.Add(newNote);
         }
+        allSelected = false;
     }
 
     private void Cut()
     {
-        foreach(DummyNote note in clipboard)
+        foreach(DummyNote note in GetComponents<DummyNote>())
         {
-            Destroy(note);
+            Destroy(GetComponent<DummyNote>());
         }
         clipboard.Clear();
         foreach (DummyNote note in selectedNotes)
@@ -287,21 +313,19 @@ public class MapEditor : MonoBehaviour
             clipboard.Add(newNote);
         }
         DeleteSelectedNotes();
+        allSelected = false;
     }
 
     private void Paste()
     {
-        int currentSample = audioSource.timeSamples;
-        int sampleRate = audioSource.clip.frequency;
-        float currentTime = (float)currentSample / sampleRate;
-        float currentBeat = currentTime / secondsPerBeat;
-
-        clipboard = clipboard.OrderBy(x => x.beat).ToList();
-        foreach (DummyNote note in clipboard)
+        float currentBeat = songTime / secondsPerBeat;
+        List<DummyNote> sorted = clipboard.OrderBy(x => x.beat).ToList();
+        float firstBeat = sorted[0].beat;
+        foreach (DummyNote note in sorted)
         {
             float beat = note.beat;
-            print("note beat: " + note.beat + "current beat: " + clipboard[0].beat);
-            float targetBeat = currentBeat + (beat - clipboard[0].beat);
+            print("note beat: " + note.beat + "current beat: " + currentBeat);
+            float targetBeat = currentBeat + (beat - firstBeat);
             print(targetBeat);
             invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat));
             i++;
@@ -372,6 +396,7 @@ public class MapEditor : MonoBehaviour
             i--;
         }
         selectedNotes.Clear();
+        allSelected = false;
     }
 
     void SelectNote()

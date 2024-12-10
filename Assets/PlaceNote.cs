@@ -16,7 +16,7 @@ public static class PlaceNote
         note.gameObject.transform.localPosition -= Vector3.right * loadCompensate;
         note.lane = lane;
         note.note = selectedNoteNumber;
-        note.beat = beat / secondsPerBeat;
+        note.beat = beat;
         if(load) note.load = true;
         if(!selectToStrum) note.strum = false;
         else
