@@ -1,10 +1,1 @@
-{
-    "songName" : "HUSH",
-    "songCover" : "cover.png",
-    "artistName" : "Kreisburger",
-    "songFile" : "HUSH.wav",
-    "mapper" : "Kreisburger",
-    "bpm" : 184,
-    "firstBeatOffset" : 0,
-    "id" : "Kreisburger.HUSH.Kreisburger"
-}
+{"songName" : "HUSH", "songCover" : "cover.png", "artistName" : "Kreisburger", "songFile" : "HUSH.ogg", "mapper" : "Kreisburger", "bpm" : 182, "firstBeatOffset" : 0, "id" : "Kreisburger.HUSH.Kreisburger", "selected" : true}
