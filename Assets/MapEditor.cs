@@ -62,6 +62,7 @@ public class MapEditor : MonoBehaviour
     public EditorPauseMenu pause;
     public float trackerOffset;
     public bool spec = false;
+    private List<DummyNote> clipboard = new List<DummyNote>();
 
     public void Init()
     {
@@ -173,6 +174,18 @@ public class MapEditor : MonoBehaviour
             {
                 selectedNotes.Clear();
             }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Copy();
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                Cut();
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                Paste();
+            }
             if (Mathf.Abs(Input.mouseScrollDelta.y) > 0) Zoom();
             if(Input.GetKeyDown(KeyCode.S)) Save();
             return;
@@ -233,6 +246,66 @@ public class MapEditor : MonoBehaviour
         SelectNote();
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
+    }
+
+    private void Copy()
+    {
+        foreach(DummyNote note in clipboard)
+        {
+            Destroy(note);
+        }
+        clipboard.Clear();
+        foreach (DummyNote note in selectedNotes)
+        {
+            DummyNote newNote = gameObject.AddComponent<DummyNote>();
+            newNote.beat = note.beat;
+            newNote.lane = note.lane;
+            newNote.note = note.note;
+            newNote.strum = note.strum;
+            newNote.downStrum = note.downStrum;
+            newNote.history = true;
+            clipboard.Add(newNote);
+        }
+    }
+
+    private void Cut()
+    {
+        foreach(DummyNote note in clipboard)
+        {
+            Destroy(note);
+        }
+        clipboard.Clear();
+        foreach (DummyNote note in selectedNotes)
+        {
+            DummyNote newNote = gameObject.AddComponent<DummyNote>();
+            newNote.beat = note.beat;
+            newNote.lane = note.lane;
+            newNote.note = note.note;
+            newNote.strum = note.strum;
+            newNote.downStrum = note.downStrum;
+            newNote.history = true;
+            clipboard.Add(newNote);
+        }
+        DeleteSelectedNotes();
+    }
+
+    private void Paste()
+    {
+        int currentSample = audioSource.timeSamples;
+        int sampleRate = audioSource.clip.frequency;
+        float currentTime = (float)currentSample / sampleRate;
+        float currentBeat = currentTime / secondsPerBeat;
+
+        clipboard = clipboard.OrderBy(x => x.beat).ToList();
+        foreach (DummyNote note in clipboard)
+        {
+            float beat = note.beat;
+            print("note beat: " + note.beat + "current beat: " + currentBeat);
+            float targetBeat = currentBeat + (beat - clipboard[0].beat);
+            print(beat);
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat));
+            i++;
+        }
     }
 
     public void NoteSpacingChanged()
@@ -328,8 +401,6 @@ public class MapEditor : MonoBehaviour
 
     void TrackerGoToSong(float audioTime)
     {
-        //float songPercentage = (audioTime + (secondsPerBeat / 2f)) / audioSource.clip.length;
-        print(audioTime / secondsPerBeat);
         float songPercentage = audioTime / audioSource.clip.length;
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
         if(spec)
