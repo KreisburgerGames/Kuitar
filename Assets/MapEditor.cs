@@ -300,9 +300,9 @@ public class MapEditor : MonoBehaviour
         foreach (DummyNote note in clipboard)
         {
             float beat = note.beat;
-            print("note beat: " + note.beat + "current beat: " + currentBeat);
+            print("note beat: " + note.beat + "current beat: " + clipboard[0].beat);
             float targetBeat = currentBeat + (beat - clipboard[0].beat);
-            print(beat);
+            print(targetBeat);
             invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat));
             i++;
         }
