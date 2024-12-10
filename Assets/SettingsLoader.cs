@@ -1,6 +1,9 @@
 using FftSharp;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SettingsLoader : MonoBehaviour
@@ -8,7 +11,7 @@ public class SettingsLoader : MonoBehaviour
     public int screenWidth;
     public int screenHeight;
     public bool fullscreen;
-    public float refreshRate;
+    public int refreshRate;
     public float latency;
     public static SettingsLoader instance;
 
@@ -40,22 +43,13 @@ public class SettingsLoader : MonoBehaviour
             PlayerPrefs.SetInt("Fullscreen", FromBool(true));
             fullscreen = ToBool(PlayerPrefs.GetInt("Fullscreen"));
         }
-        if (PlayerPrefs.HasKey("RefreshRate"))
-        {
-            refreshRate = PlayerPrefs.GetFloat("RefreshRate");
-        }
-        else
-        {
-            PlayerPrefs.SetFloat("RefreshRate", (float)Screen.currentResolution.refreshRateRatio.value);
-            refreshRate = PlayerPrefs.GetFloat("RefreshRate");
-        }
         if (PlayerPrefs.HasKey("Latency"))
         {
-            refreshRate = PlayerPrefs.GetFloat("Latency");
+            refreshRate = PlayerPrefs.GetInt("Latency");
         }
         else
         {
-            PlayerPrefs.SetFloat("Latency", 200f);
+            PlayerPrefs.SetFloat("Latency", 50f);
             latency = PlayerPrefs.GetFloat("Latency");
         }
 
@@ -68,12 +62,8 @@ public class SettingsLoader : MonoBehaviour
         {
             fullScreenMode = FullScreenMode.Windowed;
         }
-
-        RefreshRate refresh = new RefreshRate();
-        refresh.denominator = 1;
-        refresh.numerator = (uint)refreshRate;
-
-        Screen.SetResolution(screenWidth, screenHeight, fullScreenMode, refresh);
+        
+        Screen.SetResolution(screenWidth, screenHeight, fullScreenMode);
     }
 
     public static bool ToBool(int value)

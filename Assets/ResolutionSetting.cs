@@ -27,7 +27,7 @@ public class ResolutionSetting : MonoBehaviour
             resolutions.Add(resolution);
         }
         dropdown.AddOptions(options);
-        dropdown.value = dropdown.options.FindIndex(x => x.text == PlayerPrefs.GetInt("ResWidth").ToString() + " x " + PlayerPrefs.GetInt("ResHeight").ToString() + " at " + PlayerPrefs.GetFloat("RefreshRate").ToString());
+        dropdown.value = dropdown.options.FindIndex(x => x.text == PlayerPrefs.GetInt("ResWidth").ToString() + " x " + PlayerPrefs.GetInt("ResHeight").ToString() + " at " + Screen.currentResolution.refreshRateRatio.value.ToString());
         fullscreen.isOn = SettingsLoader.ToBool(PlayerPrefs.GetInt("Fullscreen"));
     }
 
@@ -66,6 +66,5 @@ public class ResolutionSetting : MonoBehaviour
         Screen.SetResolution(resolutions[index].width, resolutions[index].height, fullScreenMode, resolutions[index].refreshRateRatio);
         PlayerPrefs.SetInt("ResWidth", resolutions[index].width);
         PlayerPrefs.SetInt("ResHeight", resolutions[index].height);
-        PlayerPrefs.SetFloat("RefreshRate", (float)resolutions[index].refreshRateRatio.value);
     }
 }
