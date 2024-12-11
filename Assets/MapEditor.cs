@@ -369,7 +369,7 @@ public class MapEditor : MonoBehaviour
         {
             float loadCompensation = 0;
             json += " {";
-            float beat = (-note.transform.localPosition.x + offset + loadCompensation) / metersPerSecond / secondsPerBeat;
+            float beat = note.beat;
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
