@@ -49,7 +49,7 @@ public class SettingsLoader : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetFloat("Latency", 25f);
+            PlayerPrefs.SetFloat("Latency", 50f);
             latency = PlayerPrefs.GetFloat("Latency");
         }
 
