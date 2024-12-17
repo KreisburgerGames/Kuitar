@@ -169,6 +169,7 @@ public class Conductor : MonoBehaviour
 
     void Update()
     {
+        if(end.isEnd) return;
         int currentSample = song.timeSamples;
         int sampleRate = song.clip.frequency;
         
@@ -178,6 +179,7 @@ public class Conductor : MonoBehaviour
         if(canEnd && song.time == 0f) 
         {
             end.scoreEarned = score;
+            end.unmultipliedScore = unmultipliedScore;
             end.panel.gameObject.SetActive(true);
             end.isEnd = true; /*SceneManager.LoadScene("Select", LoadSceneMode.Single);*/
         }
@@ -507,7 +509,7 @@ public class Conductor : MonoBehaviour
         {
             float accuracy = MathF.Round((float)unmultipliedScore / (float)bestPossibleScore * 100, 2);
             accuracyText.text = "Accuracy: " + accuracy.ToString() + "%";
-            rankText.text = GetRank(accuracy);
+            rankText.text = GetRank(accuracy, false);
         }
         
         yield return null;
@@ -554,7 +556,9 @@ public class Conductor : MonoBehaviour
         }
     }
 
-    public string GetRank(float accuracy)
+    public Color rankColor;
+
+    public string GetRank(float accuracy, bool end)
     {
         for (int i = 0; i < ranks.Count; i++)
         {
@@ -563,12 +567,18 @@ public class Conductor : MonoBehaviour
                 try
                 {
                     if(accuracy >= ranks[i + 1].accuracyNeeded) continue;
-                    rankText.color = ranks[i].color;
+                    if(!end)
+                        rankText.color = ranks[i].color;
+                    else
+                        rankColor = ranks[i].color;
                     return ranks[i].rank;
                 }
                 catch(ArgumentOutOfRangeException)
                 {
-                    rankText.color = ranks[i].color;
+                    if(!end)
+                        rankText.color = ranks[i].color;
+                    else
+                        rankColor = ranks[i].color;
                     return ranks[i].rank;
                 }
             }

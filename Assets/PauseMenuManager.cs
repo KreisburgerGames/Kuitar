@@ -23,9 +23,23 @@ public class PauseMenuManager : MonoBehaviour
     public string songCoverFile;
     public string songArtist;
     public string mapper;
+    public bool end = false;
+    public End endRef;
+
+    void Start()
+    {
+        endRef = FindFirstObjectByType<End>();
+    }
 
     void Update()
     {
+        if(end) return;
+        if(endRef.isEnd)
+        {
+            if(isPaused)
+                Resume();
+            end = true;            
+        }
         if(!foundSong && FindFirstObjectByType<AudioSource>() != null)
         {
             song = FindFirstObjectByType<AudioSource>();

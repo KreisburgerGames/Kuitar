@@ -23,11 +23,32 @@ public class End : MonoBehaviour
 
     [Space]
     public int scoreEarned;
+    public int unmultipliedScore;
     public TMP_Text rankText;
     public TMP_Text scoreText;
     public float scoreTime = 0f;
     public float scoreLerpTime = 5f;
     private Conductor conductor;
+
+    public Image menu;
+    public Image restart;
+    public float rankAlpha = 0f;
+    private PauseMenuManager pause;
+
+    void Start()
+    {
+        pause = FindFirstObjectByType<PauseMenuManager>();;
+    }
+
+    public void Restart()
+    {
+        pause.Restart();
+    }
+
+    public void Menu()
+    {
+        pause.Quit();
+    }
 
     void Update()
     {
@@ -36,7 +57,6 @@ public class End : MonoBehaviour
             try
             {
                 conductor = FindFirstObjectByType<Conductor>();
-                PauseMenuManager pause = FindFirstObjectByType<PauseMenuManager>();
                 Texture2D loadedIMG = new Texture2D(1, 1);
                 byte[] pngBytes = File.ReadAllBytes(pause.songFolder + "/" + pause.songCoverFile);
                 loadedIMG.LoadImage(pngBytes);
@@ -55,20 +75,40 @@ public class End : MonoBehaviour
         {
             fadeTime += Time.deltaTime;
             fadeTime = Mathf.Clamp(fadeTime, 0, timeToFade);
+            print(fadeTime);
+            Color originalColorS = Color.white;
+            originalColorS.a = Mathf.Lerp(1f, 0f, fadeTime/timeToFade);
             foreach(SpriteRenderer sprite in lanes)
             {
-                Color originalColor = sprite.color;
-                originalColor.a = Mathf.Lerp(originalColor.a, 0f, fadeTime/timeToFade);
-                sprite.color = originalColor;
+                sprite.color = originalColorS;
             }
-            foreach(SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>())
-            {
-                Color originalColor = sprite.color;
-                originalColor.a = Mathf.Lerp(originalColor.a, 0f, fadeTime/timeToFade);
-                sprite.color = originalColor;
-            }
+
+            Color originalColor = songImg.color;
+            originalColor.a = Mathf.Lerp(0f, 1f, fadeTime/timeToFade);
+            songImg.color = originalColor;
+
+            songNameText.color = originalColor;
+
+            songArtistText.color = originalColor;
+
+            mapperText.color = originalColor;
+
+            scoreText.color = originalColor;
+
+            rankAlpha = originalColor.a;
+
+            menu.color = originalColor;
+
+            restart.color = originalColor;
+
+            originalColor = menu.gameObject.GetComponentInChildren<TMP_Text>().color;
+            originalColor.a = Mathf.Lerp(0f, 1f, fadeTime/timeToFade);
+            menu.gameObject.GetComponentInChildren<TMP_Text>().color = originalColor;
+
+            restart.gameObject.GetComponentInChildren<TMP_Text>().color = originalColor;
+
             Color panelColor = panel.color;
-            panelColor.a = Mathf.Lerp(panelColor.a, 0f, fadeTime/timeToFade);
+            panelColor.a = Mathf.Lerp(0f, 1f, fadeTime/timeToFade);
             panel.color = panelColor;
         }
         if(isEnd)
@@ -76,10 +116,13 @@ public class End : MonoBehaviour
             scoreTime += Time.deltaTime;
             scoreTime = Mathf.Clamp(scoreTime, 0, scoreLerpTime);
             int newScore = (int)Mathf.Ceil(Mathf.Lerp(0, scoreEarned, scoreTime/scoreLerpTime));
+            int newUScore = (int)Mathf.Ceil(Mathf.Lerp(0, unmultipliedScore, scoreTime/scoreLerpTime));
             scoreText.text = "Score: " + newScore.ToString();
 
-            rankText.text = conductor.GetRank(newScore);
-            rankText.color = conductor.rankText.color;
+            rankText.text = conductor.GetRank(MathF.Round((float)newUScore/conductor.bestPossibleScore * 100, 2), true);
+            Color newColor = conductor.rankColor;
+            newColor.a = rankAlpha;
+            rankText.color = newColor;
         }
     }
 }
