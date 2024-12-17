@@ -6,6 +6,7 @@ using UnityEngine;
 using System;
 using Unity.Collections;
 using System.IO;
+using UnityEngine.Rendering.PostProcessing;
 
 public class End : MonoBehaviour
 {
@@ -35,9 +36,19 @@ public class End : MonoBehaviour
     public float rankAlpha = 0f;
     private PauseMenuManager pause;
 
+    public TMP_Text accuracyText;
+
+    public PostProcessVolume vol;
+    private Bloom bloom;
+    private float originalBloomStrength;
+    public float endBloomStrength;
+
     void Start()
     {
-        pause = FindFirstObjectByType<PauseMenuManager>();;
+        pause = FindFirstObjectByType<PauseMenuManager>();
+        vol = FindFirstObjectByType<PostProcessVolume>();
+        vol.profile.TryGetSettings(out bloom);
+        originalBloomStrength = bloom.intensity;
     }
 
     public void Restart()
@@ -75,7 +86,6 @@ public class End : MonoBehaviour
         {
             fadeTime += Time.deltaTime;
             fadeTime = Mathf.Clamp(fadeTime, 0, timeToFade);
-            print(fadeTime);
             Color originalColorS = Color.white;
             originalColorS.a = Mathf.Lerp(1f, 0f, fadeTime/timeToFade);
             foreach(SpriteRenderer sprite in lanes)
@@ -101,6 +111,8 @@ public class End : MonoBehaviour
 
             restart.color = originalColor;
 
+            accuracyText.color = originalColor;
+
             originalColor = menu.gameObject.GetComponentInChildren<TMP_Text>().color;
             originalColor.a = Mathf.Lerp(0f, 1f, fadeTime/timeToFade);
             menu.gameObject.GetComponentInChildren<TMP_Text>().color = originalColor;
@@ -110,8 +122,10 @@ public class End : MonoBehaviour
             Color panelColor = panel.color;
             panelColor.a = Mathf.Lerp(0f, 1f, fadeTime/timeToFade);
             panel.color = panelColor;
+
+            bloom.intensity.Override(Mathf.Lerp(originalBloomStrength, endBloomStrength, fadeTime/timeToFade));
         }
-        if(isEnd)
+        if(isEnd && scoreTime < scoreLerpTime)
         {
             scoreTime += Time.deltaTime;
             scoreTime = Mathf.Clamp(scoreTime, 0, scoreLerpTime);
@@ -119,10 +133,13 @@ public class End : MonoBehaviour
             int newUScore = (int)Mathf.Ceil(Mathf.Lerp(0, unmultipliedScore, scoreTime/scoreLerpTime));
             scoreText.text = "Score: " + newScore.ToString();
 
-            rankText.text = conductor.GetRank(MathF.Round((float)newUScore/conductor.bestPossibleScore * 100, 2), true);
+            float lerpedAccuracy = MathF.Round((float)newUScore/conductor.bestPossibleScore * 100, 2);
+            rankText.text = conductor.GetRank(lerpedAccuracy, true);
             Color newColor = conductor.rankColor;
             newColor.a = rankAlpha;
             rankText.color = newColor;
+            
+            accuracyText.text = "Accuracy: " + lerpedAccuracy.ToString() + "%";
         }
     }
 }
