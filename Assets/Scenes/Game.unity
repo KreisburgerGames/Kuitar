@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 189579418}
   - component: {fileID: 189579417}
   - component: {fileID: 189579416}
+  - component: {fileID: 189579419}
   m_Layer: 0
   m_Name: End
   m_TagString: Untagged
@@ -308,6 +309,44 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!114 &189579419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189579414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de4762b72859274f89728810be3540a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 819113231}
+  lanes:
+  - {fileID: 216655380}
+  - {fileID: 1253147391}
+  - {fileID: 824849967}
+  - {fileID: 1444656773}
+  - {fileID: 1178989943}
+  - {fileID: 181854100}
+  - {fileID: 1698435484}
+  - {fileID: 790708027}
+  - {fileID: 1661252425}
+  - {fileID: 1890679352}
+  - {fileID: 1484256310}
+  - {fileID: 670190368}
+  timeToFade: 3
+  isEnd: 0
+  fadeTime: 0
+  songImg: {fileID: 488348997}
+  songNameText: {fileID: 1520549203}
+  songArtistText: {fileID: 638822113}
+  mapperText: {fileID: 1641650106}
+  scoreEarned: 0
+  rankText: {fileID: 1804098730}
+  scoreText: {fileID: 1640958523}
+  scoreTime: 0
+  scoreLerpTime: 5
 --- !u!1 &203215348
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,8 +751,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -905,7 +944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 488348994}
   - component: {fileID: 488348996}
-  - component: {fileID: 488348995}
+  - component: {fileID: 488348997}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -932,10 +971,18 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -250}
+  m_AnchoredPosition: {x: 400, y: -300}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &488348995
+--- !u!222 &488348996
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488348993}
+  m_CullTransparentMesh: 1
+--- !u!114 &488348997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -944,7 +991,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 488348993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -955,24 +1002,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &488348996
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488348993}
-  m_CullTransparentMesh: 1
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &494555333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,6 +1791,9 @@ MonoBehaviour:
   startOffset: 0
   pixelsPerBeat: 0
   songFolder: 
+  songCoverFile: 
+  songArtist: 
+  mapper: 
 --- !u!4 &730186265
 Transform:
   m_ObjectHideFlags: 0
@@ -1765,281 +1804,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.722963, y: 1.0761961, z: 0.016825179}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &768431618
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 768431620}
-  - component: {fileID: 768431619}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &768431619
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768431618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Main HUD (GameObject)
-    - Select Main Camera (GameObject)
-    - Create Panel
-    - Create Panel
-    - Add Image
-    - Create Canvas
-    - Create Canvas
-    - Add Canvas
-    - Add CanvasScaler
-    - Add GraphicRaycaster
-    - Create Panel
-    - Update Object
-    - Update Object
-    - Update Object
-    - Select Panel (GameObject)
-    - Select Canvas (GameObject)
-    - Modified Name in Canvas
-    - Select Panel (GameObject)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified Color in Panel
-    - Modified Color in Panel
-    - Modified Color in Panel
-    - Create Image
-    - Create Image
-    - Add Image
-    - Update Object
-    - Update Object
-    - Create Image
-    - Select Image (GameObject)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Select End (GameObject)
-    - Modified Ui Scale Mode in End
-    - Modified Match Width Or Height in End
-    - Modified Reference Resolution.x in End
-    - Modified Reference Resolution.y in End
-    - Select Image (GameObject)
-    - Change Rectangle Anchors
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Select Panel (GameObject)
-    - Create Text (TMP)
-    - Create Text (TMP)
-    - Add TextMeshProUGUI
-    - Update Object
-    - Update Object
-    - Create Text (TMP)
-    - Select Text (TMP) (GameObject)
-    - Change Text (TMP) Parent
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified 2 properties in Text (TMP)
-    - Modified Horizontal Alignment in Text (TMP)
-    - Modified Vertical Alignment in Text (TMP)
-    - Modified Horizontal Alignment in Text (TMP)
-    - Modified Enable Word Wrapping in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Select Text (TMP) (GameObject)
-    - Paste Text (TMP)
-    - Paste Text (TMP)
-    - Modified RectTransform Values
-    - Modified 2 properties in Text (TMP) (1)
-    - Modified Text in Text (TMP) (1)
-    - Select Text (TMP) (1) (GameObject)
-    - Paste Text (TMP) (1)
-    - Paste Text (TMP) (1)
-    - Select Text (TMP) (GameObject)
-    - Select Text (TMP) (1) (GameObject)
-    - Select Text (TMP) (2) (GameObject)
-    - Modified RectTransform Values
-    - Modified 2 properties in Text (TMP) (2)
-    - Select Multiple from Hierarchy
-    - Modified Horizontal Alignment in 3 Objects
-    - Modified Horizontal Alignment in 3 Objects
-    - Modified Vertical Alignment in 3 Objects
-    - Modified Vertical Alignment in 3 Objects
-    - Modified Horizontal Alignment in 3 Objects
-    - Modified Horizontal Alignment in 3 Objects
-    - Select Text (TMP) (2) (GameObject)
-    - Modified Text in Text (TMP) (2)
-    - Select Text (TMP) (GameObject)
-    - Modified Name in Text (TMP)
-    - Select Text (TMP) (1) (GameObject)
-    - Modified Name in Text (TMP) (1)
-    - Select Text (TMP) (2) (GameObject)
-    - Modified Name in Text (TMP) (2)
-    - Select Image (GameObject)
-    - Select Mapper (GameObject)
-    - Select Song Name (GameObject)
-    - Select Song Name (GameObject)
-    - Paste Song Name
-    - Paste Song Name
-    - Select Song Name (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Change Rectangle Anchors
-    - Change Rectangle Anchors
-    - Change Song Name (1) Parent
-    - Select Song Name (1) (GameObject)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Select Panel (GameObject)
-    - Select End (GameObject)
-    - Select Song Name (1) (GameObject)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified Text in Song Name (1)
-    - Modified Horizontal Alignment in Song Name (1)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified 2 properties in Song Name (1)
-    - Modified Name in Song Name (1)
-    - Select Score (GameObject)
-    - Paste Score
-    - Paste Score
-    - Modified Name in Score (1)
-    - Modified RectTransform Values
-    - Modified Text in Accuracy
-    - Modified 2 properties in Accuracy
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified Font Color in Accuracy
-    - Select Panel (GameObject)
-    - Change Layer of Panel
-    - Select End (GameObject)
-    - Change Layer of End
-    - Select Main HUD (GameObject)
-    - Select End (GameObject)
-    - Modified RectTransform Values
-    - Modified Render Mode in End
-    - Set Pixel Perfect
-    - Modified Camera in End
-    - Select Image (GameObject)
-    - Select Panel (GameObject)
-    - Select End (GameObject)
-    - Modified Plane Distance in End
-    - Select Main HUD (GameObject)
-    - Modified Plane Distance in Main HUD
-    - Select Panel (GameObject)
-    - Select End (GameObject)
-    - Modified Sorting Order in End
-    - Modified Vertex Color Always Gamma Space in End
-    - Select Panel (GameObject)
-    - Select No Post Process (GameObject)
-    - Modified Is Active in No Post Process
-    - Modified Is Active in No Post Process
-    - Select End (GameObject)
-    - Select No Post Process (GameObject)
-    - Select Canvas (GameObject)
-    - Select End (GameObject)
-    - Modified Sorting Order in End
-    - Select No Post Process (GameObject)
-    - Select Main HUD (GameObject)
-    - Select Canvas (GameObject)
-    - Select Pause Menu (GameObject)
-    - Select Canvas (GameObject)
-    - Modified Is Active in Canvas
-    - Modified Is Active in Canvas
-    - Select No Post Process (GameObject)
-    - Select Main HUD (GameObject)
-    - Select No Post Process (GameObject)
-    - Modified Is Active in No Post Process
-    - Modified Is Active in No Post Process
-    - Select Panel (GameObject)
-    - Select No Post Process (GameObject)
-    - Modified Is Active in No Post Process
-    - Select Score (GameObject)
-    - Select Notes (GameObject)
-    - Select Accuracy (GameObject)
-    - Select Score (GameObject)
-    - Modified Horizontal Alignment in Score
-    - Modified Text in Score
-    - Select Accuracy (GameObject)
-    - Select Score (GameObject)
-    - Modified Horizontal Alignment in Score
-    - Select Accuracy (GameObject)
-    - Modified Font Color in Accuracy
-    - Modified Font Color in Accuracy
-    - Modified Font Color in Accuracy
-    - Modified Font Color in Accuracy
-    - Select Panel (GameObject)
-    - Update Object
-    - Update Object
-    - Create Button
-    - Select Button (GameObject)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Change Rectangle Anchors
-    - Change Rectangle Anchors
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Select Button (GameObject)
-    - Paste Button
-    - Paste Button
-    - Change Rectangle Anchors
-    - Modified RectTransform Values
-    - Select Text (TMP) (GameObject)
-    - Select Multiple from Hierarchy
-    - Modified 2 properties in 2 Objects
-    - Modified 2 properties in 2 Objects
-    - Select Text (TMP) (GameObject)
-    - Modified Text in Text (TMP)
-    - Select Text (TMP) (GameObject)
-    - Modified Text in Text (TMP)
---- !u!4 &768431620
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768431618}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2161,7 +1925,6 @@ RectTransform:
   m_Children:
   - {fileID: 488348994}
   - {fileID: 1640958522}
-  - {fileID: 1804098729}
   - {fileID: 1773164619}
   - {fileID: 2139010663}
   m_Father: {fileID: 189579415}
@@ -3092,7 +2855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!20 &1330601152
 Camera:
   m_ObjectHideFlags: 0
@@ -3694,6 +3457,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1380743476}
   m_CullTransparentMesh: 1
+--- !u!1 &1425356003
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1425356005}
+  - component: {fileID: 1425356004}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1425356004
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425356003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Panel (GameObject)
+    - Modified Color in Panel
+    - Modified Color in Panel
+    - Select Game (Asset)
+--- !u!4 &1425356005
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425356003}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1444656772
 GameObject:
   m_ObjectHideFlags: 0
@@ -4248,12 +4063,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1804098729}
   m_Father: {fileID: 819113230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -100}
+  m_AnchoredPosition: {x: -450, y: -200}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1640958523
@@ -4741,7 +4557,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -350, y: -400}
-  m_SizeDelta: {x: 500, y: 200}
+  m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773164620
 MonoBehaviour:
@@ -4855,11 +4671,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 819113230}
+  m_Father: {fileID: 1640958522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -225}
+  m_AnchoredPosition: {x: 0, y: -125}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1804098730
@@ -5240,8 +5056,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5327,7 +5143,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -350, y: 400}
-  m_SizeDelta: {x: 500, y: 200}
+  m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2139010664
 MonoBehaviour:
@@ -5422,4 +5238,4 @@ SceneRoots:
   - {fileID: 597952975}
   - {fileID: 1903284188}
   - {fileID: 730186265}
-  - {fileID: 768431620}
+  - {fileID: 1425356005}

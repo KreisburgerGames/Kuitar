@@ -20,6 +20,9 @@ public class PauseMenuManager : MonoBehaviour
     public float startOffset;
     public int pixelsPerBeat;
     public string songFolder;
+    public string songCoverFile;
+    public string songArtist;
+    public string mapper;
 
     void Update()
     {

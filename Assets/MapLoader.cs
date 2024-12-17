@@ -102,6 +102,13 @@ public class MapLoader : MonoBehaviour
         pause.startOffset = startOffset;
         pause.practiceMode = practiceMode;
         pause.songFolder = songFolder;
+        reader = new StreamReader(songFolder + "/info.json");
+        jsonFile = new TextAsset(reader.ReadToEnd());
+        reader.Close();
+        SongLoader songLoad = JsonUtility.FromJson<SongLoader>(jsonFile.text);
+        pause.songCoverFile = songLoad.songCover;
+        pause.songArtist = songLoad.artistName;
+        pause.mapper = songLoad.mapper;
     }
 
     void Start()
