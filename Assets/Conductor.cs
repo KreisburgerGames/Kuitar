@@ -160,9 +160,11 @@ public class Conductor : MonoBehaviour
         noteTimingOffset = secondsPerBeat/2f;
 
         AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
-        print(bufflen/(float)AudioSettings.GetConfiguration().sampleRate/1000f);
-        print((float)AudioSettings.GetConfiguration().sampleRate/bufflen/1000f);
-        print((float)AudioSettings.GetConfiguration().sampleRate/AudioSettings.outputSampleRate);
+        AudioConfiguration audioConfig = AudioSettings.GetConfiguration();
+        print((float)bufflen/audioConfig.sampleRate/1000f);
+        print((float)audioConfig.sampleRate/bufflen/1000f);
+        print((float)AudioSettings.GetConfiguration().sampleRate/AudioSettings.GetConfiguration().dspBufferSize/1000f);
+        print(AudioSettings.GetConfiguration().dspBufferSize/(float)AudioSettings.GetConfiguration().sampleRate/1000f);
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
     }
