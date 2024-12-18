@@ -120,6 +120,7 @@ public class Conductor : MonoBehaviour
     public float time = 0f;
     public float noteTimingOffset = 0.5f;
     private End end;
+    public float pauseTime;
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -154,6 +155,8 @@ public class Conductor : MonoBehaviour
 
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
+
+        dspSongTime = (float)AudioSettings.dspTime;
     }
 
     IEnumerator PlaySong()
@@ -194,9 +197,23 @@ public class Conductor : MonoBehaviour
             cameraFound = true;
         }
 
-        songPos = time;
+        if(pauseMenu == null)
+        {
+            pauseMenu = FindFirstObjectByType<PauseMenuManager>();
+        }
 
-        songBeatsPos = songPos / secondsPerBeat;
+        if(pauseMenu.isPaused)
+        {
+            //pauseTime += (float)(AudioSettings.dspTime - pauseMenu.pauseDspTime);
+            return;
+        }
+
+        print("Pause Time: " + pauseTime);
+        float songPosition = (float)(AudioSettings.dspTime - dspSongTime) - pauseTime;
+
+        songPos = songPosition;
+
+        songBeatsPos = songPosition / secondsPerBeat;
 
         List<Note> readyNotes = new List<Note>();
 
