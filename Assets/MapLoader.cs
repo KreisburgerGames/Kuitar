@@ -80,6 +80,7 @@ public class MapLoader : MonoBehaviour
             note.conductor = conductor;
             note.gameObject.transform.SetParent(GameObject.Find("Notes").transform);
             note.Init();
+            note.gameObject.SetActive(false);
         }
         if(SceneManager.GetActiveScene().name == "Select") SceneManager.UnloadSceneAsync("Select");
         else SceneManager.UnloadSceneAsync("Reset");
