@@ -25,6 +25,8 @@ public class PauseMenuManager : MonoBehaviour
     public string mapper;
     public bool end = false;
     public End endRef;
+    public double pauseDspTime;
+    private Conductor conductor;
 
     void Start()
     {
@@ -45,6 +47,7 @@ public class PauseMenuManager : MonoBehaviour
             song = FindFirstObjectByType<AudioSource>();
             foundSong = true;
         }
+        if(conductor == null) conductor = FindFirstObjectByType<Conductor>();
         if(Input.GetKeyDown(KeyCode.Escape)) OnPauseButtonPressed();
     }
     public void OnPauseButtonPressed()
@@ -65,6 +68,7 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = true;
         song.Pause();
         Time.timeScale = 0f;
+        pauseDspTime = AudioSettings.dspTime;
         pauseMenu.SetActive(true);
     }
 
@@ -73,6 +77,7 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = false;
         song.UnPause();
         Time.timeScale = 1f;
+        conductor.pauseDspTime += AudioSettings.dspTime - pauseDspTime;
         pauseMenu.SetActive(false);
     }
 

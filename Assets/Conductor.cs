@@ -11,9 +11,9 @@ public class Conductor : MonoBehaviour
 {
     public float songBPM;
     public float secondsPerBeat;
-    public float songPos;
-    public float songBeatsPos;
-    public float dspSongTime;
+    public double songPos;
+    public double songBeatsPos;
+    public double dspSongTime;
     public AudioSource song;
     public float firstBeatOffset;
     public float songStartOffset;
@@ -118,9 +118,11 @@ public class Conductor : MonoBehaviour
     private int unmultipliedScore = 0;
     public List<AccuracyRank> ranks = new List<AccuracyRank>();
     public PauseMenuManager pauseMenu;
-    public float time = 0f;
+    public double time = 0f;
     public float noteTimingOffset = 0.5f;
     private End end;
+    public double pauseDspTime;
+    public bool started = false;
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -141,14 +143,14 @@ public class Conductor : MonoBehaviour
         {
             song.time = 0f;
         }
+
+        pauseMenu = FindAnyObjectByType<PauseMenuManager>();
         
         StartCoroutine(PlaySong());
 
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
-            float latency = PlayerPrefs.GetFloat("Latency") / 1000f;
-            note.beat += latency / secondsPerBeat;
         }
         noteLate = GameObject.Find("Note Late");
         noteTimingOffset = secondsPerBeat/2f;
@@ -160,21 +162,25 @@ public class Conductor : MonoBehaviour
     IEnumerator PlaySong()
     {
         yield return new WaitUntil(() => song.clip.loadState == AudioDataLoadState.Loaded);
-        song.Play();
+        float latency = PlayerPrefs.GetFloat("Latency") / 1000f;
+        double schedule = AudioSettings.dspTime + latency;
+        dspSongTime = AudioSettings.dspTime + (latency) * 2;
+        song.PlayScheduled(schedule);
+        started = true;
     }
 
-    public float GetBeats()
+    public double GetBeats()
     {
         return songBeatsPos;
     }
 
     void Update()
     {
-        if(end.isEnd) return;
+        if(end.isEnd || !started) return;
         int currentSample = song.timeSamples;
         int sampleRate = song.clip.frequency;
         
-        time = (float)currentSample / sampleRate;
+        time = (double)currentSample / sampleRate;
 
         if(song.time > 0) canEnd = true;
         if(canEnd && song.time == 0f) 
@@ -195,7 +201,9 @@ public class Conductor : MonoBehaviour
             cameraFound = true;
         }
 
-        songPos = time;
+        if(pauseMenu.isPaused) return;
+
+        songPos = AudioSettings.dspTime - dspSongTime - pauseDspTime;
 
         songBeatsPos = songPos / secondsPerBeat;
 
