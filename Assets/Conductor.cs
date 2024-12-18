@@ -155,6 +155,8 @@ public class Conductor : MonoBehaviour
         noteLate = GameObject.Find("Note Late");
         noteTimingOffset = secondsPerBeat/2f;
 
+        AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
+        print(AudioSettings.outputSampleRate/bufflen/1000f);
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
     }
@@ -163,10 +165,11 @@ public class Conductor : MonoBehaviour
     {
         yield return new WaitUntil(() => song.clip.loadState == AudioDataLoadState.Loaded);
         float latency = PlayerPrefs.GetFloat("Latency") / 1000f;
-        double schedule = AudioSettings.dspTime + 1f;
-        dspSongTime = AudioSettings.dspTime + 1f + latency;
+        float delay = 1f;
+        double schedule = AudioSettings.dspTime + delay;
+        dspSongTime = schedule + latency;
         song.PlayScheduled(schedule);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(delay);
         started = true;
     }
 
