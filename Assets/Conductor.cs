@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AudioSource))]
 public class Conductor : MonoBehaviour
 {
     public float songBPM;
@@ -120,7 +121,6 @@ public class Conductor : MonoBehaviour
     public float time = 0f;
     public float noteTimingOffset = 0.5f;
     private End end;
-    public float pauseTime;
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -155,8 +155,6 @@ public class Conductor : MonoBehaviour
 
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
-
-        dspSongTime = (float)AudioSettings.dspTime;
     }
 
     IEnumerator PlaySong()
@@ -197,23 +195,9 @@ public class Conductor : MonoBehaviour
             cameraFound = true;
         }
 
-        if(pauseMenu == null)
-        {
-            pauseMenu = FindFirstObjectByType<PauseMenuManager>();
-        }
+        songPos = time;
 
-        if(pauseMenu.isPaused)
-        {
-            //pauseTime += (float)(AudioSettings.dspTime - pauseMenu.pauseDspTime);
-            return;
-        }
-
-        print("Pause Time: " + pauseTime);
-        float songPosition = (float)(AudioSettings.dspTime - dspSongTime) - pauseTime;
-
-        songPos = songPosition;
-
-        songBeatsPos = songPosition / secondsPerBeat;
+        songBeatsPos = songPos / secondsPerBeat;
 
         List<Note> readyNotes = new List<Note>();
 
