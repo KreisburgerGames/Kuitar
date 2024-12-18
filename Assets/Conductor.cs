@@ -101,7 +101,6 @@ public class Conductor : MonoBehaviour
     public float noteMissDist = 1f;
     private Camera camera;
     public float laneEdgeMargin;
-    private bool cameraFound = false;
     private bool canEnd = false;
     public int combo = 0;
     public int multiplier = 1;
@@ -151,12 +150,14 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
+            note.gameObject.SetActive(false);
         }
         noteLate = GameObject.Find("Note Late");
         noteTimingOffset = secondsPerBeat/2f;
 
         AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
-        print(AudioSettings.outputSampleRate/bufflen/1000f);
+        print(bufflen/(float)AudioSettings.GetConfiguration().sampleRate/1000f);
+        print((float)AudioSettings.GetConfiguration().sampleRate/bufflen/1000f);
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
     }
@@ -194,15 +195,15 @@ public class Conductor : MonoBehaviour
             end.panel.gameObject.SetActive(true);
             end.isEnd = true; /*SceneManager.LoadScene("Select", LoadSceneMode.Single);*/
         }
-        if(!cameraFound && FindFirstObjectByType<Camera>() != null)
+        if(camera == null)
         {
             camera = FindFirstObjectByType<Camera>();
+            if(camera == null) return;
             noteLate.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x + noteMissDist, noteLate.transform.position.y);
             GameObject lanes = GameObject.FindGameObjectWithTag("Lanes");
             GameObject laneEnds = GameObject.FindGameObjectWithTag("Lane Ends");
             lanes.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(0, 0)).x + laneEdgeMargin, 0);
             laneEnds.transform.position = new Vector2(camera.ScreenToWorldPoint(new Vector2(camera.pixelWidth, 0)).x - laneEdgeMargin, 0);
-            cameraFound = true;
         }
 
         if(pauseMenu.isPaused) return;
