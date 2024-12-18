@@ -158,6 +158,7 @@ public class Conductor : MonoBehaviour
         AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
         print(bufflen/(float)AudioSettings.GetConfiguration().sampleRate/1000f);
         print((float)AudioSettings.GetConfiguration().sampleRate/bufflen/1000f);
+        print((float)AudioSettings.GetConfiguration().sampleRate/AudioSettings.outputSampleRate);
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
     }
