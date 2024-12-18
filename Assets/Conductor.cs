@@ -122,6 +122,7 @@ public class Conductor : MonoBehaviour
     private End end;
     public double pauseDspTime;
     public bool started = false;
+    public float offset;
     // Is this enough varibles for u pookie?
 
     void Start()
@@ -132,15 +133,18 @@ public class Conductor : MonoBehaviour
         
         if(firstBeatOffset > 0){
             float clampedOffset = Mathf.Clamp(songStartOffset, 0, rewindDistance - 1f);
-            song.time = songStartOffset - ((rewindDistance - 1f) * (clampedOffset/firstBeatOffset));
+            offset = songStartOffset - ((rewindDistance - 1f) * (clampedOffset/firstBeatOffset));
+            song.time = offset;
         }
         else if(songStartOffset - rewindDistance > 0)
         {
-            song.time = songStartOffset - rewindDistance - 1f;
+            offset = songStartOffset - rewindDistance - 1f;
+            song.time = offset;
         }
         else
         {
-            song.time = 0f;
+            offset = 0f;
+            song.time = offset;
         }
 
         pauseMenu = FindAnyObjectByType<PauseMenuManager>();
@@ -209,7 +213,7 @@ public class Conductor : MonoBehaviour
 
         if(pauseMenu.isPaused) return;
 
-        songPos = AudioSettings.dspTime - dspSongTime - pauseDspTime;
+        songPos = AudioSettings.dspTime - dspSongTime - pauseDspTime + offset;
 
         songBeatsPos = songPos / secondsPerBeat;
 
