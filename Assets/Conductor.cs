@@ -163,8 +163,10 @@ public class Conductor : MonoBehaviour
     {
         yield return new WaitUntil(() => song.clip.loadState == AudioDataLoadState.Loaded);
         float latency = PlayerPrefs.GetFloat("Latency") / 1000f;
-        double schedule = AudioSettings.dspTime + latency;
-        dspSongTime = AudioSettings.dspTime + (latency * 2);
+        double delay = 1f;
+        double dspTime = AudioSettings.dspTime;
+        double schedule = dspSongTime + delay;
+        dspSongTime = dspTime + delay + latency;
         song.PlayScheduled(schedule);
         started = true;
     }
