@@ -151,20 +151,17 @@ public class Conductor : MonoBehaviour
         
         StartCoroutine(PlaySong());
 
+        AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
+            //note.beat += Application.targetFrameRate * Time.fixedDeltaTime * secondsPerBeat / numbuff;
+            note.beat += Application.targetFrameRate * Time.fixedDeltaTime / numbuff;
             note.gameObject.SetActive(false);
         }
         noteLate = GameObject.Find("Note Late");
         noteTimingOffset = secondsPerBeat/2f;
 
-        AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
-        AudioConfiguration audioConfig = AudioSettings.GetConfiguration();
-        print((float)bufflen/audioConfig.sampleRate/1000f);
-        print((float)audioConfig.sampleRate/bufflen/1000f);
-        print((float)AudioSettings.GetConfiguration().sampleRate/AudioSettings.GetConfiguration().dspBufferSize/1000f);
-        print(AudioSettings.GetConfiguration().dspBufferSize/(float)AudioSettings.GetConfiguration().sampleRate/1000f);
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
     }

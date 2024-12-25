@@ -130,7 +130,7 @@ public class Note : MonoBehaviour
         if(!moving) return;
         float distFromTarget = targetPos.x - transform.position.x - .0219f;
         if(distFromTarget <= 1) return;
-        double secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos - Time.deltaTime;
+        double secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
         secondsAvailable = Mathf.Clamp((float)secondsAvailable, 0, 1000);
         vel = new Vector2(distFromTarget / (float)secondsAvailable, 0);
         rb.velocity = vel;

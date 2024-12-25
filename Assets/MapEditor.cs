@@ -65,6 +65,7 @@ public class MapEditor : MonoBehaviour
     private List<DummyNote> clipboard = new List<DummyNote>();
     private float songTime;
     private bool allSelected;
+    private int numbuff;
 
     public void Init()
     {
@@ -92,6 +93,7 @@ public class MapEditor : MonoBehaviour
         draw.Generate(songFolder);
         pause.songFileName = songFolder + "/" + song.songFile;
         pause.songFolder = songFolder;
+        AudioSettings.GetDSPBufferSize(out int bufflen, out numbuff);
     }
 
     public void TimeScrollbar()
@@ -430,7 +432,8 @@ public class MapEditor : MonoBehaviour
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
         if(spec)
         {
-            trackerAnchor.anchoredPosition += Vector2.right * trackerOffset;
+            float toffset = Application.targetFrameRate * Time.fixedDeltaTime / numbuff;
+            trackerAnchor.anchoredPosition += Vector2.right * toffset * secondsPerBeat;
         }
     }
 
