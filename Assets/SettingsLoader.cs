@@ -13,9 +13,9 @@ public class SettingsLoader : MonoBehaviour
     public bool fullscreen;
     public int refreshRate;
     public float latency;
-    public static SettingsLoader instance;
     public int frameLimit;
     public int vSync;
+    public static SettingsLoader instance;
 
     private void Awake()
     {
