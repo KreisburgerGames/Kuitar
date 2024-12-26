@@ -156,7 +156,7 @@ public class Conductor : MonoBehaviour
         {
             notes.Add(note);
             //note.beat += Application.targetFrameRate * Time.fixedDeltaTime * secondsPerBeat / numbuff;
-            note.beat += Application.targetFrameRate * Time.fixedDeltaTime / numbuff;
+            note.beat += Application.targetFrameRate * Time.fixedDeltaTime / numbuff * (1 - secondsPerBeat);
             note.gameObject.SetActive(false);
         }
         noteLate = GameObject.Find("Note Late");
