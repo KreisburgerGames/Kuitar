@@ -65,7 +65,7 @@ public class MapEditor : MonoBehaviour
     private List<DummyNote> clipboard = new List<DummyNote>();
     private float songTime;
     private bool allSelected;
-    private int numbuff;
+    private float latency;
 
     public void Init()
     {
@@ -93,7 +93,7 @@ public class MapEditor : MonoBehaviour
         draw.Generate(songFolder);
         pause.songFileName = songFolder + "/" + song.songFile;
         pause.songFolder = songFolder;
-        AudioSettings.GetDSPBufferSize(out int bufflen, out numbuff);
+        latency = PlayerPrefs.GetFloat("Latency") / 1000f;
     }
 
     public void TimeScrollbar()
@@ -160,11 +160,11 @@ public class MapEditor : MonoBehaviour
         songTime = (float)currentSample / sampleRate;
         timeScrollbar.value = songTime / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
-        noteParent.transform.position = new Vector3(metersPerSecond * songTime, 0, 0);
+        noteParent.transform.position = new Vector3(metersPerSecond * (songTime + latency), 0, 0);
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
-            TrackerGoToSong(songTime);
+            TrackerGoToSong(songTime + latency);
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -369,9 +369,9 @@ public class MapEditor : MonoBehaviour
         notes = notes.OrderBy(x => x.beat).ToList();
         foreach(DummyNote note in notes)
         {
-            float loadCompensation = 0;
             json += " {";
-            float beat = note.beat;
+            float offsetBeat = -latency / secondsPerBeat;
+            float beat = note.beat + offsetBeat;
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
@@ -422,18 +422,17 @@ public class MapEditor : MonoBehaviour
         int currentSample = audioSource.timeSamples;
         int sampleRate = audioSource.clip.frequency;
         float time = (float)currentSample / sampleRate;
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, time/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, (time + latency)/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
         i++;
     }
 
     void TrackerGoToSong(float audioTime)
     {
-        float songPercentage = audioTime / audioSource.clip.length;
+        float songPercentage = audioTime/ audioSource.clip.length;
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
         if(spec)
         {
-            float toffset = Application.targetFrameRate * Time.fixedDeltaTime / numbuff;
-            trackerAnchor.anchoredPosition += Vector2.right * toffset * secondsPerBeat;
+            trackerAnchor.anchoredPosition += Vector2.right * trackerOffset;
         }
     }
 

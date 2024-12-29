@@ -24,7 +24,7 @@ public class BallSync : MonoBehaviour
     {
         beep = GetComponent<AudioSource>();
         halfBounceTime = secondsPerBounce / 2;
-        currentLatency = PlayerPrefs.GetFloat("Latency") / 1000;
+        currentLatency = PlayerPrefs.GetFloat("Latency") / 1000f;
         beepOffset = halfBounceTime + currentLatency;
         if(beepOffset <= halfBounceTime) negBeepOffset = true; else negBeepOffset = false;
         upY = transform.position.y + bounceHeight;
@@ -34,7 +34,7 @@ public class BallSync : MonoBehaviour
 
     public void UpdateOffset(float newOffset)
     {
-        currentLatency = newOffset / 1000;
+        currentLatency = newOffset / 1000f;
         beepOffset = halfBounceTime + currentLatency;
         if(beepOffset <= halfBounceTime) negBeepOffset = true; else negBeepOffset = false;
     }

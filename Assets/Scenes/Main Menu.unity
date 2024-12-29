@@ -188,8 +188,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1019,8 +1019,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1255,8 +1255,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2349,8 +2349,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2417,156 +2417,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658645318}
   m_CullTransparentMesh: 1
---- !u!1 &1692214594
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1692214596}
-  - component: {fileID: 1692214595}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1692214595
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1692214594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Canvas (GameObject)
-    - Select Canvas (GameObject)
-    - Paste Canvas
-    - Paste Canvas
-    - Select Text (TMP) (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Delete Game Objects
-    - Delete Game Objects
-    - Delete Game Objects
-    - Delete Game Objects
-    - Delete Game Objects
-    - Select Canvas (1) (GameObject)
-    - Select Multiple from Hierarchy
-    - Modified Match Width Or Height in 2 Objects
-    - Modified Vertex Color Always Gamma Space in 2 Objects
-    - Select Canvas (1) (GameObject)
-    - Create Panel
-    - Create Panel
-    - Add Image
-    - Update Object
-    - Update Object
-    - Create Panel
-    - Select Panel (GameObject)
-    - Modified Color in Panel
-    - Modified Color in Panel
-    - Modified Color in Panel
-    - Modified Color in Panel
-    - Select Text (TMP) (GameObject)
-    - Select Panel (GameObject)
-    - Select Text (TMP) (GameObject)
-    - Paste Text (TMP)
-    - Paste Text (TMP)
-    - Sibling Order Change
-    - Change Text (TMP) Parent
-    - Modified Text in Text (TMP)
-    - Modified 2 properties in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Vertical Alignment in Text (TMP)
-    - Modified Vertical Alignment in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Select Play (GameObject)
-    - Select Text (TMP) (GameObject)
-    - Select Play (GameObject)
-    - Paste Play
-    - Paste Play
-    - Change Play Parent
-    - Change Rectangle Anchors
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Select Play (GameObject)
-    - Paste Play
-    - Paste Play
-    - Modified RectTransform Values
-    - Select Play (GameObject)
-    - Modified Name in Play
-    - Select Play (1) (GameObject)
-    - Modified Name in Play (1)
-    - Select Text (TMP) (GameObject)
-    - Select Yes (GameObject)
-    - Modified RectTransform Values
-    - Select No (GameObject)
-    - Modified RectTransform Values
-    - Select Text (TMP) (GameObject)
-    - Modified Text in Text (TMP)
-    - Select Multiple from Hierarchy
-    - Modified Font Color in 2 Objects
-    - Select Yes (GameObject)
-    - Select Text (TMP) (GameObject)
-    - Modified Text in Text (TMP)
-    - Select Yes (GameObject)
-    - Modified 2 properties in Yes
-    - Modified 4 properties in Yes
-    - Select No (GameObject)
-    - Modified 2 properties in No
-    - Modified 4 properties in No
-    - Select Canvas (1) (GameObject)
-    - Modified Is Active in Canvas (1)
-    - Select Settings (GameObject)
-    - Modified First Launch Popup in Settings
-    - Select Canvas (1) (GameObject)
-    - Modified Is Active in Canvas (1)
-    - Select Text (TMP) (GameObject)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified Text in Text (TMP)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Select Canvas (1) (GameObject)
-    - Modified Is Active in Canvas (1)
---- !u!4 &1692214596
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1692214594}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1708352743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2700,6 +2550,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708352743}
   m_CullTransparentMesh: 1
+--- !u!1 &2036493139
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2036493141}
+  - component: {fileID: 2036493140}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2036493140
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036493139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Play (GameObject)
+    - Select Editor (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Modified Font Color in 4 Objects
+    - Clear Selection
+--- !u!4 &2036493141
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036493139}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2708,4 +2614,4 @@ SceneRoots:
   - {fileID: 405363847}
   - {fileID: 179419986}
   - {fileID: 1205029608}
-  - {fileID: 1692214596}
+  - {fileID: 2036493141}
