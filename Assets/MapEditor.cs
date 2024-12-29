@@ -68,6 +68,7 @@ public class MapEditor : MonoBehaviour
     private float latency;
     private float beatsLatency;
     private float zeroLatencyTime;
+    private float originalLatency;
 
     public void Init()
     {
@@ -139,6 +140,7 @@ public class MapEditor : MonoBehaviour
             invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat + beatsLatency, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, load:true));
             i++;
         }
+        latency = notesLoaded.notes[0].latency;
     }
 
     void SetDirAndNoteText()
@@ -168,7 +170,14 @@ public class MapEditor : MonoBehaviour
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
-            TrackerGoToSong(zeroLatencyTime - latency, 0);
+            if(originalLatency != 0f)
+            {
+                TrackerGoToSong(zeroLatencyTime - (latency * (originalLatency / latency)), 0);
+            }
+            else
+            {
+                TrackerGoToSong(zeroLatencyTime - latency, 0);
+            }
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -363,6 +372,7 @@ public class MapEditor : MonoBehaviour
 
     void Save()
     {
+        int x = 0;
         if(File.Exists(mapPath + "/notes.json")) File.Delete(mapPath + "/notes.json");
         string json = "{\"notes\": [ ";
         List<DummyNote> notes = new List<DummyNote>();
@@ -385,11 +395,17 @@ public class MapEditor : MonoBehaviour
             }
             else {json += "\"strum\" : false, "; json += "\"downStrum\" : false, ";}
             int noteNum = note.note;
+            if(x == 0)
+            {
+                json += "\"latency\" : " + latency + ", ";
+            }
             json += "\"note\" : "  + noteNum.ToString() + "}, ";
+            x++;
         }
         json = json.Remove(json.Length - 2, 1);
         json += "] }";
         File.WriteAllText(mapPath + "/notes.json", json);
+        
         print("Saved at " + mapPath + "/notes.json");
     }
 
