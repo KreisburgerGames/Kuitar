@@ -157,14 +157,14 @@ public class MapEditor : MonoBehaviour
         
         int currentSample = audioSource.timeSamples;
         int sampleRate = audioSource.clip.frequency;
-        songTime = (float)currentSample / sampleRate;
-        timeScrollbar.value = songTime / audioSource.clip.length;
+        songTime = ((float)currentSample / sampleRate) + latency;
+        timeScrollbar.value = (songTime - latency) / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
-        noteParent.transform.position = new Vector3(metersPerSecond * (songTime + latency), 0, 0);
+        noteParent.transform.position = new Vector3(metersPerSecond * songTime, 0, 0);
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
-            TrackerGoToSong(songTime + latency);
+            TrackerGoToSong(songTime);
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -370,8 +370,7 @@ public class MapEditor : MonoBehaviour
         foreach(DummyNote note in notes)
         {
             json += " {";
-            float offsetBeat = -latency / secondsPerBeat;
-            float beat = note.beat + offsetBeat;
+            float beat = note.beat;
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
@@ -419,16 +418,13 @@ public class MapEditor : MonoBehaviour
 
     public void PlaceNoteAction(int lane)
     {
-        int currentSample = audioSource.timeSamples;
-        int sampleRate = audioSource.clip.frequency;
-        float time = (float)currentSample / sampleRate;
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, (time + latency)/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, songTime/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
         i++;
     }
 
     void TrackerGoToSong(float audioTime)
     {
-        float songPercentage = audioTime/ audioSource.clip.length;
+        float songPercentage = audioTime / audioSource.clip.length;
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
         if(spec)
         {
