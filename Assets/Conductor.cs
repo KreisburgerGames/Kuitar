@@ -155,8 +155,6 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
-            //note.beat += Application.targetFrameRate * Time.fixedDeltaTime * secondsPerBeat / numbuff;
-            note.beat += Application.targetFrameRate * Time.fixedDeltaTime / numbuff * (1 - secondsPerBeat);
             note.gameObject.SetActive(false);
         }
         noteLate = GameObject.Find("Note Late");
@@ -164,6 +162,7 @@ public class Conductor : MonoBehaviour
 
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
+        print(song.clip.loadType);
     }
 
     IEnumerator PlaySong()
@@ -172,7 +171,7 @@ public class Conductor : MonoBehaviour
         float latency = PlayerPrefs.GetFloat("Latency") / 1000f;
         float delay = 1f;
         double schedule = AudioSettings.dspTime + delay;
-        dspSongTime = schedule + latency;
+        dspSongTime = schedule - latency;
         song.PlayScheduled(schedule);
         yield return new WaitForSeconds(delay);
         started = true;

@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/AdjustAudio.unity
+    guid: 3f3d810ca3ff69548a0a7a180c29b186
+  - enabled: 1
     path: Assets/Scenes/Reset.unity
     guid: e2906fb463ef6f54281c1d2fc13c670a
   - enabled: 1

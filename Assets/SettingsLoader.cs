@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SettingsLoader : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class SettingsLoader : MonoBehaviour
     public int frameLimit;
     public int vSync;
     public static SettingsLoader instance;
+    private bool firstLaunch;
+    public GameObject firstLaunchPopup;
 
     private void Awake()
     {
@@ -72,6 +75,15 @@ public class SettingsLoader : MonoBehaviour
             PlayerPrefs.SetInt("VSync", 1);
             vSync = PlayerPrefs.GetInt("VSync");
         }
+         if (PlayerPrefs.HasKey("FirstLaunch"))
+        {
+            firstLaunch = false;
+        }
+        else
+        {
+            PlayerPrefs.SetInt("FirstLaunch", FromBool(true));
+            firstLaunch = true;
+        }
 
         FullScreenMode fullScreenMode;
         if (fullscreen)
@@ -86,6 +98,27 @@ public class SettingsLoader : MonoBehaviour
         Screen.SetResolution(screenWidth, screenHeight, fullScreenMode);
         Application.targetFrameRate = frameLimit;
         QualitySettings.vSyncCount = vSync;
+
+        if(firstLaunch)
+        {
+            FirstLaunch();
+        }
+    }
+
+    private void FirstLaunch()
+    {
+        PlayerPrefs.SetInt("FromSettings", FromBool(false));
+        firstLaunchPopup.SetActive(true);
+    }
+
+    public void Yes()
+    {
+        SceneManager.LoadScene("AdjustAudio");
+    }
+
+    public void No()
+    {
+        firstLaunchPopup.SetActive(false);
     }
 
     public static bool ToBool(int value)

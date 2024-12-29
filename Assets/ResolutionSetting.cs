@@ -31,9 +31,10 @@ public class ResolutionSetting : MonoBehaviour
         fullscreen.isOn = SettingsLoader.ToBool(PlayerPrefs.GetInt("Fullscreen"));
     }
 
-    public void Back()
+    public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene("Main Menu");
+        PlayerPrefs.SetInt("FromSettings", SettingsLoader.FromBool(true));
+        SceneManager.LoadScene(sceneName);
     }
 
     public void FullscreenToggle(bool fullscreen)

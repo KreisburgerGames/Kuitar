@@ -10,6 +10,7 @@ public class AudioOffsetSetting : MonoBehaviour
     public float minLatency;
     public float maxLatency;
     public TMP_Text latencyText;
+    public BallSync ballSync;
 
     void Start()
     {
@@ -25,5 +26,9 @@ public class AudioOffsetSetting : MonoBehaviour
         float selectedLatency = Mathf.Round(Mathf.Lerp(minLatency, maxLatency, value));
         latencyText.text = selectedLatency.ToString() + " ms";
         PlayerPrefs.SetFloat("Latency", selectedLatency);
+        if(ballSync != null)
+        {
+            ballSync.UpdateOffset(selectedLatency);
+        }
     }
 }
