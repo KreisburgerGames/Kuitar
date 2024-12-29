@@ -66,6 +66,8 @@ public class MapEditor : MonoBehaviour
     private float songTime;
     private bool allSelected;
     private float latency;
+    private float beatsLatency;
+    private float zeroLatencyTime;
 
     public void Init()
     {
@@ -93,7 +95,6 @@ public class MapEditor : MonoBehaviour
         draw.Generate(songFolder);
         pause.songFileName = songFolder + "/" + song.songFile;
         pause.songFolder = songFolder;
-        latency = PlayerPrefs.GetFloat("Latency") / 1000f;
     }
 
     public void TimeScrollbar()
@@ -118,6 +119,8 @@ public class MapEditor : MonoBehaviour
         audioSource.Play();
         audioSource.Pause();
         audioSource.time = 0f;
+        latency = PlayerPrefs.GetFloat("Latency") / 1000f;
+        beatsLatency = latency / secondsPerBeat;
         LoadNotes();
         draw.audioSource = audioSource;
         draw.Generate(songFolder);
@@ -133,7 +136,7 @@ public class MapEditor : MonoBehaviour
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, load:true));
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat + beatsLatency, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, load:true));
             i++;
         }
     }
@@ -157,14 +160,15 @@ public class MapEditor : MonoBehaviour
         
         int currentSample = audioSource.timeSamples;
         int sampleRate = audioSource.clip.frequency;
-        songTime = ((float)currentSample / sampleRate) + latency;
+        zeroLatencyTime = (float)currentSample / sampleRate;
+        songTime = zeroLatencyTime + latency;
         timeScrollbar.value = (songTime - latency) / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
         noteParent.transform.position = new Vector3(metersPerSecond * songTime, 0, 0);
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
-            TrackerGoToSong(songTime);
+            TrackerGoToSong(zeroLatencyTime - latency);
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -329,7 +333,7 @@ public class MapEditor : MonoBehaviour
             print("note beat: " + note.beat + "current beat: " + currentBeat);
             float targetBeat = currentBeat + (beat - firstBeat);
             print(targetBeat);
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat));
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat - beatsLatency, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat));
             i++;
         }
     }
@@ -370,7 +374,7 @@ public class MapEditor : MonoBehaviour
         foreach(DummyNote note in notes)
         {
             json += " {";
-            float beat = note.beat;
+            float beat = note.beat - beatsLatency;
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
@@ -418,7 +422,7 @@ public class MapEditor : MonoBehaviour
 
     public void PlaceNoteAction(int lane)
     {
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, songTime/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, (zeroLatencyTime + latency)/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
         i++;
     }
 
