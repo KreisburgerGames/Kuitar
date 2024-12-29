@@ -168,7 +168,7 @@ public class MapEditor : MonoBehaviour
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
         if (audioSource.clip != null)
         {
-            TrackerGoToSong(zeroLatencyTime - (latency/2), latency);
+            TrackerGoToSong(zeroLatencyTime - latency, 0);
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -426,9 +426,9 @@ public class MapEditor : MonoBehaviour
         i++;
     }
 
-    void TrackerGoToSong(float audioTime, float latency)
+    void TrackerGoToSong(float audioTime, float latencyTime)
     {
-        float songPercentage = audioTime / (audioSource.clip.length + latency);
+        float songPercentage = audioTime / (audioSource.clip.length + latencyTime);
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
         if(spec)
         {
