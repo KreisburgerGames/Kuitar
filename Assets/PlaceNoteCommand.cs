@@ -19,9 +19,10 @@ public class PlaceNoteCommand : ICommand
     float secondsPerBeat;
     bool load;
     bool latencySet;
+    float noteParentOffset;
     DummyNote note;
 
-    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false, bool latencySet=false)
+    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, float noteParentOffset, bool load=false, bool latencySet=false)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -37,11 +38,12 @@ public class PlaceNoteCommand : ICommand
         this.secondsPerBeat = secondsPerBeat;
         this.load = load;
         this.latencySet = latencySet;
+        this.noteParentOffset = noteParentOffset;
     }
 
     public void Execute()
     {
-        note = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, load:load, latencySet);
+        note = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset, load:load, latencySet:latencySet);
     }
 
     public void PerformUndo()

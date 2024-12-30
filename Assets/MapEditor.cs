@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using System.Threading;
 using System.Linq;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class MapEditor : MonoBehaviour
 {
@@ -63,16 +64,19 @@ public class MapEditor : MonoBehaviour
     public float trackerOffset;
     public bool spec = false;
     private List<DummyNote> clipboard = new List<DummyNote>();
-    private float songTime;
     private bool allSelected;
     private float latency;
-    private float beatsLatency;
-    private float zeroLatencyTime;
-    private float originalLatency;
+    private float trackedTime;
+    private bool negLatency;
+    private bool isPlaying;
+    bool canPause;
+    public float noteParentOffset;
+    private float offsetBeats;
 
     public void Init()
     {
         latency = PlayerPrefs.GetFloat("Latency") / 1000f;
+        if(latency < 0f) negLatency = true;
         if(FindFirstObjectByType<SongListEditor>() != null) Destroy(FindFirstObjectByType<SongListEditor>().gameObject);
         if(FindFirstObjectByType<EditorSong>() != null) Destroy(FindFirstObjectByType<EditorSong>().gameObject);
         song = GetComponent<Song>();
@@ -97,6 +101,14 @@ public class MapEditor : MonoBehaviour
         draw.Generate(songFolder);
         pause.songFileName = songFolder + "/" + song.songFile;
         pause.songFolder = songFolder;
+        offsetBeats = noteParentOffset / metersPerSecond / secondsPerBeat;
+    }
+
+    private IEnumerator NegativeDelayStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isPlaying = true;
+        canPause = true;
     }
 
     public void TimeScrollbar()
@@ -109,7 +121,7 @@ public class MapEditor : MonoBehaviour
 
     private void UpdateText()
     {
-        float selectedTime = MathF.Round(audioSource.time, 2);
+        float selectedTime = MathF.Round(trackedTime, 2);
         float seconds = MathF.Round(selectedTime % 60, 2);
         int minutes = (int)Mathf.Floor(selectedTime / 60);
         if(seconds < 10) time.text = minutes.ToString() + " : 0" + seconds.ToString();
@@ -119,9 +131,10 @@ public class MapEditor : MonoBehaviour
     public void Ready()
     {
         audioSource.Play();
+        isPlaying = false;
         audioSource.Pause();
         audioSource.time = 0f;
-        beatsLatency = latency / secondsPerBeat;
+        trackedTime = 0f;
         LoadNotes();
         draw.audioSource = audioSource;
         draw.Generate(songFolder);
@@ -135,12 +148,9 @@ public class MapEditor : MonoBehaviour
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         reader.Close();
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
-        bool latencySet = false;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            print(noteLoad.latency);
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat + beatsLatency, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, load:true, noteLoad.latencySet));
-            if(noteLoad.latency != 0.00f && !latencySet) {originalLatency = noteLoad.latency; latencySet = true;}
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, noteParentOffset, load:true, latencySet:noteLoad.latencySet));
             i++;
         }
         
@@ -157,35 +167,38 @@ public class MapEditor : MonoBehaviour
         selectedNote.text = selectedNoteNumber.ToString();
     }
 
+    private IEnumerator DelayStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        audioSource.UnPause();
+        canPause = true;
+    }
+
+    private IEnumerator ReSyncTime()
+    {
+        yield return new WaitForSeconds(1f);
+        trackedTime = audioSource.time - latency;
+        StartCoroutine(ReSyncTime());
+    }
+
     // Update is called once per frame
     void Update()
     {
         UpdateText();
         SetDirAndNoteText();
         
-        int currentSample = audioSource.timeSamples;
-        int sampleRate = audioSource.clip.frequency;
-        zeroLatencyTime = (float)currentSample / sampleRate;
-        songTime = zeroLatencyTime + latency;
-        timeScrollbar.value = (songTime - latency) / audioSource.clip.length;
         zoomLevel = anchor.localScale.x;
-        noteParent.transform.position = new Vector3(metersPerSecond * songTime, 0, 0);
         tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
+        if(isPlaying) trackedTime += Time.deltaTime;
+        timeScrollbar.value = trackedTime / audioSource.clip.length;
+        noteParent.transform.position = new Vector3(metersPerSecond * trackedTime + noteParentOffset, 0, 0);
         if (audioSource.clip != null)
         {
-            if(originalLatency != 0f)
-            {
-                print(originalLatency);
-                TrackerGoToSong(zeroLatencyTime - (latency * (originalLatency / latency)), 0);
-            }
-            else
-            {
-                TrackerGoToSong(zeroLatencyTime - latency, 0);
-            }
+            TrackerGoToSong(trackedTime);
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.Space) && canPause)
             {
                 zoomRect.localPosition = originalWaveformPos;
                 anchor.localScale = originalAnchorScale;
@@ -222,10 +235,11 @@ public class MapEditor : MonoBehaviour
             {
                 WaveformScroll();
             }
-            if(Input.GetKeyDown(KeyCode.Space) && audioSource.isPlaying)
+            if(Input.GetKeyDown(KeyCode.Space) && audioSource.isPlaying && canPause)
             {
+                isPlaying = false;
                 audioSource.Pause();
-                lastPos = audioSource.time;
+                lastPos = trackedTime;
             }
             if (Input.GetKeyDown(KeyCode.Tab))
             {
@@ -248,9 +262,36 @@ public class MapEditor : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(audioSource.isPlaying) { audioSource.Pause(); audioSource.time = lastPos; }
-            else { lastPos = audioSource.time; audioSource.UnPause(); }
-            timeScrollbar.value = audioSource.time / audioSource.clip.length;
+            if(audioSource.isPlaying) { if(!canPause) {return;} isPlaying = false; audioSource.Pause(); trackedTime = lastPos; audioSource.time = lastPos; }
+            else 
+            {
+                if(latency == 0f)
+                {
+                    lastPos = trackedTime; 
+                    audioSource.time = trackedTime;
+                    isPlaying = true;
+                    audioSource.UnPause(); 
+                }
+                else if(!negLatency)
+                {
+                    lastPos = trackedTime; 
+                    float safeTime = Mathf.Clamp(trackedTime, 0f, audioSource.clip.length);
+                    audioSource.time = safeTime;
+                    isPlaying = true;
+                    canPause = false;
+                    StartCoroutine(DelayStart(latency));
+                }
+                else
+                {
+                    lastPos = trackedTime;
+                    float safeTime = Mathf.Clamp(trackedTime, 0f, audioSource.clip.length);
+                    audioSource.time = safeTime;
+                    audioSource.UnPause();
+                    canPause = false;
+                    StartCoroutine(NegativeDelayStart(-latency));
+                }
+            }
+            timeScrollbar.value = trackedTime / audioSource.clip.length;
         }
         if(Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
         {
@@ -337,7 +378,7 @@ public class MapEditor : MonoBehaviour
 
     private void Paste()
     {
-        float currentBeat = songTime / secondsPerBeat;
+        float currentBeat = trackedTime / secondsPerBeat;
         List<DummyNote> sorted = clipboard.OrderBy(x => x.beat).ToList();
         float firstBeat = sorted[0].beat;
         foreach (DummyNote note in sorted)
@@ -346,7 +387,7 @@ public class MapEditor : MonoBehaviour
             print("note beat: " + note.beat + "current beat: " + currentBeat);
             float targetBeat = currentBeat + (beat - firstBeat);
             print(targetBeat);
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat - beatsLatency, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat));
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat + secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat, noteParentOffset));
             i++;
         }
     }
@@ -376,7 +417,6 @@ public class MapEditor : MonoBehaviour
 
     void Save()
     {
-        int x = 0;
         if(File.Exists(mapPath + "/notes.json")) File.Delete(mapPath + "/notes.json");
         string json = "{\"notes\": [ ";
         List<DummyNote> notes = new List<DummyNote>();
@@ -385,10 +425,12 @@ public class MapEditor : MonoBehaviour
             notes.Add(note);
         }
         notes = notes.OrderBy(x => x.beat).ToList();
+        float beatLatency = latency / secondsPerBeat;
         foreach(DummyNote note in notes)
         {
             json += " {";
-            float beat = note.beat - beatsLatency;
+            float beat = note.beat;
+            if(!note.load) beat += offsetBeats;
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
@@ -399,18 +441,7 @@ public class MapEditor : MonoBehaviour
             }
             else {json += "\"strum\" : false, "; json += "\"downStrum\" : false, ";}
             int noteNum = note.note;
-            if(x == 0 && !note.latencySet)
-            {
-                json += "\"latency\" : " + (PlayerPrefs.GetFloat("Latency")/1000f) + ", ";
-                json += "\"latencySet\" : true, ";
-            }
-            else
-            {
-                json += "\"latency\" : " + originalLatency + ", ";
-                json += "\"latencySet\" : true, ";
-            }
             json += "\"note\" : "  + noteNum.ToString() + "}, ";
-            x++;
         }
         json = json.Remove(json.Length - 2, 1);
         json += "] }";
@@ -423,7 +454,7 @@ public class MapEditor : MonoBehaviour
     {
         foreach (DummyNote note in selectedNotes)
         {
-            invoker.AddCommand(new RemoveNoteCommand(note, notePrefab, noteParent, (Mathf.Abs(note.transform.localPosition.x) + offset) / metersPerSecond / secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, note.gameObject.transform.localPosition.y, secondsPerBeat, note.load));
+            invoker.AddCommand(new RemoveNoteCommand(note, notePrefab, noteParent, (Mathf.Abs(note.transform.localPosition.x) + offset) / metersPerSecond / secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, note.gameObject.transform.localPosition.y, secondsPerBeat, note.load, noteParentOffset));
             i--;
         }
         selectedNotes.Clear();
@@ -448,13 +479,13 @@ public class MapEditor : MonoBehaviour
 
     public void PlaceNoteAction(int lane)
     {
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, (zeroLatencyTime + latency)/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat));
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, trackedTime/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset));
         i++;
     }
 
-    void TrackerGoToSong(float audioTime, float latencyTime)
+    void TrackerGoToSong(float audioTime)
     {
-        float songPercentage = audioTime / (audioSource.clip.length + latencyTime);
+        float songPercentage = audioTime / audioSource.clip.length;
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
         if(spec)
         {
@@ -474,19 +505,19 @@ public class MapEditor : MonoBehaviour
     void IncrementRight()
     {
         float increment = secondsPerBeat/arrowIncrement * 1;
-        if(audioSource.time + increment < 0) audioSource.time = 0;
-        if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
-        else audioSource.time += increment;
-        lastPos = audioSource.time;
+        if(trackedTime + increment < 0) trackedTime = 0;
+        if(trackedTime + increment > audioSource.clip.length) trackedTime = audioSource.clip.length;
+        else trackedTime += increment;
+        lastPos = trackedTime;
     }
 
     void IncrementLeft()
     {
         float increment = secondsPerBeat/arrowIncrement * -1;
-        if(audioSource.time + increment < 0) audioSource.time = 0;
-        if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
-        else audioSource.time += increment;
-        lastPos = audioSource.time;
+        if(trackedTime + increment < 0) trackedTime = 0;
+        if(trackedTime + increment > audioSource.clip.length) trackedTime = audioSource.clip.length;
+        else trackedTime += increment;
+        lastPos = trackedTime;
     }
 
     void WaveformScroll()
@@ -498,9 +529,9 @@ public class MapEditor : MonoBehaviour
     void Scroll()
     {
         float increment = secondsPerBeat * scrollSnapIncrement * Input.mouseScrollDelta.y;
-        if(audioSource.time + increment < 0) audioSource.time = 0;
-        if(audioSource.time + increment > audioSource.clip.length) audioSource.time = audioSource.clip.length;
-        else audioSource.time += increment;
-        lastPos = audioSource.time;
+        if(trackedTime + increment < 0) trackedTime = 0;
+        if(trackedTime + increment > audioSource.clip.length) trackedTime = audioSource.clip.length;
+        else trackedTime += increment;
+        lastPos = trackedTime;
     }
 }

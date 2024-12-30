@@ -19,9 +19,10 @@ public class RemoveNoteCommand : ICommand
     float yValue;
     float secondsPerBeat;
     bool loaded;
+    float noteParentOffset;
     DummyNote noteRef;
 
-    public RemoveNoteCommand(DummyNote noteRef, GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float yValue, float secondsPerBeat, bool loaded)
+    public RemoveNoteCommand(DummyNote noteRef, GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float yValue, float secondsPerBeat, bool loaded, float noteParentOffset)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -38,6 +39,7 @@ public class RemoveNoteCommand : ICommand
         this.secondsPerBeat = secondsPerBeat;
         this.noteRef = noteRef;
         this.loaded = loaded;
+        this.noteParentOffset = noteParentOffset;
     }
 
     public void Execute()
@@ -47,6 +49,6 @@ public class RemoveNoteCommand : ICommand
 
     public void PerformUndo()
     {
-        PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, load:loaded);
+        PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset, load:loaded);
     }
 }
