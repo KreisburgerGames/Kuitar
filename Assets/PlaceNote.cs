@@ -6,7 +6,7 @@ using UnityEngine;
 public static class PlaceNote
 {
     static List<DummyNote> notes;
-    public static DummyNote Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false)
+    public static DummyNote Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, bool load=false, bool latencySet=false)
     {
         DummyNote note = GameObject.Instantiate(notePrefab).GetComponent<DummyNote>();
         note.gameObject.transform.SetParent(noteParent.transform, true);
@@ -17,6 +17,7 @@ public static class PlaceNote
         note.lane = lane;
         note.note = selectedNoteNumber;
         note.beat = beat;
+        note.latencySet = latencySet;
         if(load) note.load = true;
         if(!selectToStrum) note.strum = false;
         else

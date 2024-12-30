@@ -11,4 +11,5 @@ public class NoteLoad
     public int lane;
     public float beat;
     public float latency;
+    public bool latencySet = false;
 }

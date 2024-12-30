@@ -36,6 +36,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public Vector2 position;
     public bool history = false;
     public bool load = false;
+    public bool latencySet;
 
     public void Init()
     {

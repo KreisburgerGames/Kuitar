@@ -135,12 +135,15 @@ public class MapEditor : MonoBehaviour
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         reader.Close();
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
+        bool latencySet = false;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat + beatsLatency, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, load:true));
+            print(noteLoad.latency);
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat + beatsLatency, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, load:true, noteLoad.latencySet));
+            if(noteLoad.latency != 0.00f && !latencySet) {originalLatency = noteLoad.latency; latencySet = true;}
             i++;
         }
-        latency = notesLoaded.notes[0].latency;
+        
     }
 
     void SetDirAndNoteText()
@@ -172,6 +175,7 @@ public class MapEditor : MonoBehaviour
         {
             if(originalLatency != 0f)
             {
+                print(originalLatency);
                 TrackerGoToSong(zeroLatencyTime - (latency * (originalLatency / latency)), 0);
             }
             else
@@ -395,9 +399,15 @@ public class MapEditor : MonoBehaviour
             }
             else {json += "\"strum\" : false, "; json += "\"downStrum\" : false, ";}
             int noteNum = note.note;
-            if(x == 0)
+            if(x == 0 && !note.latencySet)
             {
                 json += "\"latency\" : " + (PlayerPrefs.GetFloat("Latency")/1000f) + ", ";
+                json += "\"latencySet\" : true, ";
+            }
+            else
+            {
+                json += "\"latency\" : " + originalLatency + ", ";
+                json += "\"latencySet\" : true, ";
             }
             json += "\"note\" : "  + noteNum.ToString() + "}, ";
             x++;
