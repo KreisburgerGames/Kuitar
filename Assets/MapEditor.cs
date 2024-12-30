@@ -72,6 +72,7 @@ public class MapEditor : MonoBehaviour
 
     public void Init()
     {
+        latency = PlayerPrefs.GetFloat("Latency") / 1000f;
         if(FindFirstObjectByType<SongListEditor>() != null) Destroy(FindFirstObjectByType<SongListEditor>().gameObject);
         if(FindFirstObjectByType<EditorSong>() != null) Destroy(FindFirstObjectByType<EditorSong>().gameObject);
         song = GetComponent<Song>();
@@ -120,7 +121,6 @@ public class MapEditor : MonoBehaviour
         audioSource.Play();
         audioSource.Pause();
         audioSource.time = 0f;
-        latency = PlayerPrefs.GetFloat("Latency") / 1000f;
         beatsLatency = latency / secondsPerBeat;
         LoadNotes();
         draw.audioSource = audioSource;
@@ -397,7 +397,7 @@ public class MapEditor : MonoBehaviour
             int noteNum = note.note;
             if(x == 0)
             {
-                json += "\"latency\" : " + latency + ", ";
+                json += "\"latency\" : " + (PlayerPrefs.GetFloat("Latency")/1000f) + ", ";
             }
             json += "\"note\" : "  + noteNum.ToString() + "}, ";
             x++;
