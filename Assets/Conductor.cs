@@ -659,7 +659,7 @@ public class Conductor : MonoBehaviour
     }
 
     void DetermineKeyStrokes()
-    { 
+    {
         // There might be a better way to do this but fuck that I like unoptimized games :3
         if(Input.GetKey(H10)) currentH = H10;
         else if(Input.GetKey(H9)) currentH = H9;
