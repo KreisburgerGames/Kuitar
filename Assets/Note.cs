@@ -45,7 +45,7 @@ public class Note : MonoBehaviour
 
     public void Init()
     {
-        // There HAS to be another way right???
+        // Now slightly better!
         switch(noteStr)
         {
             case "H0":
