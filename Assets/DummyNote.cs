@@ -41,17 +41,42 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public void Init()
     {
         Bg = GetComponent<SpriteRenderer>();
-        if(note == 0) number.sprite = NoteZeroIMG;
-        else if(note == 1) number.sprite = NoteOneIMG;
-        else if(note == 2) number.sprite = NoteTwoIMG;
-        else if(note == 3) number.sprite = NoteThreeIMG;
-        else if(note == 4) number.sprite = NoteFourIMG;
-        else if(note == 5) number.sprite = NoteFiveIMG;
-        else if(note == 6) number.sprite = NoteSixIMG;
-        else if(note == 7) number.sprite = NoteSevenIMG;
-        else if(note == 8) number.sprite = NoteEightIMG;
-        else if(note == 9) number.sprite = NoteNineIMG;
-        else if(note == 10) number.sprite = NoteTenIMG;
+        switch (note)
+        {
+            case 0:
+                number.sprite = NoteZeroIMG;
+                break;
+            case 1:
+                number.sprite = NoteOneIMG;
+                break;
+            case 2:
+                number.sprite = NoteTwoIMG;
+                break;
+            case 3:
+                number.sprite = NoteThreeIMG;
+                break;
+            case 4:
+                number.sprite = NoteFourIMG;
+                break;
+            case 5:
+                number.sprite = NoteFiveIMG;
+                break;
+            case 6:
+                number.sprite = NoteSixIMG;
+                break;
+            case 7:
+                number.sprite = NoteSevenIMG;
+                break;
+            case 8:
+                number.sprite = NoteEightIMG;
+                break;
+            case 9:
+                number.sprite = NoteNineIMG;
+                break;
+            case 10:
+                number.sprite = NoteTenIMG;
+                break;
+        }
 
         if(strum)
         {
@@ -59,11 +84,22 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
             else Bg.sprite = DownStrumIMG;
         }
         else Bg.sprite = regularBGIMG;
-
-        if(lane == 1) transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 1 End").transform.position.y);
-        else if(lane == 2) transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 2 End").transform.position.y);
-        else if(lane == 3) transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 3 End").transform.position.y);
-        else if(lane == 4) transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 4 End").transform.position.y);
+        
+        switch(lane)
+        {
+            case 1:
+                transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 1 End").transform.position.y);
+                break;
+            case 2:
+                transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 2 End").transform.position.y);
+                break;
+            case 3:
+                transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 3 End").transform.position.y);
+                break;
+            case 4:
+                transform.position = new Vector2(transform.position.x, GameObject.Find("Lane Ends/Lane 4 End").transform.position.y);
+                break;
+        }
 
         mapEditor = FindFirstObjectByType<MapEditor>();
     }
