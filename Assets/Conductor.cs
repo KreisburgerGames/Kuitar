@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.Intrinsics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -508,7 +509,6 @@ public class Conductor : MonoBehaviour
 
     private IEnumerator UpdateHUD()
     {
-        bool noneHit = false;
         comboText.text = "Combo: " + combo.ToString();
         multiplierText.text = "Multiplier: x" + multiplier.ToString();
 
@@ -520,12 +520,11 @@ public class Conductor : MonoBehaviour
         if(bestPossibleScore == 0)
         {
             accuracyText.text = "Accuracy: 100%";
-            noneHit = true;
         }
-        if(!noneHit)
+        else
         {
-            float accuracy = MathF.Round((float)unmultipliedScore / (float)bestPossibleScore * 100, 2);
-            accuracyText.text = "Accuracy: " + accuracy.ToString() + "%";
+            float accuracy = MathF.Round((float)unmultipliedScore / bestPossibleScore * 100, 2);
+            accuracyText.text = $"Accuracy: {accuracy}%";
             rankText.text = GetRank(accuracy, false);
         }
         
