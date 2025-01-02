@@ -69,7 +69,10 @@ public class Conductor : MonoBehaviour
     public KeyCode L10 = KeyCode.Slash;
     public KeyCode DownStrum = KeyCode.UpArrow;
     public KeyCode UpStrum = KeyCode.DownArrow;
-
+    private List<KeyCode> HKeys;
+    private List<KeyCode> HMKeys;
+    private List<KeyCode> LMKeys;
+    private List<KeyCode> LKeys;
     public List<Note> notes = new List<Note>();
 
     public float reactionBeats = 5f;
@@ -128,6 +131,22 @@ public class Conductor : MonoBehaviour
 
     void Start()
     {
+        HKeys = new List<KeyCode>()
+        {
+            H1, H2, H3, H4, H5, H6, H7, H8, H9, H10
+        };
+        HMKeys = new List<KeyCode>()
+        {
+            HM1, HM2, HM3, HM4, HM5, HM6, HM7, HM8, HM9, HM10
+        };
+        LMKeys = new List<KeyCode>()
+        {
+            LM1, LM2, LM3, LM4, LM5, LM6, LM7, LM8, LM9, LM10
+        };
+        LKeys = new List<KeyCode>()
+        {
+            L1, L2, L3, L4, L5, L6, L7, L8, L9, L10
+        };
         song = GetComponent<AudioSource>();
 
         secondsPerBeat = 60f / songBPM;
@@ -659,54 +678,41 @@ public class Conductor : MonoBehaviour
 
     void DetermineKeyStrokes()
     {
-        // There might be a better way to do this but fuck that I like unoptimized games :3
-        if(Input.GetKey(H10)) currentH = H10;
-        else if(Input.GetKey(H9)) currentH = H9;
-        else if(Input.GetKey(H8)) currentH = H8;
-        else if(Input.GetKey(H7)) currentH = H7;
-        else if(Input.GetKey(H6)) currentH = H6;
-        else if(Input.GetKey(H5)) currentH = H5;
-        else if(Input.GetKey(H4)) currentH = H4;
-        else if(Input.GetKey(H3)) currentH = H3;
-        else if(Input.GetKey(H2)) currentH = H2;
-        else if(Input.GetKey(H1)) currentH = H1;
-        else currentH = H0;
-
-
-        if (Input.GetKey(HM10)) currentHM = HM10;
-        else if(Input.GetKey(HM9)) currentHM = HM9;
-        else if(Input.GetKey(HM8)) currentHM = HM8;
-        else if(Input.GetKey(HM7)) currentHM = HM7;
-        else if(Input.GetKey(HM6)) currentHM = HM6;
-        else if(Input.GetKey(HM5)) currentHM = HM5;
-        else if(Input.GetKey(HM4)) currentHM = HM4;
-        else if(Input.GetKey(HM3)) currentHM = HM3;
-        else if(Input.GetKey(HM2)) currentHM = HM2;
-        else if(Input.GetKey(HM1)) currentHM = HM1;
-        else currentHM = HM0;
-
-        if(Input.GetKey(LM10)) currentLM = LM10;
-        else if(Input.GetKey(LM9)) currentLM = LM9;
-        else if(Input.GetKey(LM8)) currentLM = LM8;
-        else if(Input.GetKey(LM7)) currentLM = LM7;
-        else if(Input.GetKey(LM6)) currentLM = LM6;
-        else if(Input.GetKey(LM5)) currentLM = LM5;
-        else if(Input.GetKey(LM4)) currentLM = LM4;
-        else if(Input.GetKey(LM3)) currentLM = LM3;
-        else if(Input.GetKey(LM2)) currentLM = LM2;
-        else if(Input.GetKey(LM1)) currentLM = LM1;
-        else currentLM = LM0;
-
-        if(Input.GetKey(L10)) currentL = L10;
-        else if(Input.GetKey(L9)) currentL = L9;
-        else if(Input.GetKey(L8)) currentL = L8;
-        else if(Input.GetKey(L7)) currentL = L7;
-        else if(Input.GetKey(L6)) currentL = L6;
-        else if(Input.GetKey(L5)) currentL = L5;
-        else if(Input.GetKey(L4)) currentL = L4;
-        else if(Input.GetKey(L3)) currentL = L3;
-        else if(Input.GetKey(L2)) currentL = L2;
-        else if(Input.GetKey(L1)) currentL = L1;
-        else currentL = L0;
+        for (int i = 9; i >= 0; i--)
+        {
+            if(Input.GetKey(HKeys[i]))
+            {
+                currentH = HKeys[i];
+                break;
+            }
+            if(i == 0) currentH = H0;
+        }
+        for (int i = 9; i >= 0; i--)
+        {
+            if(Input.GetKey(HMKeys[i]))
+            {
+                currentHM = HMKeys[i];
+                break;
+            }
+             if(i == 0) currentHM = HM0;
+        }
+        for (int i = 9; i >= 0; i--)
+        {
+            if(Input.GetKey(LMKeys[i]))
+            {
+                currentLM = LMKeys[i];
+                break;
+            }
+             if(i == 0) currentLM = LM0;
+        }
+        for (int i = 9; i >= 0; i--)
+        {
+            if(Input.GetKey(LKeys[i]))
+            {
+                currentL = LKeys[i];
+                break;
+            }
+             if(i == 0) currentL = L0;
+        }
     }
 }
