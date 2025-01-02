@@ -694,7 +694,7 @@ public class Conductor : MonoBehaviour
                 currentHM = HMKeys[i];
                 break;
             }
-             if(i == 0) currentHM = HM0;
+            if(i == 0) currentHM = HM0;
         }
         for (int i = 9; i >= 0; i--)
         {
@@ -703,7 +703,7 @@ public class Conductor : MonoBehaviour
                 currentLM = LMKeys[i];
                 break;
             }
-             if(i == 0) currentLM = LM0;
+            if(i == 0) currentLM = LM0;
         }
         for (int i = 9; i >= 0; i--)
         {
@@ -712,7 +712,7 @@ public class Conductor : MonoBehaviour
                 currentL = LKeys[i];
                 break;
             }
-             if(i == 0) currentL = L0;
+            if(i == 0) currentL = L0;
         }
     }
 }
