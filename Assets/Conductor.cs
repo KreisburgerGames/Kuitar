@@ -196,7 +196,7 @@ public class Conductor : MonoBehaviour
             end.scoreEarned = score;
             end.unmultipliedScore = unmultipliedScore;
             end.panel.gameObject.SetActive(true);
-            end.isEnd = true; /*SceneManager.LoadScene("Select", LoadSceneMode.Single);*/
+            end.isEnd = true;
         }
         if(camera == null)
         {
