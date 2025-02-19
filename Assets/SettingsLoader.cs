@@ -54,7 +54,7 @@ public class SettingsLoader : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetFloat("Latency", 250f);
+            PlayerPrefs.SetFloat("Latency", 0f);
             latency = PlayerPrefs.GetFloat("Latency");
         }
         if (PlayerPrefs.HasKey("FrameLimit"))
