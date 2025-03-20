@@ -270,6 +270,7 @@ public class MapEditor : MonoBehaviour
                     lastPos = trackedTime; 
                     audioSource.time = trackedTime;
                     isPlaying = true;
+                    canPause = true;
                     audioSource.UnPause(); 
                 }
                 else if(!negLatency)
