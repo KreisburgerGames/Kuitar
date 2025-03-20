@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public static class PlaceNote
             notes = new List<DummyNote>();
         }
         notes.Add(note);
+        notes = notes.OrderBy(x => x.beat).ToList();
         return note;
     }
 
@@ -52,6 +54,7 @@ public static class PlaceNote
                 return note;
             }
         }
+        notes = notes.OrderBy(x => x.beat).ToList();
         return null;
     }
 }

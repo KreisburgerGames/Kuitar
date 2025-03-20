@@ -7,6 +7,7 @@ public class Note : MonoBehaviour
     public float beat;
     public string noteStr;
     [Header("Strum set false if 0 note")]
+    public bool hammerOn;
     public bool strum;
     public bool downStrum;
     private Vector2 targetPos;

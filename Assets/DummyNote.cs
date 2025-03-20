@@ -9,6 +9,8 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
 {
     public SpriteRenderer number;
     public int note;
+    public bool hammerOn;
+    public DummyNote noteBefore;
     public int lane;
     public Sprite NoteZeroIMG;
     public Sprite NoteOneIMG;

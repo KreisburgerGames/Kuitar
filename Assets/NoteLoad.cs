@@ -12,4 +12,5 @@ public class NoteLoad
     public float beat;
     public float latency;
     public bool latencySet = false;
+    public bool hammerOn = false;
 }

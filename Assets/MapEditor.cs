@@ -148,6 +148,7 @@ public class MapEditor : MonoBehaviour
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         reader.Close();
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
+        notesLoaded.notes = notesLoaded.notes.OrderBy(x => x.beat).ToArray();
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
             invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, noteParentOffset, load:true, latencySet:noteLoad.latencySet));
