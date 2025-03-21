@@ -345,410 +345,425 @@ public class Conductor : MonoBehaviour
         else if (Input.GetKeyDown(L0) && !notesReady) GetColorManagerFromString("4").Error();
         if (isStrumming)
         {
-            if(Input.GetKeyDown(DownStrum) || Input.GetKeyDown(UpStrum))
-            {
-                // I have no fucking clue why this works but if I don't reverse down strum to upstrum input it doesn't work
-                if(hittingNotes.Count > 0 && hittingNotes[0].downStrum && Input.GetKey(UpStrum) || hittingNotes.Count > 0 && !hittingNotes[0].downStrum && Input.GetKey(DownStrum))
-                {
-                    foreach(Note note in hittingNotes)
-                    {
-                        int hitScore;
-                        float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
-                        if(checkHitScore == 0) continue;
-                        if (note.lane == 1)
-                        {
-                            if(currentH == note.note)
-                            {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                                print(hitScore);
-                                ParticlesAndText(hitScore, note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                            else
-                            {
-                                print("Wrong Note!");
-                                WrongNote(note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                        }
-                        else if(note.lane == 2)
-                        {
-                            if(currentHM == note.note)
-                            {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                                print(hitScore);
-                                ParticlesAndText(hitScore, note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                            else
-                            {
-                                print("Wrong Note!");
-                                WrongNote(note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                        }
-                        else if(note.lane == 3)
-                        {
-                            if(currentLM == note.note)
-                            {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                                print(hitScore);
-                                ParticlesAndText(hitScore, note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                            else
-                            {
-                                print("Wrong Note!");
-                                WrongNote(note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                        }
-                        else if(note.lane == 4)
-                        {
-                            if(currentL == note.note)
-                            {
-                                hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                                print(hitScore);
-                                ParticlesAndText(hitScore, note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                            else
-                            {
-                                print("Wrong Note!");
-                                WrongNote(note);
-                                notes.Remove(note);
-                                ChangeIndexes();
-                                Destroy(note.gameObject);
-                                passedNotes += 1;
-                            }
-                        }
-                        
-                    }
-                }
-                else
-                {
-                    foreach(Note note in hittingNotes)
-                    {
-                        print("Wrong Direction!");
-                        WrongDirection(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-            }
+            Strum(hittingNotes);
         }
         else if(!hammerOn)// Lmao copy paste code go brrrrrrrrr
         {
-            foreach(Note note in hittingNotes)
-            {
-                int hitScore;
-                float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
-                if (checkHitScore == 0) continue;
-                if (note.lane == 1 && Input.GetKeyDown(H0))
-                {
-                    if(currentH == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if(note.lane == 2 && Input.GetKeyDown(HM0))
-                {
-                    if(currentHM == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if(note.lane == 3 && Input.GetKeyDown(LM0))
-                {
-                    if(currentLM == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if(note.lane == 4 && Input.GetKeyDown(L0))
-                {
-                    if(currentL == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
-                else if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
-                else if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
-                else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
-            }
+            Pluck(hittingNotes);
         }
         else
         {
-            foreach(Note note in hittingNotes)
+            HammerOn(hittingNotes);
+        }
+    }
+
+    private void Strum(List<Note> hittingNotes)
+    {
+        if(Input.GetKeyDown(DownStrum) || Input.GetKeyDown(UpStrum))
+        {
+            // I have no fucking clue why this works but if I don't reverse down strum to upstrum input it doesn't work
+            if(hittingNotes.Count > 0 && hittingNotes[0].downStrum && Input.GetKey(UpStrum) || hittingNotes.Count > 0 && !hittingNotes[0].downStrum && Input.GetKey(DownStrum))
             {
-                int hitScore;
-                float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
-                if (checkHitScore == 0) continue;
-                if (note.lane == 1 && note.prevNote != H0 && !Input.GetKey(note.prevNote))
+                foreach(Note note in hittingNotes)
                 {
-                    if(currentH == note.note)
+                    int hitScore;
+                    float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
+                    if(checkHitScore == 0) continue;
+                    if (note.lane == 1)
                     {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
+                        if(currentH == note.note)
+                        {
+                            hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                            print(hitScore);
+                            ParticlesAndText(hitScore, note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
+                        else
+                        {
+                            print("Wrong Note!");
+                            WrongNote(note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
                     }
-                    else
+                    else if(note.lane == 2)
                     {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
+                        if(currentHM == note.note)
+                        {
+                            hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                            print(hitScore);
+                            ParticlesAndText(hitScore, note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
+                        else
+                        {
+                            print("Wrong Note!");
+                            WrongNote(note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
                     }
+                    else if(note.lane == 3)
+                    {
+                        if(currentLM == note.note)
+                        {
+                            hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                            print(hitScore);
+                            ParticlesAndText(hitScore, note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
+                        else
+                        {
+                            print("Wrong Note!");
+                            WrongNote(note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
+                    }
+                    else if(note.lane == 4)
+                    {
+                        if(currentL == note.note)
+                        {
+                            hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                            print(hitScore);
+                            ParticlesAndText(hitScore, note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
+                        else
+                        {
+                            print("Wrong Note!");
+                            WrongNote(note);
+                            notes.Remove(note);
+                            ChangeIndexes();
+                            Destroy(note.gameObject);
+                            passedNotes += 1;
+                        }
+                    }
+                    
                 }
-                else if (note.lane == 1 && note.prevNote == H0 && currentH != H0)
-                {
-                    if(currentH == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if(note.lane == 2 && note.prevNote != HM0  && !Input.GetKey(note.prevNote))
-                {
-                    if(currentHM == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if (note.lane == 2 && note.prevNote == HM0 && currentHM != HM0)
-                {
-                    if(currentHM == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if(note.lane == 3 && note.prevNote != LM0 && !Input.GetKey(note.prevNote))
-                {
-                    if(currentLM == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if (note.lane == 3 && note.prevNote == LM0 && currentLM != LM0)
-                {
-                    if(currentLM == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if(note.lane == 4 && note.prevNote != L0 && !Input.GetKey(note.prevNote))
-                {
-                    if(currentL == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                else if (note.lane == 4 && note.prevNote == L0 && currentL != L0)
-                {
-                    if(currentL == note.note)
-                    {
-                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
-                        print(hitScore);
-                        ParticlesAndText(hitScore, note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                    else
-                    {
-                        print("Wrong Note!");
-                        WrongNote(note);
-                        notes.Remove(note);
-                        ChangeIndexes();
-                        Destroy(note.gameObject);
-                        passedNotes += 1;
-                    }
-                }
-                if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
-                if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
-                if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
-                if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();     
             }
+            else
+            {
+                foreach(Note note in hittingNotes)
+                {
+                    print("Wrong Direction!");
+                    WrongDirection(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+        }
+    }
+
+    private void Pluck(List<Note> hittingNotes)
+    {
+        foreach(Note note in hittingNotes)
+        {
+            int hitScore;
+            float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
+            if (checkHitScore == 0) continue;
+            if (note.lane == 1 && Input.GetKeyDown(H0))
+            {
+                if(currentH == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if(note.lane == 2 && Input.GetKeyDown(HM0))
+            {
+                if(currentHM == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if(note.lane == 3 && Input.GetKeyDown(LM0))
+            {
+                if(currentLM == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if(note.lane == 4 && Input.GetKeyDown(L0))
+            {
+                if(currentL == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
+            else if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
+            else if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
+            else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
+        }
+    }
+
+    private void HammerOn(List<Note> hittingNotes)
+    {
+        foreach(Note note in hittingNotes)
+        {
+            int hitScore;
+            float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
+            if (checkHitScore == 0) continue;
+            if (note.lane == 1 && note.prevNote != H0 && !Input.GetKey(note.prevNote))
+            {
+                if(currentH == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if (note.lane == 1 && note.prevNote == H0 && currentH != H0)
+            {
+                if(currentH == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if(note.lane == 2 && note.prevNote != HM0  && !Input.GetKey(note.prevNote))
+            {
+                if(currentHM == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if (note.lane == 2 && note.prevNote == HM0 && currentHM != HM0)
+            {
+                if(currentHM == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if(note.lane == 3 && note.prevNote != LM0 && !Input.GetKey(note.prevNote))
+            {
+                if(currentLM == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if (note.lane == 3 && note.prevNote == LM0 && currentLM != LM0)
+            {
+                if(currentLM == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if(note.lane == 4 && note.prevNote != L0 && !Input.GetKey(note.prevNote))
+            {
+                if(currentL == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            else if (note.lane == 4 && note.prevNote == L0 && currentL != L0)
+            {
+                if(currentL == note.note)
+                {
+                    hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                    print(hitScore);
+                    ParticlesAndText(hitScore, note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+                else
+                {
+                    print("Wrong Note!");
+                    WrongNote(note);
+                    notes.Remove(note);
+                    ChangeIndexes();
+                    Destroy(note.gameObject);
+                    passedNotes += 1;
+                }
+            }
+            if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
+            if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
+            if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
+            if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();     
         }
     }
 
