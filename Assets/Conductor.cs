@@ -568,7 +568,7 @@ public class Conductor : MonoBehaviour
                 int hitScore;
                 float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
                 if (checkHitScore == 0) continue;
-                if (note.lane == 1 && !Input.GetKey(H0) && !Input.GetKey(note.prevNote))
+                if (note.lane == 1 && note.prevNote != H0 && !Input.GetKey(note.prevNote))
                 {
                     if(currentH == note.note)
                     {
@@ -590,7 +590,29 @@ public class Conductor : MonoBehaviour
                         passedNotes += 1;
                     }
                 }
-                else if(note.lane == 2 && !Input.GetKey(HM0) && !Input.GetKey(note.prevNote))
+                else if (note.lane == 1 && note.prevNote == H0 && currentH != H0)
+                {
+                    if(currentH == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                else if(note.lane == 2 && note.prevNote == HM0  && !Input.GetKey(note.prevNote))
                 {
                     if(currentHM == note.note)
                     {
@@ -612,7 +634,29 @@ public class Conductor : MonoBehaviour
                         passedNotes += 1;
                     }
                 }
-                else if(note.lane == 3 && !Input.GetKey(LM0) && !Input.GetKey(note.prevNote))
+                else if (note.lane == 2 && note.prevNote == HM0 && currentHM != HM0)
+                {
+                    if(currentHM == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                else if(note.lane == 3 && note.prevNote == LM0 && !Input.GetKey(note.prevNote))
                 {
                     if(currentLM == note.note)
                     {
@@ -634,7 +678,29 @@ public class Conductor : MonoBehaviour
                         passedNotes += 1;
                     }
                 }
-                else if(note.lane == 4 && !Input.GetKey(L0) && !Input.GetKey(note.prevNote))
+                else if (note.lane == 3 && note.prevNote == LM0 && currentLM != LM0)
+                {
+                    if(currentLM == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                else if(note.lane == 4 && note.prevNote == L0 && !Input.GetKey(note.prevNote))
                 {
                     if(currentL == note.note)
                     {
@@ -656,10 +722,32 @@ public class Conductor : MonoBehaviour
                         passedNotes += 1;
                     }
                 }
-                else if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
-                else if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
-                else if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
-                else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
+                else if (note.lane == 4 && note.prevNote == L0 && currentL != L0)
+                {
+                    if(currentL == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
+                if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
+                if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
+                if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();     
             }
         }
     }
