@@ -150,10 +150,21 @@ public class MapEditor : MonoBehaviour
         reader.Close();
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
         notesLoaded.notes = notesLoaded.notes.OrderBy(x => x.beat).ToArray();
+        i = 0;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, noteParentOffset, load:true, latencySet:noteLoad.latencySet));
+            if(noteLoad.hammerOn) print("h");
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, noteParentOffset, load:true, latencySet:noteLoad.latencySet, hammerOn:noteLoad.hammerOn));
             i++;
+        }
+        StartCoroutine(LoadHammers(notesLoaded));
+    }
+
+    IEnumerator LoadHammers(Notes notesLoaded)
+    {
+        while(FindObjectsOfType<DummyNote>().Length != notesLoaded.notes.Length)
+        {
+            yield return new WaitForSeconds(0.1f);
         }
         foreach(DummyNote note in FindObjectsOfType<DummyNote>())
         {
@@ -325,7 +336,14 @@ public class MapEditor : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.H) && selectedNotes.Count == 2)
         {
             selectedNotes = selectedNotes.OrderBy(x => x.beat).ToList();
-            selectedNotes[1].MakeHammer();
+            if(selectedNotes[0].lane == selectedNotes[1].lane && selectedNotes[0].note != selectedNotes[1].note)
+            {
+                if(!selectedNotes[1].hammerOn)
+                    selectedNotes[1].MakeHammer(selectedNotes[0]);
+                else
+                    selectedNotes[1].UnmakeHammer();
+            }
+            
         }
         SelectNote();
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
@@ -403,7 +421,7 @@ public class MapEditor : MonoBehaviour
             print("note beat: " + note.beat + "current beat: " + currentBeat);
             float targetBeat = currentBeat + (beat - firstBeat);
             print(targetBeat);
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat + secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat, noteParentOffset));
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat + secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat, noteParentOffset, hammerOn:note.hammerOn));
             i++;
         }
     }
@@ -497,7 +515,7 @@ public class MapEditor : MonoBehaviour
 
     public void PlaceNoteAction(int lane)
     {
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, trackedTime/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset));
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, trackedTime/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset, hammerOn:false));
         i++;
     }
 

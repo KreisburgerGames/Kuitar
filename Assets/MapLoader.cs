@@ -86,7 +86,7 @@ public class MapLoader : MonoBehaviour
         {
             note.conductor = conductor;
             note.gameObject.transform.SetParent(GameObject.Find("Notes").transform);
-            note.Init();
+            //note.Init();
         }
         if(SceneManager.GetActiveScene().name == "Select") SceneManager.UnloadSceneAsync("Select");
         else SceneManager.UnloadSceneAsync("Reset");
@@ -255,6 +255,7 @@ public class MapLoader : MonoBehaviour
                 note.index = i;
                 note.strum = noteLoad.strum;
                 note.downStrum = noteLoad.downStrum;
+                note.hammerOn = noteLoad.hammerOn;
                 string laneStr;
                 if (note.lane == 1) laneStr = "H";
                 else if (note.lane == 2) laneStr = "HM";

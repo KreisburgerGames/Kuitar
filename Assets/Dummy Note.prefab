@@ -198,7 +198,7 @@ MonoBehaviour:
   selectedHighlight: {fileID: 5389389481567456629}
   selected: 0
   beat: 0
-  index: 
+  index: 0
   parent: {fileID: 0}
   position: {x: 0, y: 0}
   history: 0
@@ -305,7 +305,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 1
+  m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!1 &5389389481567456629

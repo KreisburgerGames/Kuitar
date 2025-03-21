@@ -38,6 +38,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public Vector2 position;
     public bool history = false;
     public bool load = false;
+    public DummyNote hammerDependency;
     public bool latencySet;
     private LineRenderer lineRenderer;
 
@@ -132,21 +133,32 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
         if(hammerOn)
         {
             noteBefore = mapEditor.loadedNotes[index - 1];
-            Vector2 localDiff = transform.position - noteBefore.gameObject.transform.position;
+            noteBefore.hammerDependency = this;
+            Vector2 localDiff = noteBefore.gameObject.transform.position - transform.position;
 
             lineRenderer.SetPosition(0, Vector2.zero);
-            lineRenderer.SetPosition(1, localDiff);
+            lineRenderer.SetPosition(1, localDiff * 1/transform.localScale.x);
         }
     }
 
-    public void MakeHammer()
+    public void MakeHammer(DummyNote previousNote)
     {
         hammerOn = true;
-        noteBefore = mapEditor.loadedNotes[index - 1];
-        Vector2 localDiff = transform.position - noteBefore.gameObject.transform.position;
+        noteBefore = previousNote;
+        noteBefore.hammerDependency = this;
+        Vector2 localDiff = noteBefore.gameObject.transform.position - transform.position;
 
         lineRenderer.SetPosition(0, Vector2.zero);
-        lineRenderer.SetPosition(1, localDiff);
+        lineRenderer.SetPosition(1, localDiff * 1/transform.localScale.x);
+    }
+
+    public void UnmakeHammer()
+    {
+        noteBefore.hammerDependency = null;
+        hammerOn = false;
+        noteBefore = null;
+        lineRenderer.SetPosition(0, Vector2.zero);
+        lineRenderer.SetPosition(1, Vector2.zero);
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)

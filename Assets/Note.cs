@@ -43,6 +43,7 @@ public class Note : MonoBehaviour
     public Sprite UpStrumIMG;
 
     private LineRenderer lineRenderer;
+    private Vector2 originalPos;
 
     public float noteVelCalculationEndDist;
 
@@ -204,6 +205,7 @@ public class Note : MonoBehaviour
                 transform.position = GameObject.Find("Lanes/Lane 4").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 4 End").transform.position;
                 break;
         }
+        originalPos = transform.position;
         if(hammerOn)
         {
             prevNote = conductor.notes[index - 1].note;
@@ -249,21 +251,43 @@ public class Note : MonoBehaviour
         vel = new Vector2(distFromTarget / (float)secondsAvailable, 0);
         rb.velocity = vel;
 
+        if(hammerStart)
+        {
+            try
+            {
+                if(!conductor.notes[index + 1].moving)
+                {
+                    lineRenderer.SetPosition(0, Vector2.zero);
+                    lineRenderer.SetPosition(1, (originalPos - (Vector2)transform.position) * 1/transform.localScale.x);
+                }
+                else
+                {
+                    lineRenderer.SetPosition(0, Vector2.zero);
+                    lineRenderer.SetPosition(1, Vector2.zero);
+                }
+            }
+            catch(ArgumentOutOfRangeException)
+            {
+                lineRenderer.SetPosition(0, Vector2.zero);
+                lineRenderer.SetPosition(1, Vector2.zero);
+            }
+        }
+
         if(hammerOn)
         {
             try
             {
-                Vector2 targetLocalPos = transform.position - conductor.notes[index - 1].transform.position;
+                Vector2 targetLocalPos = conductor.notes[index - 1].transform.position - transform.position;
 
                 lineRenderer.SetPosition(0, Vector2.zero);
-                lineRenderer.SetPosition(1, targetLocalPos);
+                lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
             }
-            catch(IndexOutOfRangeException)
+            catch(ArgumentOutOfRangeException)
             {
-                Vector2 targetLocalPos = (Vector2)transform.position - targetPos;
+                Vector2 targetLocalPos = targetPos - (Vector2)transform.position;
 
                 lineRenderer.SetPosition(0, Vector2.zero);
-                lineRenderer.SetPosition(1, targetLocalPos);
+                lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
             }
         }
     }

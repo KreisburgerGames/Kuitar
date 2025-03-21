@@ -177,6 +177,7 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
+            note.Init();
             note.gameObject.SetActive(false);
         }
         noteLate = GameObject.Find("Note Late");

@@ -20,9 +20,10 @@ public class PlaceNoteCommand : ICommand
     bool load;
     bool latencySet;
     float noteParentOffset;
+    bool hammerOn;
     DummyNote note;
 
-    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, float noteParentOffset, bool load=false, bool latencySet=false)
+    public PlaceNoteCommand(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, float noteParentOffset, bool hammerOn, bool load=false, bool latencySet=false)
     {
         this.notePrefab = notePrefab;
         this.noteParent = noteParent;
@@ -39,11 +40,12 @@ public class PlaceNoteCommand : ICommand
         this.load = load;
         this.latencySet = latencySet;
         this.noteParentOffset = noteParentOffset;
+        this.hammerOn = hammerOn;
     }
 
     public void Execute()
     {
-        note = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset, load:load, latencySet:latencySet);
+        note = PlaceNote.Place(notePrefab, noteParent, beat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset, load:load, latencySet:latencySet, hammerOn:hammerOn);
     }
 
     public void PerformUndo()

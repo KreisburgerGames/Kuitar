@@ -7,7 +7,7 @@ using UnityEngine;
 public static class PlaceNote
 {
     static List<DummyNote> notes;
-    public static DummyNote Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, float noteParentOffset, bool load=false, bool latencySet=false)
+    public static DummyNote Place(GameObject notePrefab, GameObject noteParent, float beat, float metersPerSecond, float offset, int lane, int selectedNoteNumber, bool selectToStrum, bool selectedDownStrum, int i, float secondsPerBeat, float noteParentOffset, bool load=false, bool latencySet=false, bool hammerOn=false)
     {
         DummyNote note = GameObject.Instantiate(notePrefab).GetComponent<DummyNote>();
         note.gameObject.transform.SetParent(noteParent.transform, true);
@@ -16,6 +16,7 @@ public static class PlaceNote
         note.lane = lane;
         note.index = i;
         note.note = selectedNoteNumber;
+        note.hammerOn = hammerOn;
         note.beat = beat;
         note.latencySet = latencySet;
         if(load) note.load = true;
@@ -52,6 +53,16 @@ public static class PlaceNote
                 GameObject.Destroy(notes[x].gameObject);
                 Vector2 pos = notes[x].gameObject.transform.localPosition;
                 notes.Remove(notes[x]);
+
+                if(note.hammerDependency != null)
+                {
+                    note.hammerDependency.UnmakeHammer();
+                }
+                if(note.hammerOn)
+                {
+                    note.noteBefore.hammerDependency = null;
+                }
+
                 return note;
             }
         }
