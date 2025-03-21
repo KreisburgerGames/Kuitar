@@ -104,16 +104,16 @@ public class Song : MonoBehaviour
         songDisplay.difficult.interactable = Directory.Exists(folderPath + "/difficult");
         songList.selectedSongClip = songClip;
         songDisplayOBJ.SetActive(true);
-        PracticeModeHandler practiceModeHandler = FindAnyObjectByType<PracticeModeHandler>();
+        PracticeModeHandler practiceModeHandler = FindFirstObjectByType<PracticeModeHandler>();
         practiceModeHandler.selectedSong = this;
         practiceModeHandler.selectedSongClip = songClip;
         practiceModeHandler.selectedTime = 0;
         practiceModeHandler.timeSelect.value = 0;
         practiceModeHandler.practiceToggle.isOn = false;
         practiceModeHandler.TogglePracticeMode();
-        practiceModeHandler.SetTime();
         songList.audioSource.clip = songClip;
         songList.audioSource.Play();
+        practiceModeHandler.SetTime();
     }
 
     public void StartMap(float startOffset, string difficulty)
