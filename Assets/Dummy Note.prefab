@@ -203,6 +203,7 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   history: 0
   load: 0
+  hammerDependency: {fileID: 0}
   latencySet: 0
 --- !u!120 &2125590045031258515
 LineRenderer:
@@ -214,7 +215,7 @@ LineRenderer:
   m_GameObject: {fileID: 3067807202382027894}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 0
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 0
@@ -225,7 +226,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 4b8454f26d280b50898d3e23f7ca636a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -245,7 +246,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -5
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
