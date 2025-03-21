@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ using UnityEngine.Windows;
 
 public class MapLoader : MonoBehaviour
 {
+    public static MapLoader instance;
     public GameObject notePrefab;
     public List<Texture2D> maps = new List<Texture2D>();
     public GameObject conductorPrefab;
@@ -43,6 +45,11 @@ public class MapLoader : MonoBehaviour
     public float startOffset;
     public float noteRewindTime = 2f;
     public float laneEdgeMargin = 1f;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Thanks random unity form guy
     private IEnumerator LoadLevel(string sceneName, AudioClip song, float bpm, float firstBeatOffset)
@@ -137,6 +144,13 @@ public class MapLoader : MonoBehaviour
     public async void Init()
     {
         string path = songFolder + "/" + songFileName;
+        
+        if(SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
+        {
+            path = UnityEngine.Networking.UnityWebRequest.EscapeURL(path);
+            path = "file:///" + path;
+        }
+
         await LoadClip(path);
     }
 
@@ -225,6 +239,8 @@ public class MapLoader : MonoBehaviour
         TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
         reader.Close();
         Notes notesLoaded = JsonUtility.FromJson<Notes>(jsonFile.text);
+        notesLoaded.notes = notesLoaded.notes.OrderBy(x => x.beat).ToArray();
+        int i = 0;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
             float fixedRewindTime;
@@ -236,6 +252,7 @@ public class MapLoader : MonoBehaviour
                 Note note = Instantiate(notePrefab).GetComponent<Note>();
                 note.beat = noteLoad.beat;
                 note.lane = noteLoad.lane;
+                note.index = i;
                 note.strum = noteLoad.strum;
                 note.downStrum = noteLoad.downStrum;
                 string laneStr;
@@ -247,6 +264,7 @@ public class MapLoader : MonoBehaviour
                 notes.Add(note);
                 DontDestroyOnLoad(note);
             }
+            i++;
         }
         StartMap(song); 
     }

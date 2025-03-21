@@ -64,6 +64,13 @@ public class Song : MonoBehaviour
     async Task<AudioClip> LoadClip(string path)
     {
         AudioClip clip = null;
+
+        if(SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
+        {
+            path = UnityEngine.Networking.UnityWebRequest.EscapeURL(path);
+            path = "file:///" + path;
+        }
+
         using (UnityEngine.Networking.UnityWebRequest uwr = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(path, AudioType.OGGVORBIS))
         {
             uwr.SendWebRequest();

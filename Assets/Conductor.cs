@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Burst.Intrinsics;
 using UnityEditor;
@@ -131,6 +132,7 @@ public class Conductor : MonoBehaviour
 
     void Start()
     {
+        notes = notes.OrderBy(x => x.beat).ToList();
         HKeys = new List<KeyCode>()
         {
             H1, H2, H3, H4, H5, H6, H7, H8, H9, H10
@@ -183,6 +185,14 @@ public class Conductor : MonoBehaviour
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
         print(song.clip.loadType);
+    }
+
+    private void ChangeIndexes()
+    {
+        for (int i = 0; i < notes.Count; i++)
+        {
+            notes[i].index--;
+        }
     }
 
     IEnumerator PlaySong()
@@ -252,6 +262,7 @@ public class Conductor : MonoBehaviour
         }
         List<Note> hittingNotes = new List<Note>();
         isStrumming = false;
+        bool hammerOn = false;
         Note previousNote = null;
         // gl reading this code, I can barley read this fucking thing
         if (readyNotes.Count > 0 && readyNotes[0].strum)
@@ -283,6 +294,7 @@ public class Conductor : MonoBehaviour
             isStrumming = false;
             foreach(Note note2 in readyNotes)
             {
+                
                 float checkhitScore = CalculateScore(GetEndLaneX(note2) - note2.gameObject.transform.position.x, note2.lane, false);
                 if (checkhitScore == 0) break;
                 if (previousNote != null)
@@ -291,13 +303,20 @@ public class Conductor : MonoBehaviour
                     {
                         hittingNotes.Add(note2);
                         previousNote = note2;
+                        if(readyNotes[0].hammerOn)
+                        {
+                            hammerOn = true;
+                        }
                     }
                     else
                     {
                         break;
                     }
                 }
-                else if(checkhitScore != 0) {hittingNotes.Add(note2); previousNote = note2; }
+                else if(checkhitScore != 0) {hittingNotes.Add(note2); previousNote = note2; if(readyNotes[0].hammerOn)
+                {
+                    hammerOn = true;
+                }}
             }
         }
         else hittingNotes.Clear();
@@ -343,6 +362,7 @@ public class Conductor : MonoBehaviour
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -351,6 +371,7 @@ public class Conductor : MonoBehaviour
                                 print("Wrong Note!");
                                 WrongNote(note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -363,6 +384,7 @@ public class Conductor : MonoBehaviour
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -371,6 +393,7 @@ public class Conductor : MonoBehaviour
                                 print("Wrong Note!");
                                 WrongNote(note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -383,6 +406,7 @@ public class Conductor : MonoBehaviour
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -391,6 +415,7 @@ public class Conductor : MonoBehaviour
                                 print("Wrong Note!");
                                 WrongNote(note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -403,6 +428,7 @@ public class Conductor : MonoBehaviour
                                 print(hitScore);
                                 ParticlesAndText(hitScore, note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -411,6 +437,7 @@ public class Conductor : MonoBehaviour
                                 print("Wrong Note!");
                                 WrongNote(note);
                                 notes.Remove(note);
+                                ChangeIndexes();
                                 Destroy(note.gameObject);
                                 passedNotes += 1;
                             }
@@ -425,13 +452,14 @@ public class Conductor : MonoBehaviour
                         print("Wrong Direction!");
                         WrongDirection(note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
                 }
             }
         }
-        else // Lmao copy paste code go brrrrrrrrr
+        else if(!hammerOn)// Lmao copy paste code go brrrrrrrrr
         {
             foreach(Note note in hittingNotes)
             {
@@ -446,6 +474,7 @@ public class Conductor : MonoBehaviour
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
@@ -454,6 +483,7 @@ public class Conductor : MonoBehaviour
                         print("Wrong Note!");
                         WrongNote(note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
@@ -466,6 +496,7 @@ public class Conductor : MonoBehaviour
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
@@ -474,6 +505,7 @@ public class Conductor : MonoBehaviour
                         print("Wrong Note!");
                         WrongNote(note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
@@ -486,6 +518,7 @@ public class Conductor : MonoBehaviour
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
@@ -494,6 +527,7 @@ public class Conductor : MonoBehaviour
                         print("Wrong Note!");
                         WrongNote(note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
@@ -506,6 +540,7 @@ public class Conductor : MonoBehaviour
                         print(hitScore);
                         ParticlesAndText(hitScore, note);
                         notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }
@@ -514,6 +549,108 @@ public class Conductor : MonoBehaviour
                         print("Wrong Note!");
                         WrongNote(note);
                         notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                else if(Input.GetKeyDown(H0)) GetColorManagerFromString("1").Error();
+                else if(Input.GetKeyDown(HM0)) GetColorManagerFromString("2").Error();
+                else if(Input.GetKeyDown(LM0)) GetColorManagerFromString("3").Error();
+                else if(Input.GetKeyDown(L0)) GetColorManagerFromString("4").Error();
+            }
+        }
+        else
+        {
+            foreach(Note note in hittingNotes)
+            {
+                int hitScore;
+                float checkHitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, false);
+                if (checkHitScore == 0) continue;
+                if (note.lane == 1 && !Input.GetKey(H0) && !Input.GetKey(note.prevNote))
+                {
+                    if(currentH == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                else if(note.lane == 2 && !Input.GetKey(HM0) && !Input.GetKey(note.prevNote))
+                {
+                    if(currentHM == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                else if(note.lane == 3 && !Input.GetKey(LM0) && !Input.GetKey(note.prevNote))
+                {
+                    if(currentLM == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                }
+                else if(note.lane == 4 && !Input.GetKey(L0) && !Input.GetKey(note.prevNote))
+                {
+                    if(currentL == note.note)
+                    {
+                        hitScore = CalculateScore(GetEndLaneX(note) - note.gameObject.transform.position.x, note.lane, true);
+                        print(hitScore);
+                        ParticlesAndText(hitScore, note);
+                        notes.Remove(note);
+                        ChangeIndexes();
+                        Destroy(note.gameObject);
+                        passedNotes += 1;
+                    }
+                    else
+                    {
+                        print("Wrong Note!");
+                        WrongNote(note);
+                        notes.Remove(note);
+                        ChangeIndexes();
                         Destroy(note.gameObject);
                         passedNotes += 1;
                     }

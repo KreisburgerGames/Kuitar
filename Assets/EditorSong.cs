@@ -56,7 +56,15 @@ public class EditorSong : MonoBehaviour
 
     async void GetSongClip()
     {
-        songClip = await LoadClip(folderPath + "/" + songFile);
+        string path = folderPath + "/" + songFile;
+
+        if(SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
+        {
+            path = UnityEngine.Networking.UnityWebRequest.EscapeURL(path);
+            path = "file:///" + path;
+        }
+        
+        songClip = await LoadClip(path);
     }
 
     async Task<AudioClip> LoadClip(string path)

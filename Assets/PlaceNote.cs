@@ -14,6 +14,7 @@ public static class PlaceNote
         note.gameObject.transform.localPosition = new Vector2((beat * secondsPerBeat * -metersPerSecond) + offset, note.gameObject.transform.localPosition.y);
         if(!load) note.gameObject.transform.localPosition -= Vector3.right * noteParentOffset;
         note.lane = lane;
+        note.index = i;
         note.note = selectedNoteNumber;
         note.beat = beat;
         note.latencySet = latencySet;

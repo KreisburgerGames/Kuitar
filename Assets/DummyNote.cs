@@ -33,12 +33,18 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public GameObject selectedHighlight;
     public bool selected = false;
     public float beat;
-    public string index;
+    public int index;
     public Transform parent;
     public Vector2 position;
     public bool history = false;
     public bool load = false;
     public bool latencySet;
+    private LineRenderer lineRenderer;
+
+    void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+    }
 
     public void Init()
     {
@@ -119,6 +125,28 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
             }
         }
         if(selected) selectedHighlight.SetActive(true); else selectedHighlight.SetActive(false);
+    }
+
+    public void CheckHammers()
+    {
+        if(hammerOn)
+        {
+            noteBefore = mapEditor.loadedNotes[index - 1];
+            Vector2 localDiff = transform.position - noteBefore.gameObject.transform.position;
+
+            lineRenderer.SetPosition(0, Vector2.zero);
+            lineRenderer.SetPosition(1, localDiff);
+        }
+    }
+
+    public void MakeHammer()
+    {
+        hammerOn = true;
+        noteBefore = mapEditor.loadedNotes[index - 1];
+        Vector2 localDiff = transform.position - noteBefore.gameObject.transform.position;
+
+        lineRenderer.SetPosition(0, Vector2.zero);
+        lineRenderer.SetPosition(1, localDiff);
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)

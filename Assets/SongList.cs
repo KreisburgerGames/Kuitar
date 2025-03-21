@@ -26,6 +26,7 @@ public class SongList : MonoBehaviour
     {
         foreach(string name in Directory.GetDirectories(Application.streamingAssetsPath + "/" + "Songs"))
         {
+            print(name);
             StreamReader reader = new StreamReader(name + "/info.json");
             TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
             reader.Close();

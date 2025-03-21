@@ -72,6 +72,7 @@ public class MapEditor : MonoBehaviour
     bool canPause;
     public float noteParentOffset;
     private float offsetBeats;
+    public List<DummyNote> loadedNotes = new List<DummyNote>();
 
     public void Init()
     {
@@ -154,7 +155,15 @@ public class MapEditor : MonoBehaviour
             invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, noteParentOffset, load:true, latencySet:noteLoad.latencySet));
             i++;
         }
-        
+        foreach(DummyNote note in FindObjectsOfType<DummyNote>())
+        {
+            loadedNotes.Add(note);
+        }
+        loadedNotes = loadedNotes.OrderBy(x => x.beat).ToList();
+        foreach(DummyNote note in loadedNotes)
+        {
+            note.CheckHammers();
+        }
     }
 
     void SetDirAndNoteText()
@@ -313,6 +322,11 @@ public class MapEditor : MonoBehaviour
         {
             selectToStrum = false;
         }
+        if(Input.GetKeyDown(KeyCode.H) && selectedNotes.Count == 2)
+        {
+            selectedNotes = selectedNotes.OrderBy(x => x.beat).ToList();
+            selectedNotes[1].MakeHammer();
+        }
         SelectNote();
         if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
         if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
@@ -436,6 +450,8 @@ public class MapEditor : MonoBehaviour
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
+            if(note.hammerOn) {json += "\"hammerOn\" : true, ";}
+            else {json += "\"hammerOn\" : false, ";}
             if(note.strum)
             {
                 if(note.downStrum) {json += "\"strum\" : true, "; json += "\"downStrum\" : true, ";}

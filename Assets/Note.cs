@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,13 @@ public class Note : MonoBehaviour
     public float beat;
     public string noteStr;
     [Header("Strum set false if 0 note")]
+    public bool hammerStart;
     public bool hammerOn;
+    public KeyCode prevNote;
     public bool strum;
     public bool downStrum;
     private Vector2 targetPos;
+    public int index;
     private float timeToEnd;
     public Conductor conductor;
     [Header("Ignore")]
@@ -37,6 +41,8 @@ public class Note : MonoBehaviour
 
     public Sprite DownStrumIMG;
     public Sprite UpStrumIMG;
+
+    private LineRenderer lineRenderer;
 
     public float noteVelCalculationEndDist;
 
@@ -198,6 +204,12 @@ public class Note : MonoBehaviour
                 transform.position = GameObject.Find("Lanes/Lane 4").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 4 End").transform.position;
                 break;
         }
+        if(hammerOn)
+        {
+            prevNote = conductor.notes[index - 1].note;
+            conductor.notes[index - 1].hammerStart = true;
+            return;
+        }
         if(strum)
         {
             if(downStrum) bgSprite.sprite = DownStrumIMG; else bgSprite.sprite = UpStrumIMG;
@@ -207,6 +219,7 @@ public class Note : MonoBehaviour
     void Start()
     {
         conductor = FindFirstObjectByType<Conductor>();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -228,11 +241,30 @@ public class Note : MonoBehaviour
     void FixedUpdate()
     {
         if(!moving) return;
+
         float distFromTarget = targetPos.x - transform.position.x - .0219f;
         if(distFromTarget <= 1) return;
         double secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
         secondsAvailable = Mathf.Clamp((float)secondsAvailable, 0, 1000);
         vel = new Vector2(distFromTarget / (float)secondsAvailable, 0);
         rb.velocity = vel;
+
+        if(hammerOn)
+        {
+            try
+            {
+                Vector2 targetLocalPos = transform.position - conductor.notes[index - 1].transform.position;
+
+                lineRenderer.SetPosition(0, Vector2.zero);
+                lineRenderer.SetPosition(1, targetLocalPos);
+            }
+            catch(IndexOutOfRangeException)
+            {
+                Vector2 targetLocalPos = (Vector2)transform.position - targetPos;
+
+                lineRenderer.SetPosition(0, Vector2.zero);
+                lineRenderer.SetPosition(1, targetLocalPos);
+            }
+        }
     }
 }
