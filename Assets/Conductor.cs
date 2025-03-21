@@ -612,7 +612,7 @@ public class Conductor : MonoBehaviour
                         passedNotes += 1;
                     }
                 }
-                else if(note.lane == 2 && note.prevNote == HM0  && !Input.GetKey(note.prevNote))
+                else if(note.lane == 2 && note.prevNote != HM0  && !Input.GetKey(note.prevNote))
                 {
                     if(currentHM == note.note)
                     {
@@ -656,7 +656,7 @@ public class Conductor : MonoBehaviour
                         passedNotes += 1;
                     }
                 }
-                else if(note.lane == 3 && note.prevNote == LM0 && !Input.GetKey(note.prevNote))
+                else if(note.lane == 3 && note.prevNote != LM0 && !Input.GetKey(note.prevNote))
                 {
                     if(currentLM == note.note)
                     {
@@ -700,7 +700,7 @@ public class Conductor : MonoBehaviour
                         passedNotes += 1;
                     }
                 }
-                else if(note.lane == 4 && note.prevNote == L0 && !Input.GetKey(note.prevNote))
+                else if(note.lane == 4 && note.prevNote != L0 && !Input.GetKey(note.prevNote))
                 {
                     if(currentL == note.note)
                     {
