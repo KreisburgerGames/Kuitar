@@ -184,9 +184,10 @@ public class Conductor : MonoBehaviour
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
-            note.Init();
             note.gameObject.SetActive(false);
         }
+        notes = notes.OrderBy(x => x.beat).ToList();
+        foreach(Note note in notes) note.Init();
         noteLate = GameObject.Find("Note Late");
         noteTimingOffset = secondsPerBeat/2f;
 
