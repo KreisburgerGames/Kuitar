@@ -222,17 +222,24 @@ public class Note : MonoBehaviour
 
     public void GetNB(int i)
     {
-        Note noteRef = conductor.notes[index - i];
-        if(noteRef.lane == lane && noteRef.note != note && noteRef.beat < beat)
+        try
         {
-            prevNote = noteRef.note;
-            noteRef.hammerStart = true;
-            noteRef.GetDependency(index);
-            indexDependency = noteRef.index;
+            Note noteRef = conductor.notes[index - i];
+            if(noteRef.lane == lane && noteRef.note != note && noteRef.beat < beat)
+            {
+                prevNote = noteRef.note;
+                noteRef.hammerStart = true;
+                noteRef.GetDependency(index);
+                indexDependency = noteRef.index;
+            }
+            else
+            {
+                GetNB(i + 1);
+            }
         }
-        else
+        catch(ArgumentOutOfRangeException)
         {
-            GetNB(i + 1);
+            hammerOn = false;
         }
     }
 
