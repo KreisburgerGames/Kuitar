@@ -252,6 +252,7 @@ public class Note : MonoBehaviour
     {
         conductor = FindFirstObjectByType<Conductor>();
         lineRenderer = GetComponent<LineRenderer>();
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -274,10 +275,9 @@ public class Note : MonoBehaviour
     {
         if(!moving) return;
 
-        float distFromTarget = targetPos.x - transform.position.x - .0219f;
-        if(distFromTarget <= 1) return;
+        float distFromTarget = targetPos.x - transform.position.x /*- .0219f*/;
+        if(distFromTarget <= 1.219f) return;
         double secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
-        secondsAvailable = Mathf.Clamp((float)secondsAvailable, 0, 1000);
         vel = new Vector2(distFromTarget / (float)secondsAvailable, 0);
         rb.velocity = vel;
 
