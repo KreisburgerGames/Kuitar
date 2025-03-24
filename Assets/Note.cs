@@ -45,6 +45,8 @@ public class Note : MonoBehaviour
     private LineRenderer lineRenderer;
     private Vector2 originalPos;
 
+    private int indexOffset;
+
     public float noteVelCalculationEndDist;
 
     // 1 = High, 4 = Low
@@ -208,13 +210,41 @@ public class Note : MonoBehaviour
         originalPos = transform.position;
         if(hammerOn)
         {
-            prevNote = conductor.notes[index - 1].note;
-            conductor.notes[index - 1].hammerStart = true;
+            GetNB(1);
             return;
         }
         if(strum)
         {
             if(downStrum) bgSprite.sprite = DownStrumIMG; else bgSprite.sprite = UpStrumIMG;
+        }
+    }
+
+    public void GetNB(int i)
+    {
+        Note noteRef = conductor.notes[index - i];
+        if(noteRef.lane == lane && noteRef.note != note)
+        {
+            prevNote = noteRef.note;
+            noteRef.hammerStart = true;
+            noteRef.GetDependency(1);
+            indexOffset = i;
+        }
+        else
+        {
+            GetNB(i + 1);
+        }
+    }
+
+    public void GetDependency(int i)
+    {
+        Note noteRef = conductor.notes[index + i];
+        if(noteRef.lane == lane && noteRef.note != note)
+        {
+            indexOffset = i;
+        }
+        else
+        {
+            GetDependency(i + 1);
         }
     }
 
@@ -255,7 +285,7 @@ public class Note : MonoBehaviour
         {
             try
             {
-                if(!conductor.notes[index + 1].moving)
+                if(!conductor.notes[index + indexOffset].moving)
                 {
                     lineRenderer.SetPosition(0, Vector2.zero);
                     lineRenderer.SetPosition(1, (originalPos - (Vector2)transform.position) * 1/transform.localScale.x);
@@ -277,7 +307,7 @@ public class Note : MonoBehaviour
         {
             try
             {
-                Vector2 targetLocalPos = conductor.notes[index - 1].transform.position - transform.position;
+                Vector2 targetLocalPos = conductor.notes[index - indexOffset].transform.position - transform.position;
 
                 lineRenderer.SetPosition(0, Vector2.zero);
                 lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);

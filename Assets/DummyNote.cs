@@ -128,11 +128,24 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
         if(selected) selectedHighlight.SetActive(true); else selectedHighlight.SetActive(false);
     }
 
+    public void GetNB(int i)
+    {
+        DummyNote noteRef = mapEditor.loadedNotes[index - i];
+        if(noteRef.lane == lane && noteRef.note != note)
+        {
+            noteBefore = noteRef;
+        }
+        else
+        {
+            GetNB(i + 1);
+        }
+    }
+
     public void CheckHammers()
     {
         if(hammerOn)
         {
-            noteBefore = mapEditor.loadedNotes[index - 1];
+            GetNB(1);
             noteBefore.hammerDependency = this;
             Vector2 localDiff = noteBefore.gameObject.transform.position - transform.position;
 
