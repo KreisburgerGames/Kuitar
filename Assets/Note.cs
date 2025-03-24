@@ -299,9 +299,6 @@ public class Note : MonoBehaviour
             }
             setNoteVel = true;
         }
-        
-
-        if(index == 0) Debug.Log(rb.velocity.x);
 
         if(hammerStart)
         {
