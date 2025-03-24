@@ -49,8 +49,6 @@ public class Note : MonoBehaviour
 
     public float noteVelCalculationEndDist;
     private bool setNoteVel;
-    public static Note Root;
-    public float noteVel;
 
     // 1 = High, 4 = Low
     [Range(1, 4)]
@@ -220,11 +218,6 @@ public class Note : MonoBehaviour
         {
             if(downStrum) bgSprite.sprite = DownStrumIMG; else bgSprite.sprite = UpStrumIMG;
         }
-        
-        if(index == 0)
-        {
-            Root = this;
-        }
     }
 
     public void GetNB(int i)
@@ -285,20 +278,11 @@ public class Note : MonoBehaviour
 
         if(!setNoteVel)
         {
-            if(Root == this)
-            {
-                float distFromTarget = targetPos.x - transform.position.x /*- .0219f*/;
-                //if(distFromTarget <= 1.35f) return;
-                double secondsAvailable = (beat * conductor.secondsPerBeat) - conductor.songPos;
-                vel = new Vector2(distFromTarget / (float)secondsAvailable, 0);
-                rb.velocity = vel;
-            }
-            else
-            {
-                rb.velocity = Root.vel;
-            }
+            rb.velocity = new Vector2(Conductor.instance.noteSpeed, 0);
             setNoteVel = true;
         }
+
+        if(index == 0) print(rb.velocity.x);
 
         if(hammerStart)
         {

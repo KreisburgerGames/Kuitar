@@ -128,7 +128,14 @@ public class Conductor : MonoBehaviour
     public double pauseDspTime;
     public bool started = false;
     public float offset;
+    public static Conductor instance;
+    public float noteSpeed;
     // Is this enough varibles for u pookie?
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -186,6 +193,12 @@ public class Conductor : MonoBehaviour
         end = FindAnyObjectByType<End>();
         end.panel.gameObject.SetActive(false);
         print(song.clip.loadType);
+
+        float beginPos = GameObject.Find("Lanes/Lane 1").transform.position.x;
+        float endPos = GameObject.Find("Lane Ends/Lane 1 End").transform.position.x;
+        float dist = endPos - beginPos;
+        float reactSeconds = (reactionBeats + (noteTimingOffset/secondsPerBeat)) * secondsPerBeat;
+        noteSpeed = dist / reactSeconds;
     }
 
     private void ChangeIndexes()
