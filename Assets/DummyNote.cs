@@ -131,7 +131,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public void GetNB(int i)
     {
         DummyNote noteRef = mapEditor.loadedNotes[index - i];
-        if(noteRef.lane == lane && noteRef.note != note)
+        if(noteRef.lane == lane && noteRef.note != note && noteRef.beat < beat)
         {
             noteBefore = noteRef;
         }

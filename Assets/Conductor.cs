@@ -207,6 +207,7 @@ public class Conductor : MonoBehaviour
         for (int i = 0; i < notes.Count; i++)
         {
             notes[i].index--;
+            notes[i].indexDependency--;
         }
     }
 

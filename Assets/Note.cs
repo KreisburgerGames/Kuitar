@@ -45,7 +45,7 @@ public class Note : MonoBehaviour
     private LineRenderer lineRenderer;
     private Vector2 originalPos;
 
-    private int indexOffset;
+    public int indexDependency;
 
     public float noteVelCalculationEndDist;
     private bool setNoteVel;
@@ -223,12 +223,12 @@ public class Note : MonoBehaviour
     public void GetNB(int i)
     {
         Note noteRef = conductor.notes[index - i];
-        if(noteRef.lane == lane && noteRef.note != note)
+        if(noteRef.lane == lane && noteRef.note != note && noteRef.beat < beat)
         {
             prevNote = noteRef.note;
             noteRef.hammerStart = true;
-            noteRef.GetDependency(1);
-            indexOffset = i;
+            noteRef.GetDependency(index);
+            indexDependency = noteRef.index;
         }
         else
         {
@@ -236,17 +236,9 @@ public class Note : MonoBehaviour
         }
     }
 
-    public void GetDependency(int i)
+    public void GetDependency(int indexBefore)
     {
-        Note noteRef = conductor.notes[index + i];
-        if(noteRef.lane == lane && noteRef.note != note)
-        {
-            indexOffset = i;
-        }
-        else
-        {
-            GetDependency(i + 1);
-        }
+        indexDependency = indexBefore;
     }
 
     void Start()
@@ -288,21 +280,23 @@ public class Note : MonoBehaviour
         {
             try
             {
-                if(!conductor.notes[index + indexOffset].moving)
+                if(!conductor.notes[indexDependency].moving)
                 {
                     lineRenderer.SetPosition(0, Vector2.zero);
                     lineRenderer.SetPosition(1, (originalPos - (Vector2)transform.position) * 1/transform.localScale.x);
                 }
                 else
                 {
+                    lineRenderer.enabled = false;
+                    /*
                     lineRenderer.SetPosition(0, Vector2.zero);
                     lineRenderer.SetPosition(1, Vector2.zero);
+                    */
                 }
             }
             catch(ArgumentOutOfRangeException)
             {
-                lineRenderer.SetPosition(0, Vector2.zero);
-                lineRenderer.SetPosition(1, Vector2.zero);
+                lineRenderer.enabled = false;
             }
         }
 
@@ -310,7 +304,7 @@ public class Note : MonoBehaviour
         {
             try
             {
-                Vector2 targetLocalPos = conductor.notes[index - indexOffset].transform.position - transform.position;
+                Vector2 targetLocalPos = conductor.notes[indexDependency].transform.position - transform.position;
 
                 lineRenderer.SetPosition(0, Vector2.zero);
                 lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);

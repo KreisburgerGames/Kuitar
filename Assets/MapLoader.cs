@@ -264,8 +264,8 @@ public class MapLoader : MonoBehaviour
                 note.noteStr = laneStr + noteLoad.note.ToString();
                 notes.Add(note);
                 DontDestroyOnLoad(note);
+                i++;
             }
-            i++;
         }
         StartMap(song); 
     }
