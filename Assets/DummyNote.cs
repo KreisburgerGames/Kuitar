@@ -40,12 +40,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
     public bool load = false;
     public DummyNote hammerDependency;
     public bool latencySet;
-    private LineRenderer lineRenderer;
-
-    void Start()
-    {
-        lineRenderer = GetComponent<LineRenderer>();
-    }
+    [SerializeField] private LineRenderer lineRenderer;
 
     public void Init()
     {
@@ -151,7 +146,10 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
 
             lineRenderer.SetPosition(0, Vector2.zero);
             lineRenderer.SetPosition(1, localDiff * 1/transform.localScale.x);
-            print(1/transform.localScale.x);
+        }
+        else
+        {
+            lineRenderer.enabled = false;
         }
     }
 
@@ -162,6 +160,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
         noteBefore.hammerDependency = this;
         Vector2 localDiff = noteBefore.gameObject.transform.position - transform.position;
 
+        lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, Vector2.zero);
         lineRenderer.SetPosition(1, localDiff * 1/transform.localScale.x);
     }
@@ -173,6 +172,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
         noteBefore = null;
         lineRenderer.SetPosition(0, Vector2.zero);
         lineRenderer.SetPosition(1, Vector2.zero);
+        lineRenderer.enabled = false;
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)

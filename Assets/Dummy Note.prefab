@@ -205,6 +205,7 @@ MonoBehaviour:
   load: 0
   hammerDependency: {fileID: 0}
   latencySet: 0
+  lineRenderer: {fileID: 2125590045031258515}
 --- !u!120 &2125590045031258515
 LineRenderer:
   serializedVersion: 2

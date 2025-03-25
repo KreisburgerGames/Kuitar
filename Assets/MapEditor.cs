@@ -72,6 +72,7 @@ public class MapEditor : MonoBehaviour
     bool canPause;
     public float noteParentOffset;
     private float offsetBeats;
+    public TempText restartAlert;
     public List<DummyNote> loadedNotes = new List<DummyNote>();
 
     public void Init()
@@ -433,12 +434,7 @@ public class MapEditor : MonoBehaviour
         Save();
         metersPerSecond = float.Parse(noteSpacingInput.text);
         PlayerPrefs.SetFloat("NoteSpacing", metersPerSecond);
-        foreach(DummyNote note in FindObjectsOfType<DummyNote>())
-        {
-            Destroy(note.gameObject);
-        }
-        LoadNotes();
-        EventSystem.current.SetSelectedGameObject(null);
+        restartAlert.Popup();
     }
 
     public void ScrollSpeedChanged()
