@@ -105,6 +105,9 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
                 break;
         }
 
+        Vector2 scaleRef = GameObject.Find("Lane Ends/Lane 1 End").transform.lossyScale;
+        transform.lossyScale.Set(scaleRef.x, scaleRef.y, 1f);
+
         mapEditor = FindFirstObjectByType<MapEditor>();
     }
 
