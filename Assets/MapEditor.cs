@@ -339,10 +339,15 @@ public class MapEditor : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.H) && selectedNotes.Count == 2)
         {
             selectedNotes = selectedNotes.OrderBy(x => x.beat).ToList();
-            if(selectedNotes[0].lane == selectedNotes[1].lane && selectedNotes[0].note != selectedNotes[1].note && !selectedNotes[0].strum && !selectedNotes[1].strum)
+            if(selectedNotes[0].lane == selectedNotes[1].lane && selectedNotes[0].note != selectedNotes[1].note && !selectedNotes[1].strum)
             {
                 if(!selectedNotes[1].hammerOn)
+                {
+                    if(selectedNotes[0].strum && selectedNotes[0].hammerOn) return;
                     selectedNotes[1].MakeHammer(selectedNotes[0]);
+                    
+                }
+                    
                 else if(selectedNotes[1].noteBefore == selectedNotes[0])
                     selectedNotes[1].UnmakeHammer();
             }
