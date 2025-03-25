@@ -188,6 +188,7 @@ public class Conductor : MonoBehaviour
         }
         notes = notes.OrderBy(x => x.beat).ToList();
         foreach(Note note in notes) note.Init();
+        foreach(Note note in notes) note.CheckString();
         noteLate = GameObject.Find("Note Late");
         noteTimingOffset = secondsPerBeat/2f;
 
@@ -207,7 +208,6 @@ public class Conductor : MonoBehaviour
         for (int i = 0; i < notes.Count; i++)
         {
             notes[i].index--;
-            notes[i].indexDependency--;
         }
     }
 

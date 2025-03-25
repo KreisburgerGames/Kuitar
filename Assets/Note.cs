@@ -45,10 +45,13 @@ public class Note : MonoBehaviour
     private LineRenderer lineRenderer;
     private Vector2 originalPos;
 
-    public int indexDependency;
+    public Note hammerDependency;
+    public Note hammerRef;
 
     public float noteVelCalculationEndDist;
     private bool setNoteVel;
+    public bool hammerString;
+    [SerializeField] private LineRenderer stringLine;
 
     // 1 = High, 4 = Low
     [Range(1, 4)]
@@ -220,6 +223,15 @@ public class Note : MonoBehaviour
         }
     }
 
+    public void CheckString()
+    {
+        if(!hammerOn) return;
+        if(hammerDependency != null)
+        {
+            hammerString = true;
+        }
+    }
+
     public void GetNB(int i)
     {
         try
@@ -229,8 +241,8 @@ public class Note : MonoBehaviour
             {
                 prevNote = noteRef.note;
                 noteRef.hammerStart = true;
-                noteRef.GetDependency(index);
-                indexDependency = noteRef.index;
+                noteRef.GetDependency(this);
+                hammerRef = noteRef;
             }
             else
             {
@@ -243,9 +255,9 @@ public class Note : MonoBehaviour
         }
     }
 
-    public void GetDependency(int indexBefore)
+    public void GetDependency(Note noteBefore)
     {
-        indexDependency = indexBefore;
+        hammerDependency = noteBefore;
     }
 
     void Start()
@@ -287,21 +299,29 @@ public class Note : MonoBehaviour
         {
             try
             {
-                if(!conductor.notes[indexDependency].moving)
+                if(!hammerDependency.moving)
                 {
                     lineRenderer.SetPosition(0, Vector2.zero);
                     lineRenderer.SetPosition(1, (originalPos - (Vector2)transform.position) * 1/transform.localScale.x);
                 }
                 else
                 {
-                    lineRenderer.enabled = false;
+                    if(!hammerDependency.hammerString)
+                        lineRenderer.enabled = false;
+                    else
+                    {
+                        Vector2 targetLocalPos = hammerDependency.gameObject.transform.position - transform.position;
+
+                        lineRenderer.SetPosition(0, Vector2.zero);
+                        lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
+                    }
                     /*
                     lineRenderer.SetPosition(0, Vector2.zero);
                     lineRenderer.SetPosition(1, Vector2.zero);
                     */
                 }
             }
-            catch(ArgumentOutOfRangeException)
+            catch(MissingReferenceException)
             {
                 lineRenderer.enabled = false;
             }
@@ -309,19 +329,47 @@ public class Note : MonoBehaviour
 
         if(hammerOn)
         {
-            try
+            if(!hammerString)
             {
-                Vector2 targetLocalPos = conductor.notes[indexDependency].transform.position - transform.position;
+                try
+                {
+                    Vector2 targetLocalPos = hammerRef.gameObject.transform.position - transform.position;
 
-                lineRenderer.SetPosition(0, Vector2.zero);
-                lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
+                    lineRenderer.SetPosition(0, Vector2.zero);
+                    lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
+                }
+                catch(MissingReferenceException)
+                {
+                    Vector2 targetLocalPos = targetPos - (Vector2)transform.position;
+
+                    lineRenderer.SetPosition(0, Vector2.zero);
+                    lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
+                }
             }
-            catch(ArgumentOutOfRangeException)
+            else
             {
-                Vector2 targetLocalPos = targetPos - (Vector2)transform.position;
+                if(!hammerDependency.moving)
+                {
+                    lineRenderer.SetPosition(0, Vector2.zero);
+                    lineRenderer.SetPosition(1, (originalPos - (Vector2)transform.position) * 1/transform.localScale.x);
+                }
+                else
+                {
+                    Vector2 targetLocalPos = hammerDependency.gameObject.transform.position - transform.position;
 
-                lineRenderer.SetPosition(0, Vector2.zero);
-                lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
+                    lineRenderer.SetPosition(0, Vector2.zero);
+                    lineRenderer.SetPosition(1, targetLocalPos * 1/transform.localScale.x);
+                }
+                try
+                {
+                    float voidVar = hammerRef.transform.position.x;
+                }
+                catch(MissingReferenceException)
+                {
+                    stringLine.enabled = true;
+                    stringLine.SetPosition(0, Vector2.zero);
+                    stringLine.SetPosition(1, (targetPos - (Vector2)transform.position) * 1/transform.localScale.x);
+                }
             }
         }
     }

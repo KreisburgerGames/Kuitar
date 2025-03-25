@@ -164,7 +164,7 @@ public class MapEditor : MonoBehaviour
     {
         while(FindObjectsOfType<DummyNote>().Length != notesLoaded.notes.Length)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitUntil(() => FindObjectsOfType<DummyNote>().Length == notesLoaded.notes.Length);
         }
         foreach(DummyNote note in FindObjectsOfType<DummyNote>())
         {
@@ -340,7 +340,7 @@ public class MapEditor : MonoBehaviour
             {
                 if(!selectedNotes[1].hammerOn)
                     selectedNotes[1].MakeHammer(selectedNotes[0]);
-                else
+                else if(selectedNotes[1].noteBefore == selectedNotes[0])
                     selectedNotes[1].UnmakeHammer();
             }
             
@@ -428,6 +428,7 @@ public class MapEditor : MonoBehaviour
 
     public void NoteSpacingChanged()
     {
+        Save();
         metersPerSecond = float.Parse(noteSpacingInput.text);
         foreach(DummyNote note in FindObjectsOfType<DummyNote>())
         {
