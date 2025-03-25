@@ -17,6 +17,7 @@ public class SettingsLoader : MonoBehaviour
     public int frameLimit;
     public int vSync;
     public static SettingsLoader instance;
+    public float noteSpacing;
     private bool firstLaunch;
     public GameObject firstLaunchPopup;
 
@@ -56,6 +57,15 @@ public class SettingsLoader : MonoBehaviour
         {
             PlayerPrefs.SetFloat("Latency", 0f);
             latency = PlayerPrefs.GetFloat("Latency");
+        }
+        if (PlayerPrefs.HasKey("NoteSpacing"))
+        {
+            noteSpacing = PlayerPrefs.GetFloat("NoteSpacing");
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("NoteSpacing", 5f);
+            noteSpacing = PlayerPrefs.GetFloat("NoteSpacing");
         }
         if (PlayerPrefs.HasKey("FrameLimit"))
         {

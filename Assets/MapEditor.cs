@@ -76,6 +76,8 @@ public class MapEditor : MonoBehaviour
 
     public void Init()
     {
+        metersPerSecond = PlayerPrefs.GetFloat("NoteSpacing");
+        noteSpacingInput.text = metersPerSecond.ToString();
         latency = PlayerPrefs.GetFloat("Latency") / 1000f;
         if(latency < 0f) negLatency = true;
         if(FindFirstObjectByType<SongListEditor>() != null) Destroy(FindFirstObjectByType<SongListEditor>().gameObject);
@@ -336,7 +338,7 @@ public class MapEditor : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.H) && selectedNotes.Count == 2)
         {
             selectedNotes = selectedNotes.OrderBy(x => x.beat).ToList();
-            if(selectedNotes[0].lane == selectedNotes[1].lane && selectedNotes[0].note != selectedNotes[1].note)
+            if(selectedNotes[0].lane == selectedNotes[1].lane && selectedNotes[0].note != selectedNotes[1].note && !selectedNotes[0].strum && !selectedNotes[1].strum)
             {
                 if(!selectedNotes[1].hammerOn)
                     selectedNotes[1].MakeHammer(selectedNotes[0]);
@@ -430,6 +432,7 @@ public class MapEditor : MonoBehaviour
     {
         Save();
         metersPerSecond = float.Parse(noteSpacingInput.text);
+        PlayerPrefs.SetFloat("NoteSpacing", metersPerSecond);
         foreach(DummyNote note in FindObjectsOfType<DummyNote>())
         {
             Destroy(note.gameObject);

@@ -151,6 +151,7 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
 
             lineRenderer.SetPosition(0, Vector2.zero);
             lineRenderer.SetPosition(1, localDiff * 1/transform.localScale.x);
+            print(1/transform.localScale.x);
         }
     }
 
