@@ -295,6 +295,7 @@ public class Note : MonoBehaviour
 
         if(index == 0) print(rb.velocity.x);
 
+        // Messy ass code, but it works well
         if(hammerStart)
         {
             try
