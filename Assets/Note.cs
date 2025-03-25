@@ -211,6 +211,10 @@ public class Note : MonoBehaviour
                 transform.position = GameObject.Find("Lanes/Lane 4").transform.position; targetPos = GameObject.Find("Lane Ends/Lane 4 End").transform.position;
                 break;
         }
+
+        Vector2 scaleRef = GameObject.Find("Lanes/Lane 1").transform.lossyScale;
+        transform.lossyScale.Set(scaleRef.x, scaleRef.y, 1);
+
         originalPos = transform.position;
         if(hammerOn)
         {

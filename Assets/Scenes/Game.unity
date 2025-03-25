@@ -808,68 +808,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249662311}
   m_CullTransparentMesh: 1
---- !u!1 &380634947
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 380634949}
-  - component: {fileID: 380634948}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &380634948
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380634947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Main Camera (GameObject)
-    - Select Main HUD (GameObject)
-    - Select No Post Process (GameObject)
-    - Select Main HUD (GameObject)
-    - Select PauseMenuManager (GameObject)
-    - Select Lane Ends (GameObject)
-    - Select Note Late (GameObject)
-    - Select Lanes (GameObject)
-    - Select Lane Ends (GameObject)
-    - Select Backgrounds (GameObject)
-    - Select Notes (GameObject)
-    - Select End (GameObject)
-    - Modified End Bloom Strength in End
-    - Clear Selection
---- !u!4 &380634949
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380634947}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &469680144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,6 +1803,7 @@ MonoBehaviour:
   mapper: 
   end: 0
   endRef: {fileID: 0}
+  pauseDspTime: 0
 --- !u!4 &730186265
 Transform:
   m_ObjectHideFlags: 0
@@ -2530,6 +2469,113 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064517702}
   m_CullTransparentMesh: 1
+--- !u!1 &1163805604
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1163805606}
+  - component: {fileID: 1163805605}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1163805605
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163805604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Place Note
+    - Place Note
+    - Select Note (GameObject)
+    - Select Lane Ends (GameObject)
+    - Select Lane 1 End (GameObject)
+    - Select Lane Ends (GameObject)
+    - Select Note (GameObject)
+    - Set Position to (8.00, 1.00, 0.00) in Note
+    - Modified Local Position.x in Note
+    - Select Lane 1 End (GameObject)
+    - Select Note (GameObject)
+    - Set Position to (8.00, 3.00, 0.00) in Note
+    - Modified Local Position.y in Note
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.x in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.35, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Lane 1 End (GameObject)
+    - Select Lane Ends (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.y in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.x in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.x in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.x in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Set Scale to (0.17, 0.34, 1.00) in Note
+    - Modified Local Scale.x in Note
+    - Select PauseMenuManager (GameObject)
+    - Select Note (GameObject)
+    - Create/Replace Prefab
+    - Create/Replace prefab
+    - Select Note (Asset)
+    - Select Note (GameObject)
+    - Select Note (GameObject)
+    - Delete Game Objects
+--- !u!4 &1163805606
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163805604}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1178989941
 GameObject:
   m_ObjectHideFlags: 0
@@ -5416,4 +5462,4 @@ SceneRoots:
   - {fileID: 597952975}
   - {fileID: 1903284188}
   - {fileID: 730186265}
-  - {fileID: 380634949}
+  - {fileID: 1163805606}
