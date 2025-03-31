@@ -61,36 +61,32 @@ public class SongList : MonoBehaviour
             loadedSongs.Add(song);
         }
 
-        GetLastPlaylist();
-        GetLastSelected();
+        string lp = GetLastPlaylist();
+        GetLastSelected(lp);
     }
 
-    private void GetLastPlaylist()
+    private string GetLastPlaylist()
     {
         PlaylistManager playlistManager = FindFirstObjectByType<PlaylistManager>();
         if(PlayerPrefs.HasKey("LastPlaylist"))
         {
-            switch(PlayerPrefs.GetString("LastPlaylist"))
-            {
-                case "OST1":
-                    playlistManager.ShowOSTOne();
-                    break;
-                case "Custom":
-                    playlistManager.ShowCustom();
-                    break;
-                default:
-                    playlistManager.ShowOSTOne();
-                    break;
-            }
+            playlistManager.SwitchPlaylist(PlayerPrefs.GetString("LastPlaylist"));
+            return PlayerPrefs.GetString("LastPlaylist");
         }
         else
         {
             PlayerPrefs.SetString("LastPlaylist", "OST1");
             playlistManager.ShowOSTOne();
+            return "OST1";
         }
     }
 
-    private void GetLastSelected()
+    private void SwitchPlaylists(string playlist)
+    {
+        PlaylistManager playlistManager = FindFirstObjectByType<PlaylistManager>();
+        playlistManager.SwitchPlaylist(playlist);
+    }
+    private void GetLastSelected(string lp)
     {
         if(PlayerPrefs.HasKey("LastSelected"))
         {
@@ -105,6 +101,7 @@ public class SongList : MonoBehaviour
                         break;
                     }
                 }
+                if(song.playlist != lp) SwitchPlaylists(song.playlist);
                 song.Selected();
             }
             catch(NullReferenceException)

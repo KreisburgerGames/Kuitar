@@ -14,6 +14,22 @@ public class PlaylistManager : MonoBehaviour
         Playlists.Add(Custom);
     }
 
+    public void SwitchPlaylist(string playlist)
+    {
+        switch(playlist)
+        {
+            case "OST1":
+                ShowOSTOne();
+                break;
+            case "Custom":
+                ShowCustom();
+                break;
+            default:
+                ShowOSTOne();
+                break;
+        }
+    }
+
     public void ShowOSTOne()
     {
         OSTOne.SetActive(true);
