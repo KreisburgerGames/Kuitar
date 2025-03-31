@@ -28,6 +28,7 @@ public class Song : MonoBehaviour
     public bool editor = false;
     public bool waitingForClip = false;
     public string playlist;
+    public string id;
     // Start is called before the first frame update
     void Start()
     {
@@ -94,8 +95,24 @@ public class Song : MonoBehaviour
         return clip;
     }
 
+    public IEnumerator WaitForClip(SongList songList)
+    {
+        yield return new WaitUntil(() => songClip != null);
+        PracticeModeHandler practiceModeHandler = FindFirstObjectByType<PracticeModeHandler>();
+        practiceModeHandler.selectedSong = this;
+        practiceModeHandler.selectedSongClip = songClip;
+        practiceModeHandler.selectedTime = 0;
+        practiceModeHandler.timeSelect.value = 0;
+        practiceModeHandler.practiceToggle.isOn = false;
+        practiceModeHandler.TogglePracticeMode();
+        songList.audioSource.clip = songClip;
+        songList.audioSource.Play();
+        practiceModeHandler.SetTime();
+    }
+
     public void Selected()
     {
+        PlayerPrefs.SetString("LastSelected", id);
         SongList songList = FindFirstObjectByType<SongList>();
         songList.selectedSong = this;
         GameObject songDisplayOBJ = songList.songDisplay;
@@ -111,16 +128,7 @@ public class Song : MonoBehaviour
         songDisplay.difficult.interactable = Directory.Exists(folderPath + "/difficult");
         songList.selectedSongClip = songClip;
         songDisplayOBJ.SetActive(true);
-        PracticeModeHandler practiceModeHandler = FindFirstObjectByType<PracticeModeHandler>();
-        practiceModeHandler.selectedSong = this;
-        practiceModeHandler.selectedSongClip = songClip;
-        practiceModeHandler.selectedTime = 0;
-        practiceModeHandler.timeSelect.value = 0;
-        practiceModeHandler.practiceToggle.isOn = false;
-        practiceModeHandler.TogglePracticeMode();
-        songList.audioSource.clip = songClip;
-        songList.audioSource.Play();
-        practiceModeHandler.SetTime();
+        StartCoroutine(WaitForClip(songList));
     }
 
     public void StartMap(float startOffset, string difficulty)

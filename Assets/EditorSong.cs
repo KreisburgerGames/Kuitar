@@ -27,6 +27,7 @@ public class EditorSong : MonoBehaviour
     public bool editor = false;
     public bool waitingForClip = false;
     public bool selected = false;
+    public string id;
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +96,7 @@ public class EditorSong : MonoBehaviour
 
     public void Selected()
     {
+        PlayerPrefs.SetString("EditorLS", id);
         SongListEditor songList = FindFirstObjectByType<SongListEditor>();
         songList.selectedSong = this;
         songList.currentMapPath = folderPath;

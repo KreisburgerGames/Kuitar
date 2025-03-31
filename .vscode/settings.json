@@ -57,5 +57,8 @@
         "Temp/": true
     },
     "dotnet.defaultSolution": "Kuitar.sln",
-    "dotnet.preferCSharpExtension": false
+    "dotnet.preferCSharpExtension": false,
+    "cSpell.words": [
+        "Prefs"
+    ]
 }

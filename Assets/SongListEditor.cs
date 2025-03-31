@@ -256,13 +256,13 @@ public class SongListEditor : MonoBehaviour
             song.artistName = songLoad.artistName;
             song.songCover = songLoad.songCover;
             song.mapper = songLoad.mapper;
+            song.id = songLoad.id;
             song.bpm = songLoad.bpm;
             song.firstBeatOffset = songLoad.firstBeatOffset;
             song.gameObject.transform.SetParent(songsList, false);
             song.gameObject.transform.localPosition = new Vector2(0, offset - 150);
             song.folderPath = name;
             song.gameObject.name = songLoad.id;
-            song.selected = songLoad.selected;
             if(File.Exists(name + "/" + songLoad.songCover))
             {
                 Texture2D loadedIMG = new Texture2D(1, 1);
@@ -278,18 +278,21 @@ public class SongListEditor : MonoBehaviour
         newSong.transform.SetParent(songsList, false);
         newSong.transform.localPosition = new Vector2(0, offset - 150);
         newSong.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, newSong.gameObject.GetComponent<RectTransform>().anchoredPosition.y);
-        foreach(EditorSong song in loadedSongs)
+        
+        CheckLastSelected(loadedSongs);
+    }
+
+    private void CheckLastSelected(List<EditorSong> loadedSongs)
+    {
+        if(PlayerPrefs.HasKey("EditorLS"))
         {
-            if(song.selected)
+            foreach(EditorSong song in loadedSongs)
             {
-                song.Selected();
-                StreamReader reader = new StreamReader(song.folderPath + "/info.json");
-                TextAsset jsonFile = new TextAsset(reader.ReadToEnd());
-                reader.Close();
-                string json = jsonFile.text;
-                File.Delete(song.folderPath + "/info.json");
-                json.Replace("\"selected\" : true", "\"selected\" : false");
-                File.WriteAllText(song.folderPath + "/info.json", json);
+                if(PlayerPrefs.GetString("EditorLS") == song.id)
+                {
+                    song.Selected();
+                    break;
+                }
             }
         }
     }

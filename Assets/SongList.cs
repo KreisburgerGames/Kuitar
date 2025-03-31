@@ -20,6 +20,7 @@ public class SongList : MonoBehaviour
     public AudioClip selectedSongClip;
     public PracticeModeHandler practiceModeHandler;
     public AudioSource audioSource;
+    private List<Song> loadedSongs = new List<Song>();
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class SongList : MonoBehaviour
             reader.Close();
             SongLoader songLoad = JsonUtility.FromJson<SongLoader>(jsonFile.text);
             Song song = Instantiate(songItem).GetComponent<Song>();
+            song.id = songLoad.id;
             song.songFile = songLoad.songFile;
             song.songName = songLoad.songName;
             song.artistName = songLoad.artistName;
@@ -56,6 +58,59 @@ public class SongList : MonoBehaviour
             loadedIMG.LoadImage(pngBytes);
             song.songCoverIMG = loadedIMG;
             offset.offset -= songItemOffset;
+            loadedSongs.Add(song);
+        }
+
+        GetLastPlaylist();
+        GetLastSelected();
+    }
+
+    private void GetLastPlaylist()
+    {
+        PlaylistManager playlistManager = FindFirstObjectByType<PlaylistManager>();
+        if(PlayerPrefs.HasKey("LastPlaylist"))
+        {
+            switch(PlayerPrefs.GetString("LastPlaylist"))
+            {
+                case "OST1":
+                    playlistManager.ShowOSTOne();
+                    break;
+                case "Custom":
+                    playlistManager.ShowCustom();
+                    break;
+                default:
+                    playlistManager.ShowOSTOne();
+                    break;
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetString("LastPlaylist", "OST1");
+            playlistManager.ShowOSTOne();
+        }
+    }
+
+    private void GetLastSelected()
+    {
+        if(PlayerPrefs.HasKey("LastSelected"))
+        {
+            try
+            {
+                Song song = null;
+                foreach(Song check in loadedSongs)
+                {
+                    if(PlayerPrefs.GetString("LastSelected") == check.id)
+                    {
+                        song = check;
+                        break;
+                    }
+                }
+                song.Selected();
+            }
+            catch(NullReferenceException)
+            {
+                PlayerPrefs.DeleteKey("LastSelected");
+            }
         }
     }
 
