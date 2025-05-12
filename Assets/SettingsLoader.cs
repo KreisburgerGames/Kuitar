@@ -1,10 +1,12 @@
 using FftSharp;
+using NAudio.Mixer;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class SettingsLoader : MonoBehaviour
@@ -20,6 +22,7 @@ public class SettingsLoader : MonoBehaviour
     public float noteSpacing;
     private bool firstLaunch;
     public GameObject firstLaunchPopup;
+    [SerializeField] private AudioMixerGroup e;
 
     private void Awake()
     {
@@ -103,6 +106,10 @@ public class SettingsLoader : MonoBehaviour
         else
         {
             fullScreenMode = FullScreenMode.Windowed;
+        }
+        if(PlayerPrefs.HasKey("MasterVol"))
+        {
+
         }
         
         Screen.SetResolution(screenWidth, screenHeight, fullScreenMode);
