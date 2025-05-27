@@ -68,7 +68,7 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = true;
         song.Pause();
         Time.timeScale = 0f;
-        pauseDspTime = AudioSettings.dspTime;
+        pauseDspTime = UnityEngine.AudioSettings.dspTime;
         pauseMenu.SetActive(true);
     }
 
@@ -77,7 +77,7 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = false;
         song.UnPause();
         Time.timeScale = 1f;
-        conductor.pauseDspTime += AudioSettings.dspTime - pauseDspTime;
+        conductor.pauseDspTime += UnityEngine.AudioSettings.dspTime - pauseDspTime;
         pauseMenu.SetActive(false);
     }
 

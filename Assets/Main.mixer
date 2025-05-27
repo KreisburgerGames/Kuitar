@@ -69,8 +69,12 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
+  - guid: 448cc7587b2325649aed3bd324f3b563
+    name: HitFX
   - guid: f317bd36650749b42aa956afe7e9cb5e
-    name: MyExposedParam
+    name: Master
+  - guid: 1e6255730bc19614db13fd57e70ee7bb
+    name: Music
   m_AudioMixerGroupViews:
   - guids:
     - 6cc5774b25416b84b8dca7cef00c73ff
@@ -78,7 +82,7 @@ AudioMixerController:
     - 617c1aa472bf71c489f90d45942daf36
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 1752071441092697750}
+  m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -134,7 +138,8 @@ AudioMixerSnapshotController:
   m_Name: Music
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 5ba0e2f671267fc4b990a3b3c5dd04f5
-  m_FloatValues: {}
+  m_FloatValues:
+    f317bd36650749b42aa956afe7e9cb5e: 0
   m_TransitionOverrides: {}
 --- !u!244 &1771664416968720643
 AudioMixerEffectController:

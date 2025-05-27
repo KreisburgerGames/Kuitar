@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.Burst.Intrinsics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class Conductor : MonoBehaviour
@@ -180,7 +177,7 @@ public class Conductor : MonoBehaviour
         
         StartCoroutine(PlaySong());
 
-        AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
+        UnityEngine.AudioSettings.GetDSPBufferSize(out int bufflen, out int numbuff);
         foreach(Note note in notesParent.GetComponentsInChildren<Note>())
         {
             notes.Add(note);
@@ -216,7 +213,7 @@ public class Conductor : MonoBehaviour
         yield return new WaitUntil(() => song.clip.loadState == AudioDataLoadState.Loaded);
         float latency = PlayerPrefs.GetFloat("Latency") / 1000f;
         float delay = 1f;
-        double schedule = AudioSettings.dspTime + delay;
+        double schedule = UnityEngine.AudioSettings.dspTime + delay;
         dspSongTime = schedule - latency;
         song.PlayScheduled(schedule);
         yield return new WaitForSeconds(delay);
@@ -257,7 +254,7 @@ public class Conductor : MonoBehaviour
 
         if(pauseMenu.isPaused) return;
 
-        songPos = AudioSettings.dspTime - dspSongTime - pauseDspTime + offset;
+        songPos = UnityEngine.AudioSettings.dspTime - dspSongTime - pauseDspTime + offset;
 
         songBeatsPos = songPos / secondsPerBeat;
 

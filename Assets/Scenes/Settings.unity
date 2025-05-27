@@ -169,6 +169,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d184520fbfc154f91a6446cb645d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  master: {fileID: 1126079392}
+  music: {fileID: 1064298181}
+  fx: {fileID: 2133187995}
+  masterControl: {fileID: 24100000, guid: 95a66e7674d4189478795ab9301c6f2f, type: 2}
+  minVol: -80
+  maxVol: 0
 --- !u!1 &59190483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,81 +1684,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893116730}
   m_CullTransparentMesh: 1
---- !u!1 &912646979
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 912646981}
-  - component: {fileID: 912646980}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &912646980
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912646979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select Canvas (GameObject)
-    - Select Audio Offset (GameObject)
-    - Select Resolution (GameObject)
-    - Select Back (GameObject)
-    - Modified 4 properties in Back
-    - Modified On Click.m_Persistent Calls.m_Calls.Array.data[0].m_Arguments.m_String
-      Argument in Back
-    - Select Back (GameObject)
-    - Paste Back
-    - Paste Back
-    - Modified Name in Back (1)
-    - Modified RectTransform Values
-    - Change Rectangle Anchors
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Modified RectTransform Values
-    - Select Text (TMP) (GameObject)
-    - Modified 2 properties in Text (TMP)
-    - Modified 2 properties in Text (TMP)
-    - Modified Text in Text (TMP)
-    - Modified 2 properties in Text (TMP)
-    - Modified 2 properties in Text (TMP)
-    - Select AdjustAudio (GameObject)
-    - Modified On Click.m_Persistent Calls.m_Calls.Array.data[0].m_Arguments.m_String
-      Argument in AdjustAudio
---- !u!4 &912646981
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912646979}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &922546043
 GameObject:
   m_ObjectHideFlags: 0
@@ -2155,6 +2086,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987076509}
   m_CullTransparentMesh: 1
+--- !u!1 &995429055
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 995429057}
+  - component: {fileID: 995429056}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &995429056
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995429055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select LabelMaster (GameObject)
+    - Select Audio (GameObject)
+    - Select LabelMaster (GameObject)
+    - Select LabelMusic (GameObject)
+    - Select Scrollbar (GameObject)
+    - Add Element To Array
+    - Driving RectTransform
+    - Driving RectTransform
+    - Modified 5 properties in Scrollbar
+    - Select Scrollbar (GameObject)
+    - Add Element To Array
+    - Driving RectTransform
+    - Driving RectTransform
+    - Modified 5 properties in Scrollbar
+    - Select Scrollbar (GameObject)
+    - Add Element To Array
+    - Driving RectTransform
+    - Driving RectTransform
+    - Modified 5 properties in Scrollbar
+    - Clear Selection
+--- !u!4 &995429057
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995429055}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1056808930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,7 +2450,19 @@ MonoBehaviour:
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 20018216}
+        m_TargetAssemblyTypeName: AudioSettings, Assembly-CSharp
+        m_MethodName: MusicChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1064298182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2711,7 +2722,19 @@ MonoBehaviour:
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 20018216}
+        m_TargetAssemblyTypeName: AudioSettings, Assembly-CSharp
+        m_MethodName: MasterChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1126079393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4767,7 +4790,19 @@ MonoBehaviour:
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 20018216}
+        m_TargetAssemblyTypeName: AudioSettings, Assembly-CSharp
+        m_MethodName: FXChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2133187996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4813,4 +4848,4 @@ SceneRoots:
   - {fileID: 129113131}
   - {fileID: 1141581496}
   - {fileID: 549814240}
-  - {fileID: 912646981}
+  - {fileID: 995429057}

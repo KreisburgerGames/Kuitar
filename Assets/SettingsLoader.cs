@@ -22,7 +22,7 @@ public class SettingsLoader : MonoBehaviour
     public float noteSpacing;
     private bool firstLaunch;
     public GameObject firstLaunchPopup;
-    [SerializeField] private AudioMixerGroup e;
+    [SerializeField] private AudioMixer mixer;
 
     private void Awake()
     {
@@ -107,9 +107,32 @@ public class SettingsLoader : MonoBehaviour
         {
             fullScreenMode = FullScreenMode.Windowed;
         }
-        if(PlayerPrefs.HasKey("MasterVol"))
+        if (PlayerPrefs.HasKey("MasterVol"))
         {
-
+            mixer.SetFloat("Master", PlayerPrefs.GetFloat("MasterVol"));
+        }
+        else
+        {
+            mixer.SetFloat("Master", 0f);
+            PlayerPrefs.SetFloat("MasterVol", 0f);
+        }
+        if (PlayerPrefs.HasKey("MusicVol"))
+        {
+            mixer.SetFloat("Music", PlayerPrefs.GetFloat("MusicVol"));
+        }
+        else
+        {
+            mixer.SetFloat("Music", 0f);
+            PlayerPrefs.SetFloat("MusicVol", 0f);
+        }
+        if (PlayerPrefs.HasKey("FXVol"))
+        {
+            mixer.SetFloat("HitFX", PlayerPrefs.GetFloat("FXVol"));
+        }
+        else
+        {
+            mixer.SetFloat("HitFX", 0f);
+            PlayerPrefs.SetFloat("FXVol", 0f);
         }
         
         Screen.SetResolution(screenWidth, screenHeight, fullScreenMode);

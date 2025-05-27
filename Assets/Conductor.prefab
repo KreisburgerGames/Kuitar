@@ -165,6 +165,11 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   time: 0
   noteTimingOffset: 0.2
+  pauseDspTime: 0
+  started: 0
+  offset: 0
+  noteSpeed: 0
+  rankColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!82 &7231717516183070174
 AudioSource:
   m_ObjectHideFlags: 0
@@ -174,7 +179,7 @@ AudioSource:
   m_GameObject: {fileID: 11507425227744519}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3869949319529833299, guid: 95a66e7674d4189478795ab9301c6f2f, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
