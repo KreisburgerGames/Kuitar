@@ -211,6 +211,79 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &65131330
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 65131332}
+  - component: {fileID: 65131331}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &65131331
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65131330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select LabelMaster (GameObject)
+    - Select Multiple from Hierarchy
+    - Select Scrollbar (GameObject)
+    - Select Scrollbar (GameObject)
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Driving RectTransform
+    - Driving RectTransform
+    - Select LabelMaster (GameObject)
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Driving RectTransform
+    - Driving RectTransform
+    - Select Scrollbar (GameObject)
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Driving RectTransform
+    - Driving RectTransform
+    - Select Button (GameObject)
+    - Select Scrollbar (GameObject)
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Select Multiple from Hierarchy
+    - Driving RectTransform
+    - Select Button (GameObject)
+--- !u!4 &65131332
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65131330}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &90983292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,7 +1165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -2.0482178, y: 0.34628296}
+  m_AnchoredPosition: {x: -2.0482178, y: 1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &616090227
@@ -1472,7 +1545,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -4.269165, y: 0.34628296}
+  m_AnchoredPosition: {x: -4.269165, y: 1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &752289106
@@ -2086,74 +2159,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987076509}
   m_CullTransparentMesh: 1
---- !u!1 &995429055
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 995429057}
-  - component: {fileID: 995429056}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &995429056
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995429055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select LabelMaster (GameObject)
-    - Select Audio (GameObject)
-    - Select LabelMaster (GameObject)
-    - Select LabelMusic (GameObject)
-    - Select Scrollbar (GameObject)
-    - Add Element To Array
-    - Driving RectTransform
-    - Driving RectTransform
-    - Modified 5 properties in Scrollbar
-    - Select Scrollbar (GameObject)
-    - Add Element To Array
-    - Driving RectTransform
-    - Driving RectTransform
-    - Modified 5 properties in Scrollbar
-    - Select Scrollbar (GameObject)
-    - Add Element To Array
-    - Driving RectTransform
-    - Driving RectTransform
-    - Modified 5 properties in Scrollbar
-    - Clear Selection
---- !u!4 &995429057
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995429055}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1056808930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,8 +2404,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000038087368, y: -169.94188}
-  m_SizeDelta: {x: 57.38, y: 239.16}
+  m_AnchoredPosition: {x: -0.000038087368, y: -200}
+  m_SizeDelta: {x: 57.38, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1064298181
 MonoBehaviour:
@@ -2446,7 +2451,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1683862843}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 0.125
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2671,8 +2676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.0499172, y: -169.94188}
-  m_SizeDelta: {x: 57.38, y: 239.16}
+  m_AnchoredPosition: {x: -1.0499172, y: -200}
+  m_SizeDelta: {x: 57.38, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1126079392
 MonoBehaviour:
@@ -2718,7 +2723,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1419498239}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 0.125
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3403,7 +3408,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.17279053, y: 0.34628296}
+  m_AnchoredPosition: {x: 0.17279053, y: 1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1575376927
@@ -4739,8 +4744,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061273575, y: -169.94188}
-  m_SizeDelta: {x: 57.38, y: 239.16}
+  m_AnchoredPosition: {x: 0.000061273575, y: -200}
+  m_SizeDelta: {x: 57.38, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2133187995
 MonoBehaviour:
@@ -4786,7 +4791,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1322376851}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 0.125
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4848,4 +4853,4 @@ SceneRoots:
   - {fileID: 129113131}
   - {fileID: 1141581496}
   - {fileID: 549814240}
-  - {fileID: 995429057}
+  - {fileID: 65131332}

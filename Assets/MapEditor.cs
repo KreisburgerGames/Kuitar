@@ -80,9 +80,9 @@ public class MapEditor : MonoBehaviour
         metersPerSecond = PlayerPrefs.GetFloat("NoteSpacing");
         noteSpacingInput.text = metersPerSecond.ToString();
         latency = PlayerPrefs.GetFloat("Latency") / 1000f;
-        if(latency < 0f) negLatency = true;
-        if(FindFirstObjectByType<SongListEditor>() != null) Destroy(FindFirstObjectByType<SongListEditor>().gameObject);
-        if(FindFirstObjectByType<EditorSong>() != null) Destroy(FindFirstObjectByType<EditorSong>().gameObject);
+        if (latency < 0f) negLatency = true;
+        if (FindFirstObjectByType<SongListEditor>() != null) Destroy(FindFirstObjectByType<SongListEditor>().gameObject);
+        if (FindFirstObjectByType<EditorSong>() != null) Destroy(FindFirstObjectByType<EditorSong>().gameObject);
         song = GetComponent<Song>();
         audioSource = GetComponent<AudioSource>();
         song.folderPath = songFolder;
@@ -117,7 +117,7 @@ public class MapEditor : MonoBehaviour
 
     public void TimeScrollbar()
     {
-        if(audioSource.isPlaying) return;
+        if (audioSource.isPlaying) return;
         float songLength = song.songClip.length;
         float selectedTime = MathF.Round(timeScrollbar.value * songLength, 2);
         song.GetComponent<AudioSource>().time = selectedTime;
@@ -128,7 +128,7 @@ public class MapEditor : MonoBehaviour
         float selectedTime = MathF.Round(trackedTime, 2);
         float seconds = MathF.Round(selectedTime % 60, 2);
         int minutes = (int)Mathf.Floor(selectedTime / 60);
-        if(seconds < 10) time.text = minutes.ToString() + " : 0" + seconds.ToString();
+        if (seconds < 10) time.text = minutes.ToString() + " : 0" + seconds.ToString();
         else time.text = minutes.ToString() + " : " + seconds.ToString();
     }
 
@@ -156,8 +156,8 @@ public class MapEditor : MonoBehaviour
         i = 0;
         foreach (NoteLoad noteLoad in notesLoaded.notes)
         {
-            if(noteLoad.hammerOn) print("h");
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, noteParentOffset, load:true, latencySet:noteLoad.latencySet, hammerOn:noteLoad.hammerOn));
+            if (noteLoad.hammerOn) print("h");
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, noteLoad.beat, metersPerSecond, offset, noteLoad.lane, noteLoad.note, noteLoad.strum, noteLoad.downStrum, i, secondsPerBeat, noteParentOffset, load: true, latencySet: noteLoad.latencySet, hammerOn: noteLoad.hammerOn));
             i++;
         }
         StartCoroutine(LoadHammers(notesLoaded));
@@ -165,16 +165,16 @@ public class MapEditor : MonoBehaviour
 
     IEnumerator LoadHammers(Notes notesLoaded)
     {
-        while(FindObjectsOfType<DummyNote>().Length != notesLoaded.notes.Length)
+        while (FindObjectsOfType<DummyNote>().Length != notesLoaded.notes.Length)
         {
             yield return new WaitUntil(() => FindObjectsOfType<DummyNote>().Length == notesLoaded.notes.Length);
         }
-        foreach(DummyNote note in FindObjectsOfType<DummyNote>())
+        foreach (DummyNote note in FindObjectsOfType<DummyNote>())
         {
             loadedNotes.Add(note);
         }
         loadedNotes = loadedNotes.OrderBy(x => x.beat).ToList();
-        foreach(DummyNote note in loadedNotes)
+        foreach (DummyNote note in loadedNotes)
         {
             note.CheckHammers();
         }
@@ -183,7 +183,7 @@ public class MapEditor : MonoBehaviour
     void SetDirAndNoteText()
     {
         // Direction
-        if(!selectToStrum) selectedDir.text = "Pluck";
+        if (!selectToStrum) selectedDir.text = "Pluck";
         else if (selectedDownStrum) selectedDir.text = "Down";
         else selectedDir.text = "Up";
 
@@ -210,10 +210,10 @@ public class MapEditor : MonoBehaviour
     {
         UpdateText();
         SetDirAndNoteText();
-        
+
         zoomLevel = anchor.localScale.x;
-        tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler/zoomLevel, tracker.gameObject.transform.localScale.y);
-        if(isPlaying) trackedTime += Time.deltaTime;
+        tracker.gameObject.transform.localScale = new Vector2(trackerSizeScaler / zoomLevel, tracker.gameObject.transform.localScale.y);
+        if (isPlaying) trackedTime += Time.deltaTime;
         timeScrollbar.value = trackedTime / audioSource.clip.length;
         noteParent.transform.position = new Vector3(metersPerSecond * trackedTime + noteParentOffset, 0, 0);
         if (audioSource.clip != null)
@@ -222,13 +222,13 @@ public class MapEditor : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            if(Input.GetKeyDown(KeyCode.Space) && canPause)
+            if (Input.GetKeyDown(KeyCode.Space) && canPause)
             {
                 zoomRect.localPosition = originalWaveformPos;
                 anchor.localScale = originalAnchorScale;
                 zoomRect.sizeDelta = originalWaveformScale;
             }
-            if(Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 selectedNotes.Clear();
                 allSelected = false;
@@ -250,7 +250,7 @@ public class MapEditor : MonoBehaviour
                 SelectAll();
             }
             if (Mathf.Abs(Input.mouseScrollDelta.y) > 0) Zoom();
-            if(Input.GetKeyDown(KeyCode.S)) Save();
+            if (Input.GetKeyDown(KeyCode.S)) Save();
             return;
         }
         if (Input.GetKey(KeyCode.LeftShift))
@@ -259,11 +259,11 @@ public class MapEditor : MonoBehaviour
             {
                 WaveformScroll();
             }
-            if(Input.GetKeyDown(KeyCode.Space) && audioSource.isPlaying && canPause)
+            if (Input.GetKeyDown(KeyCode.Space) && audioSource.isPlaying && canPause)
             {
                 isPlaying = false;
                 audioSource.Pause();
-                lastPos = trackedTime;
+                SnapToIncrement();
             }
             if (Input.GetKeyDown(KeyCode.Tab))
             {
@@ -274,7 +274,7 @@ public class MapEditor : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftAlt))
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 zoomRect.anchoredPosition = new Vector2(zoomRect.anchoredPosition.x, -zoomRect.anchoredPosition.y);
             }
@@ -284,22 +284,22 @@ public class MapEditor : MonoBehaviour
         {
             Scroll();
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(audioSource.isPlaying) { if(!canPause) {return;} isPlaying = false; audioSource.Pause(); trackedTime = lastPos; audioSource.time = lastPos; }
-            else 
+            if (audioSource.isPlaying) { if (!canPause) { return; } isPlaying = false; audioSource.Pause(); trackedTime = lastPos; audioSource.time = lastPos; SnapToIncrement(); }
+            else
             {
-                if(latency == 0f)
+                if (latency == 0f)
                 {
-                    lastPos = trackedTime; 
+                    lastPos = trackedTime;
                     audioSource.time = trackedTime;
                     isPlaying = true;
                     canPause = true;
-                    audioSource.UnPause(); 
+                    audioSource.UnPause();
                 }
-                else if(!negLatency)
+                else if (!negLatency)
                 {
-                    lastPos = trackedTime; 
+                    lastPos = trackedTime;
                     float safeTime = Mathf.Clamp(trackedTime, 0f, audioSource.clip.length);
                     audioSource.time = safeTime;
                     isPlaying = true;
@@ -318,51 +318,51 @@ public class MapEditor : MonoBehaviour
             }
             timeScrollbar.value = trackedTime / audioSource.clip.length;
         }
-        if(Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+        if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
         {
             DeleteSelectedNotes();
             allSelected = false;
         }
-        if(Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             selectToStrum = true;
             selectedDownStrum = true;
         }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             selectToStrum = true;
             selectedDownStrum = false;
-        }else if(Input.GetKeyDown(KeyCode.X))
+        } else if (Input.GetKeyDown(KeyCode.X))
         {
             selectToStrum = false;
         }
-        if(Input.GetKeyDown(KeyCode.H) && selectedNotes.Count == 2)
+        if (Input.GetKeyDown(KeyCode.H) && selectedNotes.Count == 2)
         {
             selectedNotes = selectedNotes.OrderBy(x => x.beat).ToList();
-            if(selectedNotes[0].lane == selectedNotes[1].lane && selectedNotes[0].note != selectedNotes[1].note && !selectedNotes[1].strum)
+            if (selectedNotes[0].lane == selectedNotes[1].lane && selectedNotes[0].note != selectedNotes[1].note && !selectedNotes[1].strum)
             {
-                if(!selectedNotes[1].hammerOn)
+                if (!selectedNotes[1].hammerOn)
                 {
-                    if(selectedNotes[0].strum && selectedNotes[0].hammerOn) return;
+                    if (selectedNotes[0].strum && selectedNotes[0].hammerOn) return;
                     selectedNotes[1].MakeHammer(selectedNotes[0]);
-                    
+
                 }
-                    
-                else if(selectedNotes[1].noteBefore == selectedNotes[0])
+
+                else if (selectedNotes[1].noteBefore == selectedNotes[0])
                     selectedNotes[1].UnmakeHammer();
             }
-            
+
         }
         SelectNote();
-        if(Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
-        if(Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) IncrementLeft();
+        if (Input.GetKeyDown(KeyCode.RightArrow)) IncrementRight();
     }
 
     private void SelectAll()
     {
-        if(!allSelected)
+        if (!allSelected)
         {
-            foreach(DummyNote note in FindObjectsOfType<DummyNote>())
+            foreach (DummyNote note in FindObjectsOfType<DummyNote>())
             {
                 selectedNotes.Add(note);
             }
@@ -377,7 +377,7 @@ public class MapEditor : MonoBehaviour
 
     private void Copy()
     {
-        foreach(DummyNote note in GetComponents<DummyNote>())
+        foreach (DummyNote note in GetComponents<DummyNote>())
         {
             Destroy(GetComponent<DummyNote>());
         }
@@ -398,7 +398,7 @@ public class MapEditor : MonoBehaviour
 
     private void Cut()
     {
-        foreach(DummyNote note in GetComponents<DummyNote>())
+        foreach (DummyNote note in GetComponents<DummyNote>())
         {
             Destroy(GetComponent<DummyNote>());
         }
@@ -426,10 +426,10 @@ public class MapEditor : MonoBehaviour
         foreach (DummyNote note in sorted)
         {
             float beat = note.beat;
-            print("note beat: " + note.beat + "current beat: " + currentBeat);
+            print("note beat: " + note.beat + "current beat: " + currentBeat + "first beat: " + firstBeat);
             float targetBeat = currentBeat + (beat - firstBeat);
             print(targetBeat);
-            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat + secondsPerBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat, noteParentOffset, hammerOn:note.hammerOn));
+            invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, targetBeat, metersPerSecond, offset, note.lane, note.note, note.strum, note.downStrum, i, secondsPerBeat, noteParentOffset, hammerOn: note.hammerOn));
             i++;
         }
     }
@@ -456,38 +456,38 @@ public class MapEditor : MonoBehaviour
 
     void Save()
     {
-        if(File.Exists(mapPath + "/notes.json")) File.Delete(mapPath + "/notes.json");
+        if (File.Exists(mapPath + "/notes.json")) File.Delete(mapPath + "/notes.json");
         string json = "{\"notes\": [ ";
         List<DummyNote> notes = new List<DummyNote>();
-        foreach(DummyNote note in noteParent.GetComponentsInChildren<DummyNote>())
+        foreach (DummyNote note in noteParent.GetComponentsInChildren<DummyNote>())
         {
             notes.Add(note);
         }
         notes = notes.OrderBy(x => x.beat).ToList();
         float beatLatency = latency / secondsPerBeat;
-        foreach(DummyNote note in notes)
+        foreach (DummyNote note in notes)
         {
             json += " {";
             float beat = note.beat;
-            if(!note.load) beat += offsetBeats;
+            if (!note.load) beat += offsetBeats;
             json += "\"beat\" : " + beat.ToString() + ", ";
             int lane = note.lane;
             json += "\"lane\" : " + lane.ToString() + ", ";
-            if(note.hammerOn) {json += "\"hammerOn\" : true, ";}
-            else {json += "\"hammerOn\" : false, ";}
-            if(note.strum)
+            if (note.hammerOn) { json += "\"hammerOn\" : true, "; }
+            else { json += "\"hammerOn\" : false, "; }
+            if (note.strum)
             {
-                if(note.downStrum) {json += "\"strum\" : true, "; json += "\"downStrum\" : true, ";}
-                else {json += "\"strum\" : true, "; json += "\"downStrum\" : false, ";}
+                if (note.downStrum) { json += "\"strum\" : true, "; json += "\"downStrum\" : true, "; }
+                else { json += "\"strum\" : true, "; json += "\"downStrum\" : false, "; }
             }
-            else {json += "\"strum\" : false, "; json += "\"downStrum\" : false, ";}
+            else { json += "\"strum\" : false, "; json += "\"downStrum\" : false, "; }
             int noteNum = note.note;
-            json += "\"note\" : "  + noteNum.ToString() + "}, ";
+            json += "\"note\" : " + noteNum.ToString() + "}, ";
         }
         json = json.Remove(json.Length - 2, 1);
         json += "] }";
         File.WriteAllText(mapPath + "/notes.json", json);
-        
+
         print("Saved at " + mapPath + "/notes.json");
     }
 
@@ -504,23 +504,23 @@ public class MapEditor : MonoBehaviour
 
     void SelectNote()
     {
-        if(EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.tag == "Input") return;
-        if(Input.GetKeyDown(KeyCode.C)) selectedNoteNumber = 0;
-        else if(Input.GetKeyDown(KeyCode.Alpha1)) selectedNoteNumber = 1;
-        else if(Input.GetKeyDown(KeyCode.Alpha2)) selectedNoteNumber = 2;
-        else if(Input.GetKeyDown(KeyCode.Alpha3)) selectedNoteNumber = 3;
-        else if(Input.GetKeyDown(KeyCode.Alpha4)) selectedNoteNumber = 4;
-        else if(Input.GetKeyDown(KeyCode.Alpha5)) selectedNoteNumber = 5;
-        else if(Input.GetKeyDown(KeyCode.Alpha6)) selectedNoteNumber = 6;
-        else if(Input.GetKeyDown(KeyCode.Alpha7)) selectedNoteNumber = 7;
-        else if(Input.GetKeyDown(KeyCode.Alpha8)) selectedNoteNumber = 8;
-        else if(Input.GetKeyDown(KeyCode.Alpha9)) selectedNoteNumber = 9;
-        else if(Input.GetKeyDown(KeyCode.Alpha0)) selectedNoteNumber = 10;
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.tag == "Input") return;
+        if (Input.GetKeyDown(KeyCode.C)) selectedNoteNumber = 0;
+        else if (Input.GetKeyDown(KeyCode.Alpha1)) selectedNoteNumber = 1;
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) selectedNoteNumber = 2;
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) selectedNoteNumber = 3;
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) selectedNoteNumber = 4;
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) selectedNoteNumber = 5;
+        else if (Input.GetKeyDown(KeyCode.Alpha6)) selectedNoteNumber = 6;
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) selectedNoteNumber = 7;
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) selectedNoteNumber = 8;
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) selectedNoteNumber = 9;
+        else if (Input.GetKeyDown(KeyCode.Alpha0)) selectedNoteNumber = 10;
     }
 
     public void PlaceNoteAction(int lane)
     {
-        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, trackedTime/secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset, hammerOn:false));
+        invoker.AddCommand(new PlaceNoteCommand(notePrefab, noteParent, trackedTime / secondsPerBeat, metersPerSecond, offset, lane, selectedNoteNumber, selectToStrum, selectedDownStrum, i, secondsPerBeat, noteParentOffset, hammerOn: false));
         i++;
     }
 
@@ -528,7 +528,7 @@ public class MapEditor : MonoBehaviour
     {
         float songPercentage = audioTime / audioSource.clip.length;
         trackerAnchor.anchoredPosition = new Vector2(songPercentage * zoomRect.sizeDelta.x, trackerAnchor.anchoredPosition.y);
-        if(spec)
+        if (spec)
         {
             trackerAnchor.anchoredPosition += Vector2.right * trackerOffset;
         }
@@ -541,6 +541,15 @@ public class MapEditor : MonoBehaviour
         newX = Mathf.Clamp(newX, 1f, 30f);
         anchor.localScale = new Vector3(newX, anchor.localScale.y, 1f);
         draw.Generate(songFolder);
+    }
+
+    void SnapToIncrement()
+    {
+        float incrementSize = secondsPerBeat / arrowIncrement * 1;
+        float remainder = trackedTime % incrementSize;
+        trackedTime -= remainder;
+        audioSource.time = trackedTime;
+        lastPos = trackedTime;
     }
 
     void IncrementRight()

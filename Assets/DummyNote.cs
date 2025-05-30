@@ -116,20 +116,25 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
         if(history) return;
         selected = false;
         if (mapEditor == null) mapEditor = FindFirstObjectByType<MapEditor>();
-        foreach(DummyNote note in mapEditor.selectedNotes)
+        if(CheckSlelected()) selectedHighlight.SetActive(true); else selectedHighlight.SetActive(false);
+    }
+
+    private bool CheckSlelected()
+    {
+        foreach (DummyNote note in mapEditor.selectedNotes)
         {
             if (note == this)
             {
-                selected = true;
+                return true;
             }
         }
-        if(selected) selectedHighlight.SetActive(true); else selectedHighlight.SetActive(false);
+        return false;
     }
 
     public void GetNB(int i)
     {
         DummyNote noteRef = mapEditor.loadedNotes[index - i];
-        if(noteRef.lane == lane && noteRef.note != note && noteRef.beat < beat)
+        if (noteRef.lane == lane && noteRef.note != note && noteRef.beat < beat)
         {
             noteBefore = noteRef;
         }
@@ -187,8 +192,10 @@ public class DummyNote : MonoBehaviour, IPointerClickHandler
         }
         else
         {
+            bool wasSelectedSingle = CheckSlelected() && mapEditor.selectedNotes.Count == 1;
             mapEditor.selectedNotes.Clear();
-            mapEditor.selectedNotes.Add(this);
+            if (wasSelectedSingle) return;
+            else mapEditor.selectedNotes.Add(this);
         }
     }
 
