@@ -211,79 +211,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &65131330
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 65131332}
-  - component: {fileID: 65131331}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &65131331
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65131330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select LabelMaster (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Scrollbar (GameObject)
-    - Select Scrollbar (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Driving RectTransform
-    - Driving RectTransform
-    - Select LabelMaster (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Driving RectTransform
-    - Driving RectTransform
-    - Select Scrollbar (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Driving RectTransform
-    - Driving RectTransform
-    - Select Button (GameObject)
-    - Select Scrollbar (GameObject)
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Select Multiple from Hierarchy
-    - Driving RectTransform
-    - Select Button (GameObject)
---- !u!4 &65131332
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65131330}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &90983292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,7 +1226,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 500, y: 359}
+  m_AnchoredPosition: {x: 500, y: 467.1229}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &642858520
@@ -1891,6 +1818,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922546043}
   m_CullTransparentMesh: 1
+--- !u!1 &975107427
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 975107429}
+  - component: {fileID: 975107428}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &975107428
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975107427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select LabelFX (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Select Button (GameObject)
+    - Select Canvas (GameObject)
+    - Select Button (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Select LabelFX (GameObject)
+    - Select Audio (GameObject)
+    - Select LabelFX (GameObject)
+    - Select Button (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Select Text (TMP) (GameObject)
+    - Move Text (TMP)(-4.24, -0.68, 90.00)
+    - Move
+--- !u!4 &975107429
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975107427}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985400249
 GameObject:
   m_ObjectHideFlags: 0
@@ -4853,4 +4843,4 @@ SceneRoots:
   - {fileID: 129113131}
   - {fileID: 1141581496}
   - {fileID: 549814240}
-  - {fileID: 65131332}
+  - {fileID: 975107429}

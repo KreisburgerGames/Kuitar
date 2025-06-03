@@ -19,6 +19,8 @@ public class BallSync : MonoBehaviour
     bool negBeepOffset;
     private float currentLatency;
     public bool fromSettings;
+    public SpriteRenderer topColor, bottomColor;
+    public float fadeSpeed = 5f;
 
     void Start()
     {
@@ -39,10 +41,12 @@ public class BallSync : MonoBehaviour
         if(beepOffset <= halfBounceTime) negBeepOffset = true; else negBeepOffset = false;
     }
 
-    private IEnumerator DelayBeep(float delay)
+    private IEnumerator DelayBeep(float delay, bool top)
     {
         yield return new WaitForSeconds(delay);
         beep.Play();
+        if (top) topColor.color = Color.green;
+        else bottomColor.color = Color.green;
     }
 
     public void Exit()
@@ -52,25 +56,34 @@ public class BallSync : MonoBehaviour
 
     void Update()
     {
-        if(!down)
+        Color.RGBToHSV(topColor.color, out float th, out float ts, out float tv);
+        Color.RGBToHSV(bottomColor.color, out float bh, out float bs, out float bv);
+        ts = Mathf.Lerp(ts, 0, fadeSpeed * Time.deltaTime);
+        tv= Mathf.Lerp(tv, 1, fadeSpeed * Time.deltaTime);
+        bs = Mathf.Lerp(bs, 0, fadeSpeed * Time.deltaTime);
+        bv= Mathf.Lerp(bv, 1, fadeSpeed * Time.deltaTime);
+        topColor.color = Color.HSVToRGB(th, ts, tv);
+        bottomColor.color = Color.HSVToRGB(bh, bs, bv);
+        if (!down)
         {
             timer += Time.deltaTime;
             timer = Mathf.Clamp(timer, 0, halfBounceTime);
-            transform.position = new Vector2(0, Mathf.Lerp(downY, upY, timer/halfBounceTime));
-            if(negBeepOffset)
+            transform.position = new Vector2(0, Mathf.Lerp(downY, upY, timer / halfBounceTime));
+            if (negBeepOffset)
             {
-                if(!beeped)
+                if (!beeped)
                 {
-                    if(timer >= beepOffset)
+                    if (timer >= beepOffset)
                     {
                         beep.Play();
+                        topColor.color = Color.green;
                         beeped = true;
                     }
                 }
             }
-            if(timer == halfBounceTime)
+            if (timer == halfBounceTime)
             {
-                if(!negBeepOffset) StartCoroutine(DelayBeep(currentLatency));
+                if (!negBeepOffset) StartCoroutine(DelayBeep(currentLatency, true));
                 timer = 0;
                 down = true;
                 beeped = false;
@@ -80,21 +93,22 @@ public class BallSync : MonoBehaviour
         {
             timer += Time.deltaTime;
             timer = Mathf.Clamp(timer, 0, halfBounceTime);
-            transform.position = new Vector2(0, Mathf.Lerp(upY, downY, timer/halfBounceTime));
-            if(negBeepOffset)
+            transform.position = new Vector2(0, Mathf.Lerp(upY, downY, timer / halfBounceTime));
+            if (negBeepOffset)
             {
-                if(!beeped)
+                if (!beeped)
                 {
-                    if(timer >= beepOffset)
+                    if (timer >= beepOffset)
                     {
                         beep.Play();
+                        bottomColor.color = Color.green;
                         beeped = true;
                     }
                 }
             }
-            if(timer == halfBounceTime)
+            if (timer == halfBounceTime)
             {
-                if(!negBeepOffset) StartCoroutine(DelayBeep(currentLatency));
+                if (!negBeepOffset) StartCoroutine(DelayBeep(currentLatency, false));
                 timer = 0;
                 down = false;
                 beeped = false;

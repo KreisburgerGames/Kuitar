@@ -719,6 +719,9 @@ MonoBehaviour:
   secondsPerBounce: 2
   audioOffset: {fileID: 2104592623}
   fromSettings: 0
+  topColor: {fileID: 533317808}
+  bottomColor: {fileID: 945392017}
+  fadeSpeed: 5
 --- !u!58 &533615844
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -754,6 +757,68 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!1 &702335787
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 702335789}
+  - component: {fileID: 702335788}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &702335788
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702335787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Select Main Camera (GameObject)
+    - Select Canvas (GameObject)
+    - Select ground (1) (GameObject)
+    - Root Order Change
+    - Root Order Change
+    - Select ground (GameObject)
+    - Select ground (1) (GameObject)
+    - Select ball (GameObject)
+    - Select ground (1) (GameObject)
+    - Select ball (GameObject)
+    - Select ground (GameObject)
+    - Select ball (GameObject)
+    - Modified Top Color in ball
+    - Modified Bottom Color in ball
+--- !u!4 &702335789
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702335787}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &775278725
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,66 +894,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775278725}
   m_CullTransparentMesh: 1
---- !u!1 &788075098
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 788075100}
-  - component: {fileID: 788075099}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &788075099
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788075098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Select EventSystem (GameObject)
-    - Select ground (GameObject)
-    - Select ball (GameObject)
-    - Modified Output Audio Mixer Group in ball
-    - Modified Output Audio Mixer Group in ball
-    - Modified Output Audio Mixer Group in ball
-    - Select ground (1) (GameObject)
-    - Select ball (GameObject)
-    - Select ground (GameObject)
-    - Select ball (GameObject)
-    - Modified Output Audio Mixer Group in ball
-    - Select Easter egg (Asset)
---- !u!4 &788075100
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788075098}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &945392015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,7 +1889,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1490134390}
   - {fileID: 945392018}
-  - {fileID: 533615840}
   - {fileID: 533317809}
+  - {fileID: 533615840}
   - {fileID: 982750560}
-  - {fileID: 788075100}
+  - {fileID: 702335789}
