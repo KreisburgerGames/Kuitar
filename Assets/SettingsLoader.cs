@@ -113,8 +113,8 @@ public class SettingsLoader : MonoBehaviour
         }
         else
         {
-            mixer.SetFloat("Master", 0f);
-            PlayerPrefs.SetFloat("MasterVol", 0f);
+            mixer.SetFloat("Master", -5f);
+            PlayerPrefs.SetFloat("MasterVol", -5f);
         }
         if (PlayerPrefs.HasKey("MusicVol"))
         {
